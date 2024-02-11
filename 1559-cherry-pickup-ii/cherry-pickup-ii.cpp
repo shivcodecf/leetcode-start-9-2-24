@@ -31,7 +31,7 @@ public:
     int cherryPickup(vector<vector<int>>& grid) {
         int n = grid.size();
         int m = grid[0].size();
-        vector<vector<vector<int>>> dp(n + 1, vector<vector<int>>(m, vector<int>(m, -1))); // Adjusted the dimensions
+        vector<vector<vector<int>>> dp(n + 1, vector<vector<int>>(m+1, vector<int>(m+1, -1))); // Adjusted the dimensions
 
         return solve(grid, 0, 0, m - 1, dp);
     }
