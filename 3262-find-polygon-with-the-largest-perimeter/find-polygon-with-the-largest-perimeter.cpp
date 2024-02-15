@@ -20,9 +20,10 @@ public:
      
       for(int i=1;i<n;i++)
       {
-        pref[i]+=pref[i-1];
-      
+       pref[i]+=pref[i-1];
+       
         pref[i]+=nums[i];
+      
        
       }
       for(int i=0;i<n-1;i++)
