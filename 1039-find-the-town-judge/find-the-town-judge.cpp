@@ -36,7 +36,7 @@ public:
                  ans=i.first;
              }
          }
-         if(mp.size()>=(n-1))
+         if(mp.size()==(n-1))
          return ans;
          return -1;
 
