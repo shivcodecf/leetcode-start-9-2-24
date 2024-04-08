@@ -17,13 +17,14 @@ public:
             for(int j=0;j<originalSize;j++)
             {      
                 int front=q.front();
-                q.pop();
+               
               if( front != currentSandwich ) {
                q.push(front);
+                 q.pop();
               
                }
                else {
-                
+                  q.pop();
                 break;
                }
 
