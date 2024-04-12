@@ -17,6 +17,8 @@ public:
                 int leftIdx = s.top();
                 int length = min(height[i], height[leftIdx]) - height[rightIdx];
                 int breadth = i - leftIdx - 1;
+                int area= length*breadth;
+                if(area>0)
                 res += length*breadth;
             }
             s.push(i);
