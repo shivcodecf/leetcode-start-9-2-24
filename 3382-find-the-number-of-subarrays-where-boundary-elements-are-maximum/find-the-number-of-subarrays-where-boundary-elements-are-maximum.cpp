@@ -15,8 +15,10 @@ public:
             for (auto it : freqMap) {
                 if (it.first < target)
                     freqMap.erase(it.first);
-                else
-                    break;
+                    else{
+                        break;
+                    }
+               
             }
 
             freqMap[target]++;
