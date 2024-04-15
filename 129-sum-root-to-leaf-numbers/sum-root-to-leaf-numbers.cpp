@@ -2,7 +2,7 @@ class Solution {
 
     void solve(TreeNode* curr,int sum,int& totalsum){
 
-        int temp = 0;
+        
 
         sum = sum*10+curr->val;
 
@@ -22,7 +22,7 @@ class Solution {
 
         }
 
-        sum = temp;
+        sum=0;
 
 
     }
