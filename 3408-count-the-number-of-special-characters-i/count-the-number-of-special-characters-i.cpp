@@ -4,43 +4,28 @@ public:
           map<char,int>mp,mp1;
 
           vector<char>v,v1;
+          int ans=0;
 
-        for(int i=0;i<word.size();i++)
-        {
+          for(int i=0;i<word.size();i++)
+          {
+            for(int j=i+1;j<word.size();j++)
+            {
+                int x= abs(word[i]-word[j]);
+                 char ch=tolower(word[i]);
+                if(x==32 && mp[ch]==0)
+                {
+                    ans++;
+                   
 
-          if(islower(word[i])){
-
-           char ch=tolower(word[i]);
-           if(mp[ch]==0){
-           mp[ch]++;
-           }
-
+                    mp[ch]++;
+                    
+                }
+            }
           }
 
+          return ans;
 
-        }
-        int ans=0;
-
-
-        for(int i=0;i<word.size();i++)
-        {  
-
-            if(isupper(word[i]) && mp1[word[i]]==0)
-            {
-              
-              char ch1=tolower(word[i]);
-              if(mp[ch1]==1)
-              {
-                ans++;
-              }
-              mp1[word[i]]++;
-
-
-            }
-           
-            
-        }
-        return ans;
+       
 
 
 
