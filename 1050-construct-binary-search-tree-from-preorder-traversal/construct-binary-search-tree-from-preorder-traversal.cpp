@@ -17,13 +17,16 @@ TreeNode* solve(vector<int>& preorder,int &max,int &min,int&i)
     {
         return NULL;
     }
+    
     TreeNode*root=nullptr;
+
     if(preorder[i]<max&&preorder[i]>min)
     {
         root= new TreeNode(preorder[i++]);
         root->left=solve(preorder,root->val,min,i);
         root->right=solve(preorder,max,root->val,i);
     }
+
     return root;
 }
     TreeNode* bstFromPreorder(vector<int>& preorder) {
@@ -32,6 +35,6 @@ TreeNode* solve(vector<int>& preorder,int &max,int &min,int&i)
         int max=INT_MAX;
         int i=0;
         return solve(preorder,max,min,i);
-        
+
     }
 };
