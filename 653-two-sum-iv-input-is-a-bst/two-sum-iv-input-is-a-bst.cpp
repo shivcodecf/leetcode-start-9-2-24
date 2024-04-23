@@ -31,12 +31,12 @@ public:
 
           map<int,int> fin;
 
-        for(int i=0;i<mp.size();i++)
-        { 
+        // for(int i=0;i<mp.size();i++)
+        // { 
 
-            fin.insert({i,mp[i]});
+        //     fin.insert({i,mp[i]});
 
-        }
+        // }
 
 
         for(int i=0;i<mp.size()-1;i++)
