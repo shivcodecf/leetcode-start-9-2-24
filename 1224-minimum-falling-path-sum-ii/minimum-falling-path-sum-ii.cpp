@@ -2,30 +2,41 @@ class Solution {
 public: 
 
    int f(int i, int j, vector<vector<int>>& mat, vector<vector<int>>& dp) {
-        if(i < 0 || j < 0 || j >= mat[0].size()) {
-            return 1e8;
-        }
+        // if(i < 0 || j < 0 || j >= mat[0].size()) {
+        //     return 1e8;
+        // }
 
         // if the value is pre-computed then directly return it
-        if(dp[i][j] != -1) {
+
+        if(i == mat.size()) {
+            return 0;
+        }
+
+         if(dp[i][j] != -1) {
             return dp[i][j];
         }
 
-        if(i == 0) {
-            return mat[0][j];
-        }
+        
 
+       
+
+        
         int mini = 1e8;
 
         for(int k=0; k<mat[0].size(); k++) {
+
             if(k != j) {
-                mini = min(mini, mat[i][j] + f(i-1, k, mat, dp));
+                mini = min(mini, mat[i][k] + f(i+1, k, mat, dp));
             }
+
         }
+
 
         dp[i][j] = mini;
 
         return dp[i][j];
+
+
     }
 
 
@@ -40,7 +51,7 @@ public:
 
         for(int j=0; j<m; j++) {
 
-            mini = min(mini, f(n-1, j, grid, dp));
+            mini = min(mini, grid[0][j]+f(1, j, grid, dp));
 
         }
 
