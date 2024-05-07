@@ -9,7 +9,9 @@
  * };
  */
 class Solution {
+    
 public:
+
     ListNode* removeNthFromEnd(ListNode* head, int n) {
 
        ListNode* temp = head;
@@ -52,6 +54,7 @@ public:
 
             cnt1++;
 
+
             if(cnt1-1 == flag)
             {
                 prev->next = temp->next;
@@ -59,8 +62,10 @@ public:
                 break;
             }
 
+
             prev = temp;
             temp = temp->next;
+
 
          }
 
