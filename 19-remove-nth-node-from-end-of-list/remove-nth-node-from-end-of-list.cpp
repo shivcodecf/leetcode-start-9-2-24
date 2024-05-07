@@ -29,7 +29,6 @@ public:
        } 
 
        int flag = cnt-n;
-       temp=head;
 
        if(flag==0)
        {
@@ -38,37 +37,39 @@ public:
         return head;
 
        }
+
+         temp=head;
      
 
-       else{
+       
 
-          ListNode *prev;
+          ListNode *prev = NULL;
 
           int cnt1=0;
            
-         for(int i=0;i<flag;i++)
+         while(temp!=nullptr)
          {
 
-          
-            
+            cnt1++;
+
+            if(cnt1-1 == flag)
+            {
+                prev->next = temp->next;
+                delete(temp);
+                break;
+            }
 
             prev = temp;
             temp = temp->next;
 
          }
 
-         prev->next = temp->next;
-
-         delete temp;
-
-         return head;
-
         
 
 
-       }
+       
 
-        return head;
+         return head;
 
 
 
