@@ -32,7 +32,7 @@ public:
           carry = sum/10;
           ListNode *node =new ListNode(sum%10);
           temp->next = node;
-          temp = temp->next;
+          temp = node;
         }
         return dummy->next;
     }
