@@ -9,7 +9,7 @@ public:
      {
         for(int j=0;j<arr.size();j++)
         {
-            double result = static_cast<double>(arr[i]) / arr[j];
+            double result = double(arr[i]) / arr[j];
 
             pair<int, int> second_pair = make_pair(arr[i], arr[j]);
 
@@ -20,9 +20,9 @@ public:
         }
      }
 
-      sort(v.begin(),v.end());
+        sort(v.begin(),v.end());
 
-      return {v[k-1].second.first,v[k-1].second.second};
+        return {v[k-1].second.first,v[k-1].second.second};
 
 
 
