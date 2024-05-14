@@ -11,9 +11,11 @@ private:
             if(set.count(s.substr(start, i+1-start)) && wordBreak(s, set, memo, i+1)){
                 memo[start] = true;
                 return true;
+                
             }
         }
         return memo[start] = false;
+        return false;
     }
 public:
     bool wordBreak(string s, vector<string>& wordDict) {
