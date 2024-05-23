@@ -1,6 +1,7 @@
 class Solution {
    
 public: 
+ vector<int> v;
     void solve(vector<int>& nums, int k, int ind, vector<int>& v, int& res) {    
     if (ind == nums.size()) {    
 
@@ -35,7 +36,7 @@ public:
 
 int beautifulSubsets(vector<int>& nums, int k) {
     int res = 0;
-    vector<int> v;
+   
     solve(nums, k, 0, v, res);
     return res-1;
 }
