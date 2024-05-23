@@ -23,7 +23,7 @@ void solve(vector<int>& nums, int ind, vector<int>& v) {
 }    
 
 int subsetXORSum(vector<int>& nums) {
-    ans = 0;  // Ensure `ans` is reset before calculation
+   
     vector<int> v;
     solve(nums, 0, v);
     return ans;
