@@ -9,7 +9,7 @@ public:
             char x = word[i];
             if (mp[x] > 0){ mp[x]--; ans += sc[x]; }
             else{
-                for (int j = i-1; j >= 0; j--){
+                for (int j = 0; j<=i-1; j++){
                     mp[word[j]]++;
                 } 
                 return 0; 
