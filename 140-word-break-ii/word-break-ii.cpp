@@ -7,11 +7,12 @@ public:
             ans.push_back(ds);
             return;
         }
+        string word="";
         for(int i=ind;i<s.size();i++){
-            string word = s.substr(ind,i-ind+1);
+            word+= s[i];
             if(dict.find(word)!=dict.end()){
                 rec(s,dict,i+1,ds+word+" ");
-                word.pop_back();
+               
             }
         }
     }
@@ -19,5 +20,6 @@ public:
         set<string> dict(wordDict.begin(),wordDict.end());
         rec(s,dict,0,"");
         return ans;
+
     }
 };
