@@ -1,21 +1,64 @@
+#include<bits/stdc++.h>
+using namespace std;
+
+
 class Solution {
 public:
+
     int equalSubstring(string s, string t, int maxCost) {
-        int current =0;
-        int i =0;
-        int maxlength=0;
-        for(int j =0;j<s.length();j++)
-        {
-            current+=abs(s[j]-t[j]);
-            while(current>maxCost)
-            {
-                current -= abs(s[i]-t[i]);
-                i++;
+        
+     
+     vector<int>v,pref(s.size());
+
+     for(int i=0;i<s.size();i++)
+     {
+        int x=abs((s[i]-'a') - (t[i]-'a'));
+        v.push_back(x);
+
+     }
+
+    
+     pref[0]=0;
+     pref[1]=v[0];
+
+     for(int i=2;i<s.size();i++)
+     {
+        pref[i]=pref[i-1]+v[i];
+     } 
+         int start = 0;
+        int current_cost = 0;
+        int max_length = 0;
+        int n=s.size();
+
+       for(int end = 0; end < n; ++end) {
+
+            current_cost += v[end];
+
+            while (current_cost > maxCost) {
+                current_cost -= v[start];
+                ++start;
             }
 
-            maxlength = max(maxlength, j-i+1);
+            max_length = max(max_length, end - start + 1);
+
         }
 
-        return maxlength;
+        
+    
+
+
+    
+
+
+     
+
+
+     
+     return max_length;
+
+     
+      
+
+
     }
 };
