@@ -2,9 +2,9 @@ class Solution {
 public:
     string clearStars(string s) {
 
-        using Pair = std::pair<char, int>;
+        using Pair = pair<char, int>;
 
-         // Custom comparator for the priority queue
+         
         auto compare = [](const Pair& a, const Pair& b) {
             if (a.first == b.first) {
                 return a.second < b.second; // Sort second elements in descending order
@@ -16,7 +16,7 @@ public:
         int n=s.size();
 
             map<char,int>mp;
-        std::priority_queue<Pair, std::vector<Pair>, decltype(compare)> pq(compare);
+        priority_queue<Pair, std::vector<Pair>, decltype(compare)> pq(compare);
            int star=0;
            map<int,int>mp1;
 
@@ -178,6 +178,8 @@ public:
 
 
         // return ans;
+
+
 
 
 
