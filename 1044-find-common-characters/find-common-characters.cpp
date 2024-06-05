@@ -48,10 +48,10 @@ public:
 
         for(auto i:mp2)
         {    
-           
+           string str(1,i.first);
             while(i.second--)
             {
-              v.push_back(string(1, i.first));
+              v.push_back(str);
             }
            
         }
