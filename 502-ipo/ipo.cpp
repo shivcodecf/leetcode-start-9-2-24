@@ -18,7 +18,7 @@ public:
         int i = 0;
 
         // Main loop to select up to k projects
-        for (int j = 0; j < k; ++j) {
+        for (int j = 0; j < min(n,k); ++j) {
             // Add all profitable projects that we can afford
             while (i < n && projects[i].first <= w) {
                 maxHeap.push(projects[i].second);
@@ -33,6 +33,7 @@ public:
             // Otherwise, take the project with the maximum profit
             w += maxHeap.top();
             maxHeap.pop();
+          
         }
 
         return w;
