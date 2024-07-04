@@ -1,47 +1,65 @@
-#include <algorithm>
-#include <vector>
-
+#include<bits/stdc++.h>
 using namespace std;
+
 
 class Solution {
 public:
     vector<int> largestDivisibleSubset(vector<int>& nums) {
-        sort(nums.begin(), nums.end());
 
-        int n = nums.size();
-        vector<int> dp(n, 1);         // dp[i] stores the length of the largest
-                                      // divisible subset ending at index i
-        vector<int> prevIndex(n, -1); // To keep track of the previous index for
-                                      // constructing the subset
+     
+         sort(nums.begin(),nums.end());
 
-        int maxLen = 1; // Length of the longest divisible subset
-        int endIndex =
-            0; // Index of the last element of the longest divisible subset
+         map<int,int>mp;
+         int n=nums.size();
 
-        // Dynamic Programming - Find the length of the largest divisible subset
-        // ending at each index
-        for (int i = 1; i < n; ++i) {
-            for (int j = 0; j < i; ++j) {
-                if (nums[i] % nums[j] == 0 && dp[i]<dp[j]+1) {
-                    dp[i] = dp[j] + 1;
-                    prevIndex[i] = j;
-                   
-                }
+         vector<int>t(n,1);
+         vector<int>prev(n,-1);
+         int maxi=-1,index=-1;
+
+        
+
+         for(int i=0;i<n;i++)
+         {   
+           
+            
+            for(int j=0;j<i;j++)
+            { 
                 
-                 if (dp[i] > maxLen) {
-                        maxLen = dp[i];
-                        endIndex = i;
-                    }
+                if((nums[i]%nums[j])==0 && t[j]+1>t[i])
+                {
+                   t[i]=max(t[i],t[j]+1);
+                   prev[i]=j;
+                }
+             
             }
-        }
 
-        // Construct the largest divisible subset using the prevIndex array
-        vector<int> result;
-        while (endIndex != -1) {
-            result.push_back(nums[endIndex]);
-            endIndex = prevIndex[endIndex];
-        }
+            if(t[i]>maxi)
+            {
+                maxi=t[i];
+                index=i;
 
-        return result;
+            }
+
+           
+
+
+
+         }
+
+         vector<int>ans;
+
+         while(index!=-1)
+         {
+            ans.push_back(nums[index]);
+            index= prev[index];
+         }
+
+         return ans;
+
+        
+
+
+
+
     }
 };
