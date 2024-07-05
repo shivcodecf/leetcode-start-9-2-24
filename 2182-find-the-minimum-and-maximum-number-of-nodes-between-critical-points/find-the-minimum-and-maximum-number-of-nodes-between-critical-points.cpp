@@ -6,6 +6,7 @@ public:
 
         int ans1 = INT_MAX, cur, next, n;
         int last = head->val, position = 2;
+        head=head->next;
 
         while(head->next)
         {
