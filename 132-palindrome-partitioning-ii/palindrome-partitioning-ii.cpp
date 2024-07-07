@@ -8,7 +8,7 @@ bool isPalindrome(string &s,int i,int j){
     }
     return true;
 }
-int solve(string &s,int i, vector<int> &dp){
+int solve(string& s,int i, vector<int> &dp){
     if(i>=s.size() || isPalindrome(s,i,s.size()))
         return 0;
     if(dp[i]!=-1) return dp[i];
