@@ -1,38 +1,26 @@
 class Solution {
-public:  
+public: 
 
-    int sum,check;
 
-     int solve(int n, int current, std::vector<int>& memo) {
+   int solve(int n,vector<int>& dp)
+   {
+    if(n<=0) return 0;
 
-    if (current == n) {
-        return 0;
+    if(dp[n]!=-1) return dp[n];
+
+    int ans=n;
+
+    for(int i=1;i*i<=n;i++)
+    {
+       ans=min(ans, 1 + solve(n - i*i,dp));
+
     }
-    if (current > n) {
-        return INT_MAX;
+    return dp[n] = ans;
+   }
+    int numSquares(int n) {
+
+        vector<int>dp(n+1,-1);
+        
+        return solve(n,dp);
     }
-    if (memo[current] != -1) {
-        return memo[current];
-    }
-
-    int minCount = INT_MAX;
-    for (int i = 1; i * i <= n; ++i) {
-        int res = solve(n, current + i * i, memo);
-        if (res != INT_MAX) {
-            minCount = min(minCount, res + 1);
-        }
-    }
-
-    memo[current] = minCount;
-    return minCount;
-
-}
-
-int numSquares(int n) {
-
-    vector<int> memo(n + 1, -1);
-    return solve(n, 0, memo);
-
-}
-
 };
