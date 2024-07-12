@@ -2,12 +2,24 @@
 class Solution {
 public:  
        
-    ll int solve(vector<int>& piles,ll ind,ll h,ll mid)
+    ll solve(vector<int>& piles,ll ind,ll h,ll mid)
     {   
         ll hour=0,sum=0;
         for(int i=0;i<piles.size();i++)
         {  
-           hour+=(piles[i]/mid)+((piles[i]%mid)!=0);
+          ll d = piles[i]/mid;
+          ll r= piles[i]%mid;
+          if(mid>=piles[i])
+          {
+            hour++;
+          }
+          else {
+             hour+=d;
+             if(r!=0)
+             {
+                hour++;
+             }
+          }
         }
 
         return hour;
