@@ -1,54 +1,48 @@
-class Solution {
-public: 
 #define ll long long
-ll ans=-1,mini=INT_MAX;
-
-
-  ll solve(vector<int>& piles,int  n,int  mid)
-  {     
-      ll res=0;
+class Solution {
+public:  
        
-      for(int i=0;i<n;i++)
-      { 
-          ll x=ceil(piles[i]/(double)mid);
-          res+=x;
-      }
-      return res;
-  }
+    ll int solve(vector<int>& piles,ll ind,ll h,ll mid)
+    {   
+        ll hour=0,sum=0;
+        for(int i=0;i<piles.size();i++)
+        {  
+           hour+=(piles[i]/mid)+((piles[i]%mid)!=0);
+        }
 
-
-
+        return hour;
+    }
 
 
     int minEatingSpeed(vector<int>& piles, int h) {
-       
-       
-       ll low = 1, high = *(max_element(piles.begin(), piles.end()));
-       
+        
+    ll low = 1;
 
-      while(low<=high)
-      {   
+    ll high = *max_element(piles.begin(),piles.end());
 
-          int  mid= low+(high-low)/2;
+    ll mid=0,ans=0;
+
+    while(low<=high)
+    {
+        mid = low+(high-low)/2;
+      
+
+        ll res = solve(piles,0,h,mid);
+
+        if(res>h)
+        {
+          low = mid+1;
+
+        }
+        else {
+            ans = mid;
+            high = mid-1;
          
+        }
 
-         long long res= solve(piles,piles.size(),mid);
+    }
 
-          if(res<=h)
-          {
-              ans=mid;
-             
-              high=mid-1;
-             
-          }
-          
-          else {
-              low=mid+1;
-
-          }
-          
-      }
-      return ans;
+    return ans;
 
     }
 };
