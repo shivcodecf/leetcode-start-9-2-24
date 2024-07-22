@@ -37,7 +37,7 @@ int minCut(string s) {
 
     vector<int> dp(s.size(), -1);
 
-    return solve(s, 0, dp)-1;
+    return max(solve(s, 0, dp)-1,0);
 
 }
 };
