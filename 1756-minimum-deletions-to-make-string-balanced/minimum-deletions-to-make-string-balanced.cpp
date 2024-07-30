@@ -1,22 +1,25 @@
 class Solution {
 public:
     int minimumDeletions(string s) {
+       
         
-        stack<char>st;
+        int a=0,b=0,mini=INT_MAX,ans=0;
 
-        st.push(s[0]);
-        int ans=0;
-
-        for(int i=1;i<s.size();i++)
+        for(int i=0;i<s.size();i++)
         {
-            if(st.size() && st.top()=='b' && s[i]=='a')
-            {
-                st.pop();
-                ans++;
-            }
-            else {
-                st.push(s[i]);
-            }
+            
+        if(s[i]=='a' && b>0)
+        {
+           b--;
+          ans++;
+          
+        }
+        else if(s[i]=='b')
+        {
+            b++;
+        }
+
+
         }
         return ans;
     }
