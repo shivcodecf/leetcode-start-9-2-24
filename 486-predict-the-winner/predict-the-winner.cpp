@@ -1,32 +1,24 @@
 class Solution {
-public:
-    bool fun(vector<int>& nums,int turn,int i,int j,int player1,int player2){
-        if(i>j){
-            if(player1>=player2) return true;
-            else return false;
-        } 
-        else
-        {
-            if(turn%2==0 ){
-                 if(fun(nums,turn+1,i+1,j,player1+nums[i],player2) || fun(nums,turn+1,i,j-1,player1+nums[j],player2)  ){
-                    return true;
-                 }
-                 else return false;
-            }
-            else
-            {
-                    if(fun(nums,turn+1,i+1,j,player1,player2+nums[i])==false || fun(nums,turn+1,i,j-1,player1,player2+nums[j]) ==false ){
-                    return false;
-                 }
-                 else return true;
-            }
-        }
-    }
-    bool predictTheWinner(vector<int>& nums) {
-        int l=nums.size();
-        int dp[l+1][l+1];
-        memset(dp, -1, sizeof(dp));
-        return  fun(nums,0,0,l-1,0,0);
+public: 
 
+   bool solve(int i,int j,int p1,int p2,bool flag,vector<int>&nums){
+        if(i>j){
+            return p1>=p2;
+        }
+        bool pf = false, ps = false;
+        if(flag){
+            pf =  solve(i+1,j,p1+nums[i],p2,!flag,nums) || solve(i,j-1,p1+nums[j],p2,!flag,nums);
+        }else{
+            ps =  solve(i+1,j,p1,p2+nums[i],!flag,nums) && solve(i,j-1,p1,p2+nums[j],!flag,nums);
+        }
+
+        return pf || ps;
+    }
+
+    bool predictTheWinner(vector<int>& nums) {
+        int i=0,j=nums.size()-1;
+        int p1=0,p2=0;
+        bool flag=true;
+        return solve(i,j,p1,p2,flag,nums); 
     }
 };
