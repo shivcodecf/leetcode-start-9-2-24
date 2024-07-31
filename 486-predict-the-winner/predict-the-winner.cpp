@@ -1,24 +1,26 @@
 class Solution {
-public: 
-
-   bool solve(int i,int j,int p1,int p2,bool flag,vector<int>&nums){
-        if(i>j){
-            return p1>=p2;
+    private:
+    int solve(int i, int j, vector<int>& nums, vector<vector<int>>& memo) {
+        if (i > j) {
+            return 0;
         }
-        bool pf = false, ps = false;
-        if(flag){
-            pf =  solve(i+1,j,p1+nums[i],p2,!flag,nums) || solve(i,j-1,p1+nums[j],p2,!flag,nums);
-        }else{
-            ps =  solve(i+1,j,p1,p2+nums[i],!flag,nums) && solve(i,j-1,p1,p2+nums[j],!flag,nums);
+        
+        if (memo[i][j] != -1) {
+            return memo[i][j];
         }
 
-        return pf || ps;
+        // Player 1's choice: choose the leftmost or the rightmost element
+        int chooseLeft = nums[i] - solve(i + 1, j, nums, memo);
+        int chooseRight = nums[j] - solve(i, j - 1, nums, memo);
+        
+        // Maximize the score for Player 1
+        memo[i][j] = max(chooseLeft, chooseRight);
+        return memo[i][j];
     }
-
+public:
     bool predictTheWinner(vector<int>& nums) {
-        int i=0,j=nums.size()-1;
-        int p1=0,p2=0;
-        bool flag=true;
-        return solve(i,j,p1,p2,flag,nums); 
+          int n = nums.size();
+        vector<vector<int>> memo(n, vector<int>(n, -1));
+        return solve(0, n - 1, nums, memo) >= 0;
     }
 };
