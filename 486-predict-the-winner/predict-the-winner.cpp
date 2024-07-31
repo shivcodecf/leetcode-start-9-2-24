@@ -1,26 +1,36 @@
-class Solution {
+class Solution { 
     private:
-    int solve(int i, int j, vector<int>& nums, vector<vector<int>>& memo) {
-        if (i > j) {
-            return 0;
-        }
-        
-        if (memo[i][j] != -1) {
-            return memo[i][j];
-        }
 
-        // Player 1's choice: choose the leftmost or the rightmost element
-        int chooseLeft = nums[i] - solve(i + 1, j, nums, memo);
-        int chooseRight = nums[j] - solve(i, j - 1, nums, memo);
-        
-        // Maximize the score for Player 1
-        memo[i][j] = max(chooseLeft, chooseRight);
-        return memo[i][j];
+    int solve(vector<int>& nums,int i,int j)
+    {
+        if(i>j) return 0;
+        if(i==j) return nums[i];
+
+        int take1= nums[i] + min(solve(nums,i+2,j),solve(nums,i+1,j-1));
+
+        int take2 = nums[j] + min(solve(nums,i+1,j-1),solve(nums,i,j-2));
+
+        return max(take1,take2);
+
+
     }
 public:
     bool predictTheWinner(vector<int>& nums) {
-          int n = nums.size();
-        vector<vector<int>> memo(n, vector<int>(n, -1));
-        return solve(0, n - 1, nums, memo) >= 0;
+        int n= nums.size();
+
+        int sum = accumulate(nums.begin(),nums.end(),0);
+
+        
+        int res1 = solve(nums,0,n-1);
+
+        int res2 = sum-res1;
+
+        if(res1>=res2)
+        return true;
+        return false;
+
+
+        
+
     }
 };
