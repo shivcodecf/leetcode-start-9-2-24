@@ -3,24 +3,25 @@ class Solution {
 
     bool solve(vector<int>& nums,int mid)
     {  
-         if(nums[0]>mid)  return false;
+         
+         int m= nums.size();
 
-         long long buffer = nums[0];
+         vector<long long>v(nums.begin(),nums.end());
 
-       for(int i=1;i<nums.size();i++)
+       for(int i=0;i<m-1;i++)
        { 
           
 
-         
+        if(v[i]>mid) return false;
+
+        long long buffer = mid-v[i];
+
+        v[i+1] = v[i+1] - buffer;
+
 
 
         
-
-           long long  dif = mid - buffer;
-
-           buffer = nums[i] - dif;
-
-           if(buffer>mid) return false;
+   
            
 
          
@@ -28,7 +29,8 @@ class Solution {
 
        }
 
-       return true;
+
+       return v[m-1]<=mid;
 
     }
 
