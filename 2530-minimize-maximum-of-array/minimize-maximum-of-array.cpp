@@ -16,9 +16,10 @@ class Solution {
 
         
 
-           long long  dif = mid-buffer;
+           long long  dif = mid - buffer;
 
            buffer = nums[i] - dif;
+
            if(buffer>mid) return false;
            
 
