@@ -1,21 +1,21 @@
 class Solution {
+private:
+int solve(vector<int>& stones,int idx,int value,vector<vector<int>>& dp){
+    //base case
+    if(idx==stones.size()){
+        if(value<0)return 1e9;
+        return 0;
+    }
+    // value can be -3000 to +3000 that is why [value + 3000] 
+    if(dp[idx][value+3000]!=-1)return dp[idx][value+3000];
+    //condition
+    int ans1 = stones[idx] + solve(stones,idx+1,value+stones[idx],dp);
+    int ans2 = -stones[idx] + solve(stones,idx+1,value-stones[idx],dp);
+    return dp[idx][value+3000] = min(ans1,ans2);
+}
 public:
-    int dfs(int i, vector<int> &stones, int sum, vector<vector<int>> &dp){
-        if(i == stones.size() || sum < 0) return 0;
-        if(dp[i][sum]!=-1) return dp[i][sum];
-        int a = stones[i] + dfs(i+1, stones, sum - stones[i], dp);
-        int b = dfs(i+1, stones, sum, dp);
-        int ans;
-        if(abs(sum-a) < abs(sum-b)) ans = a;
-        else ans = b;
-        return dp[i][sum] = ans;
-    }
-    
     int lastStoneWeightII(vector<int>& stones) {
-        int sum = accumulate(stones.begin(), stones.end(), 0);
-        int temp = sum / 2;
-        vector<vector<int>> dp(stones.size(), vector<int>(temp+1, -1));
-        return abs(sum - 2*dfs(0, stones, temp, dp));
+        vector<vector<int>> dp(stones.size()+1,vector<int>(6000,-1));
+        return solve(stones,0,0,dp);
     }
-
 };
