@@ -1,37 +1,28 @@
 class Solution {
 public:
     int minTaps(int n, vector<int>& ranges) {
-        // hold max reach of left -> its biggest right
-        vector<int> maxReach(n+1, 0);
+        int size = ranges.size();
         
-        for (int i = 0; i < ranges.size(); ++i) {
-            int left = max(i - ranges[i], 0);
-            int right = min(i + ranges[i], n);
-            maxReach[left] = max(right,maxReach[left]);
-        }
+        int maxi = 0;
+        for(int i=0;i<n;i++)    maxi = max(maxi,ranges[i]);
 
-        int count = 0;  // number of taps needed
-        int currEnd = 0; // furthest point we can reach with 'count' number of taps on
-        int currFarthest = 0; // furtherst point we can reach 
-        
-        for (int i = 0; i <= n; ++i) {
-            // we havent been able to reach i so there is a gap 
-            if (i > currFarthest) {
-                return -1; 
+        vector<long> next(size+maxi+1,0),curr(size+maxi+1,0);
+        for(int j=0;j<=(size-2);j++)   next[j] = 1e8;
+
+        for(int i=size-1;i>=0;i--){
+            for(int prev=size-2;prev>=0;prev--){
+                int notPic = 0 + next[prev];
+                int Pic = 1e8;
+                if( (i - ranges[i] <= prev) ){
+                    Pic = 1 + next[i+ranges[i]];
+                }
+                curr[prev] = min(Pic,notPic);
             }
-            // we have to turn on another tap. we turn on the tap that gives us currFarthest
-            if (i >currEnd) {
-                ++count; // another tap
-                currEnd = currFarthest; // we turned on tap with furthest reach
-            }
-            // we have now got to this tap
-            currFarthest = max(currFarthest, maxReach[i]); // if this tap gives us a new max furthest
-
-            
-
+            next = curr;
         }
-
-        // if we could turn on reach all n taps
-        return (currEnd == n) ? count : -1;
+        if(next[0] == 1e8){
+            return -1;
+        }
+        return next[0];
     }
 };
