@@ -20,7 +20,7 @@ public:
                 return -1; 
             }
             // we have to turn on another tap. we turn on the tap that gives us currFarthest
-            if (i > currEnd) {
+            if (i >currEnd) {
                 ++count; // another tap
                 currEnd = currFarthest; // we turned on tap with furthest reach
             }
