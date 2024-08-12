@@ -12,14 +12,14 @@ public:
             num=(num-j) / 10;
             cur--;
         }
-        return;
+        
     }
     vector<int> numsSameConsecDiff(int n, int k) {
         vector<int> ans;
         for(int i=1;i<10;i++){
             rec(i,ans,n,k,1,i);
         }
-        
+
         return ans;
     }
 };
