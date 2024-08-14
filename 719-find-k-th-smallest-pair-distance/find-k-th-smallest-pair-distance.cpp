@@ -1,59 +1,58 @@
 class Solution {
 public:
      
-     bool solve(vector<int>& nums,int target)
-     {    
-           int mid=0;
-           int n=nums.size();
-
-           int low = 0, high = n-1;
-
-           while(high>low)
-           {
-                mid = low + (high-low)/2;
-
-              int diff = nums[high] - nums[low];
-
-              if(diff==target)
-              {
-                return true;
-              }
-
-              if(diff>target)
-              {
-                high = mid-1;
-
-              }
-              else {
-                low = mid +1;
-              }
-
-
-              
-           }
-
-           return false;
-
-     }  
+   
 
     int smallestDistancePair(vector<int>& nums, int k) {
 
        sort(nums.begin(),nums.end());
 
-       vector<int>v;
        int n=nums.size();
 
+       int diff = nums[n-1] - nums[0];
+
+       int m = n*(n-1)/2;
+
+        vector<int>v(diff+1,0);
+
        for(int i=0;i<n;i++)
-       {
+       { 
+
         for(int j=i+1;j<n;j++)
-        {
-            v.push_back(abs(nums[j]-nums[i]));
+        {  
+            int d = abs(nums[j]-nums[i]);
+
+             v[d]++;
         }
+
        }
 
-       nth_element(v.begin(),v.begin()+k-1,v.end());
 
-       return v[k-1];
+       for(int i=0;i<v.size();i++)
+       {
+         k-=v[i];
+
+         if(k<=0)
+         {
+            return i;
+         }
+       }
+
+       return -1;
+
+
+
+
+
+
+
+
+
+
+
+
+
+       
 
        
     }
