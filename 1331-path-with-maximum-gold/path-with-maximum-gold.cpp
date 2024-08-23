@@ -1,37 +1,41 @@
 class Solution {
-public:
-    vector<int> roww = {1, -1, 0, 0};
-    vector<int> coll = {0, 0, -1, 1};
-    int maxGold = 0;
-
-    int dfs(vector<vector<int>>& grid, int x, int y, int n, int m) {
-        if (x < 0 || x >= n || y < 0 || y >= m || grid[x][y] == 0) return 0;
-        
-        int curr = grid[x][y];
-        grid[x][y] = 0;
-        int localMaxGold = curr;
-
-        for (int i = 0; i < 4; i++) {
-            int newX = x + roww[i];
-            int newY = y + coll[i];
-            localMaxGold = max(localMaxGold, curr + dfs(grid, newX, newY, n, m));
+private:
+    int solve(vector<vector<int>>& grid, int n, int m, int i, int j, vector<vector<int>>& vis) {
+        if (i >= n || j >= m || i < 0 || j < 0 || grid[i][j] == 0 || vis[i][j] == 1) {
+            return 0;
         }
 
-        grid[x][y] = curr;
-        return localMaxGold;
+        // Include the gold in the current cell
+        int currentGold = grid[i][j];
+        vis[i][j] = 1;  // Mark the current cell as visited
+
+        // Explore all four directions
+        int right = currentGold+solve(grid, n, m, i, j + 1, vis);
+        int left = currentGold+solve(grid, n, m, i, j - 1, vis);
+        int down = currentGold+solve(grid, n, m, i + 1, j, vis);
+        int up = currentGold+solve(grid, n, m, i - 1, j, vis);
+
+        // Backtrack by unmarking the cell
+        vis[i][j] = 0;
+
+        // Return the maximum gold collected from any direction, including the current cell
+        return   max({right, left, down, up});
     }
 
+public:
     int getMaximumGold(vector<vector<int>>& grid) {
         int n = grid.size(), m = grid[0].size();
+        vector<vector<int>> vis(n, vector<int>(m, 0));
+        int ans = 0;
 
         for (int i = 0; i < n; i++) {
             for (int j = 0; j < m; j++) {
                 if (grid[i][j] != 0) {
-                    maxGold = max(maxGold, dfs(grid, i, j, n, m));
+                    ans = max(solve(grid, n, m, i, j, vis), ans);
                 }
             }
         }
 
-        return maxGold;
+        return ans;
     }
 };
