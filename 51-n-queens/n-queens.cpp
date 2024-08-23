@@ -8,17 +8,25 @@ private:
             }
         }
         // Check main diagonal (upper left diagonal)
-        for (int i = row1 - 1, j = col1 - 1; i >= 0 && j >= 0; i--, j--) {
-            if (board[i][j] == 'Q') {
+        int x=row1,y=col1;
+        while (x<n && y<n && x>=0 && y>=0) {
+            if (board[x][y] == 'Q') {
                 return false;
             }
+
+            x--;
+            y++;
         }
         // Check anti-diagonal (upper right diagonal)
-        for (int i = row1 - 1, j = col1 + 1; i >= 0 && j < n; i--, j++) {
-            if (board[i][j] == 'Q') {
+        x= row1,y=col1;
+        while (x>=0 && y>=0 && x<n && y<n) {
+            if (board[x][y] == 'Q') {
                 return false;
             }
+            x--;
+            y--;
         }
+        
         return true;
     }
 
