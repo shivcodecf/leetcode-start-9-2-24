@@ -1,44 +1,42 @@
 class Solution {
 public:
-
-    //DFS
-    bool checkSubIsland(vector<vector<int>>& grid1, vector<vector<int>>& grid2, int i, int j) {
-        if(i < 0 || i >= grid1.size() || j < 0 || j >= grid1[0].size()) {
-            return true;
+    bool island = false;
+    void dfs(int i, int j, vector<vector<int>>& grid1, vector<vector<int>>& grid2, int n, int m){
+        if(grid1[i][j] != grid2[i][j]){
+            island = false;
         }
-        
-        if(grid2[i][j] != 1) { //we only need land
-            return true;
+        grid2[i][j] = 0;
+
+        grid1[i][j] = 0;
+        int a[] = {0, 0, 1, -1};
+        int b[] = {1, -1, 0, 0};
+        // traverse in all directions
+        for(int k=0; k<4; k++){
+            int x = i+a[k];
+            int y = j+b[k];
+            if(x >=0 && x< n && y>=0 && y<m && grid2[x][y] == 1 ){
+                dfs(x, y, grid1, grid2, n, m);
+                
+            }
         }
-
-        grid2[i][j] = -1; //mark visited
-
-        bool result = (grid1[i][j] == 1); //grid1[i][j] must have 1
-
-        result = result & checkSubIsland(grid1, grid2, i+1, j); //Down
-        result = result & checkSubIsland(grid1, grid2, i-1, j); //Up
-        result = result & checkSubIsland(grid1, grid2, i, j+1);  //Right
-        result = result & checkSubIsland(grid1, grid2, i, j-1); //Left
-
-        return result;
-
     }
-
     int countSubIslands(vector<vector<int>>& grid1, vector<vector<int>>& grid2) {
-        //DFS
-        int subIslands = 0;
-        int m = grid2.size(); //rows
-        int n = grid2[0].size(); //cols
-
-        for(int i = 0; i < m; i++) {
-            for(int j = 0; j < n; j++) {
-                if(grid2[i][j] == 1 && checkSubIsland(grid1, grid2, i, j)) { //Found an island
-                    subIslands++;
+        int count = 0;
+        int n = grid2.size();
+        int m = grid2[0].size();
+        for(int i=0; i<n; i++){
+            for(int j=0; j<m; j++){
+                if(grid2[i][j] == 1){
+                    // assuming it is a subisland
+                    island = true;
+                    
+                    dfs(i, j, grid1, grid2, n, m);
+                    // if dfs does not mark island false then increment count
+                    if(island) count++;
+                    
                 }
             }
         }
-
-        return subIslands;
+        return count;
     }
 };
-
