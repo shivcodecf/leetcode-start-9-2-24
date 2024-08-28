@@ -3,9 +3,9 @@ public:
     bool island = true;
 
     bool dfs(int i, int j, vector<vector<int>>& grid1, vector<vector<int>>& grid2, int n, int m) {
-        if (i < 0 || j < 0 || i >= n || j >= m) {
-            return true;
-        }
+        if(i<0 || j<0 || i>=n || j>=m)
+
+        return true;
 
         if (grid2[i][j] != 1) {
             return true;
@@ -25,9 +25,9 @@ public:
             int x = i + a[k];
             int y = j + b[k];
 
-            if (x >= 0 && y >= 0 && x < n && y < m) {
-                dfs(x, y, grid1, grid2, n, m);
-            }
+           
+            dfs(x, y, grid1, grid2, n, m);
+            
         }
 
         return island;
@@ -42,7 +42,7 @@ public:
             for (int j = 0; j < m; j++) {
                 if (grid2[i][j] == 1 && grid1[i][j] == 1) {
                     island = true;
-                    if (dfs(i, j, grid1, grid2, n, m)) {
+                    if (dfs(i, j, grid1, grid2, n, m) && island) {
                         count++;
                     }
                 }
