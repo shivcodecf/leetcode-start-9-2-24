@@ -8,6 +8,7 @@ public:
         grid2[i][j] = 0;
 
         grid1[i][j] = 0;
+
         int a[] = {0, 0, 1, -1};
         int b[] = {1, -1, 0, 0};
         // traverse in all directions
@@ -26,10 +27,10 @@ public:
         int m = grid2[0].size();
         for(int i=0; i<n; i++){
             for(int j=0; j<m; j++){
-                if(grid2[i][j] == 1){
+                if(grid2[i][j] == 1 && grid1[i][j]==1){
                     // assuming it is a subisland
                     island = true;
-                    
+
                     dfs(i, j, grid1, grid2, n, m);
                     // if dfs does not mark island false then increment count
                     if(island) count++;
