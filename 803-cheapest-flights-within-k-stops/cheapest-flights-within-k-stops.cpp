@@ -1,53 +1,64 @@
 class Solution {
 public:
     int findCheapestPrice(int n, vector<vector<int>>& flights, int src, int dst, int k) {
-        vector<int> dis(n, 1e9); // Initialize distances to a large value
+        
+        vector<int>dis(n,1e9);
 
-        // Adjacency list for the graph
-        map<int, vector<pair<int, int>>> mp;
+        map<int,vector<pair<int,int>>>mp;
 
-        // Build the graph from the flights data
-        for(int i = 0; i < flights.size(); i++) {
-            mp[flights[i][0]].push_back({flights[i][1], flights[i][2]});
+        for(int i=0;i<flights.size();i++)
+        {
+           mp[flights[i][0]].push_back({flights[i][1],flights[i][2]});
         }
 
-        // Priority queue: {stops, {current city, cost to reach that city}}
         priority_queue<
-            pair<int, pair<int, int>>, 
-            vector<pair<int, pair<int, int>>>, 
-            greater<pair<int, pair<int, int>>>
-        > pq;
+        pair<int, pair<int, int>>,            // Type of elements in the priority queue
+        vector<pair<int, pair<int, int>>>, // Underlying container (vector)
+        greater<pair<int, pair<int, int>>>  // Comparison function (greater for min-heap)
+    > pq;
 
-        // Start from the source city with 0 cost and 0 stops
-        pq.push({0, {src, 0}});
-        dis[src] = 0;
+    pq.push({0,{src,0}});
 
-        while(!pq.empty()) {
-            auto it = pq.top();
-            pq.pop();
+    dis[src] = 0;
 
-            int stops = it.first;
-            int city = it.second.first;
-            int cost = it.second.second;
+    
 
-            // If we've made more than k stops, skip this path
-            if (stops > k) continue;
+    while(!pq.empty())
+    {
+        auto it = pq.top();
 
-            // Explore the neighbors of the current city
-            for(auto neighbor : mp[city]) {    
-                int nextCity = neighbor.first;
-                int flightCost = neighbor.second;
-                int newCost = cost + flightCost;
+        pq.pop();
 
-                // If the new cost is less than the known distance, update and push to the queue
-                if (newCost < dis[nextCity]) {
-                    dis[nextCity] = newCost;
-                    pq.push({stops + 1, {nextCity, newCost}});
-                }
-            }
+        int x = it.first;
+
+        int y = it.second.first;
+
+        int z = it.second.second;
+
+        if(x>k) continue;
+
+        for(auto it1:mp[y])
+        {    
+              int val  = it1.first;
+              int cost = it1.second;
+
+              int sum = z + cost;
+
+              if(sum<dis[val] )
+              {
+                 dis[val] = sum;
+                 pq.push({x+1,{val,sum}});
+              }
         }
 
-        // If the destination is unreachable, return -1
-        return dis[dst] == 1e9 ? -1 : dis[dst];
     }
-};
+
+
+    if(dis[dst]==1e9) return -1;
+
+    return  dis[dst];
+
+
+
+    }
+};  
