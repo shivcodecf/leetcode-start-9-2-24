@@ -11,7 +11,8 @@ public:
 
         for(int i=0;i<n;i++)
         {
-           sum+=(chalk[i])%1000000007;;
+           sum+=(chalk[i])%1000000007;
+          
 
            
 
