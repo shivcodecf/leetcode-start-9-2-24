@@ -28,12 +28,12 @@ public:
           {  
 
 
-            ll x =  (health[i]/power);
+            ll x =  ((health[i]+power-1)/power);
 
-            if(health[i]%power)
-            {
-                x++;
-            }
+            // if(health[i]%power)
+            // {
+            //     x++;
+            // }
 
 
            
