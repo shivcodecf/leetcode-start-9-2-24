@@ -6,12 +6,17 @@ public:
            
 
         auto custom = [](const pair<ll,ll>& a, const pair<ll,ll>& b)
-        {
-             double x = double(a.second)/double(a.first);
+        { 
 
-             double y = double(b.second)/double(b.first);
+            double x = static_cast<double>(a.second) / static_cast<double>(a.first);
+
+
+
+             double y = static_cast<double>(b.second) / static_cast<double>(b.first);
+
 
              return x>y;
+
         };
 
 
