@@ -28,15 +28,16 @@ public:
             ans += grid[r2][c2];
         }
         
-        int temp= max(func(r1+1 , c1 , r2+1 , n , grid) , func(r1 , c1+1 , r2 , n , grid));
-        temp = max(temp , func(r1+1 , c1 , r2 , n, grid));
-        temp = max(temp , func(r1 , c1+1 , r2+1 , n , grid));
+        int t1= func(r1+1 , c1 , r2+1 , n , grid);
+        int t2=  func(r1 , c1+1 , r2 , n , grid);
+        int t3 =  func(r1+1 , c1 , r2 , n, grid);
+        int t4 = func(r1 , c1+1 , r2+1 , n , grid);
         
-        ans+=temp;
+        ans+=max({t1,t2,t3,t4});
         
         return dp[r1][c1][r2]=ans;
 
-        
+
     }
 
 
