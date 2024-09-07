@@ -12,16 +12,16 @@ class Solution {
 
           if(dp[x1][y1][y2]!=-1) return dp[x1][y1][y2];
 
-        //   if(x1==n-1){
+          if(x1==n-1){
 
-        //     if( y1==y2)
-        //     {
-        //         return grid[x1][y1];
-        //     }
+            if( y1==y2)
+            {
+                return grid[x1][y1];
+            }
 
-        //     return grid[x1][y1] + grid[x1][y2];
+            return grid[x1][y1] + grid[x1][y2];
 
-        //   } 
+          } 
          
           int ans = 0;
  
