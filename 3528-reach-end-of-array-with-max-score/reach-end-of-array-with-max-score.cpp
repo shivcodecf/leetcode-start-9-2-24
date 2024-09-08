@@ -5,17 +5,26 @@ public:
          
          int n=nums.size();
 
+
          long long maxi = nums[0],ind=0,ans=0;
 
-         for(int i=1;i<n;i++)
-         {
+
+         for(int i=1;i<n-1;i++)
+         {  
+
             if(nums[i]>maxi)
-            {
+            { 
+
                 maxi=nums[i];
                 ans+=(i-ind)*nums[ind];
                 ind=i;
+
+
             }
+
+
          }
+
 
          ans+=nums[ind]*((n-1)-ind);
 
