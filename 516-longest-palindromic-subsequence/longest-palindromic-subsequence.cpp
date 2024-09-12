@@ -1,37 +1,41 @@
+int dp[1001][1001];
+
 class Solution {
-public:
-    // Recursive function to find the longest palindromic subsequence
-    int solve(string& s, int i, int j, vector<vector<int>>& dp) {
-        // Base cases
-        if (i > j) return 0; // If i crosses j, no valid subsequence exists
-        if (i == j) return 1; // A single character is a palindrome of length 1
+private:
+    int solve(string& text1,string& text2,int i,int j)
+    {  
 
-        // If the result is already calculated, return it
-        if (dp[i][j] != -1) return dp[i][j];
+        if(i==text1.length() || j==text2.length()) return 0;
 
-        // Case 1: If the characters at i and j are the same, include them
-        if (s[i] == s[j]) {
+        int ans=0,ans1=0,ans2=0;
 
-            dp[i][j] = 2 + solve(s, i + 1, j - 1, dp);
-            
+         if(dp[i][j]!=-1) return dp[i][j];
+
+        if(text1[i]==text2[j]) 
+        { 
+
+            ans = 1+solve(text1,text2,i+1,j+1);
+
+
+        }else
+        { 
+
+            ans1 = solve(text1,text2,i+1,j),
+
+            ans2= solve(text1,text2,i,j+1);
+
         }
-        // Case 2: If they are different, take the maximum by either:
-        //  - excluding the first character (i+1)
-        //  - excluding the last character (j-1)
-        else {
 
-            dp[i][j] = max(solve(s, i + 1, j, dp), solve(s, i, j - 1, dp));
+        return  dp[i][j] = max({ans,ans1,ans2});
 
-        }
-
-        return dp[i][j];
     }
 
+public:
     int longestPalindromeSubseq(string s) {
-        int n = s.size();
-        // Create a DP table initialized with -1
-        vector<vector<int>> dp(n, vector<int>(n, -1));
-        // Call the recursive function
-        return solve(s, 0, n - 1, dp);
+         memset(dp,-1,sizeof(dp));
+         string revstr=s;
+         reverse(revstr.begin(),revstr.end());
+         return solve(s,revstr,0,0);
+
     }
 };
