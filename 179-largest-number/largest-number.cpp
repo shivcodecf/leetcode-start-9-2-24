@@ -4,17 +4,27 @@ public:
 
         // Custom comparator for sorting numbers based on concatenated results
         auto custom = [](int const& a, int const& b) {  
+
+
             string s1 = to_string(a);
             string s2 = to_string(b);
 
             // Compare concatenated strings
 
-            if(s1[0]==s2[0])
+            string s3 = s1+s2;
+            string s4 = s2+s1;
+
+            if(s3[0]==s4[0])
             {
-                return s1+s2 > s2+s1;
+               
+                    return s3>s4;
+              
             }
 
+
             return s1[0]>s2[0];
+
+
           
         };
 
