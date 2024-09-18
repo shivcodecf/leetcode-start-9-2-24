@@ -8,7 +8,14 @@ public:
             string s2 = to_string(b);
 
             // Compare concatenated strings
-            return s1+s2 > s2+s1;
+
+            if(s1[0]==s2[0])
+            {
+                return s1+s2 > s2+s1;
+            }
+
+            return s1[0]>s2[0];
+          
         };
 
         // Sort the numbers using the custom comparator
