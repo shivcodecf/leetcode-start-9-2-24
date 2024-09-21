@@ -14,14 +14,20 @@ public:
 
         // Build the LPS array for the combined string
         for (int i = 1; i < combined.size(); i++) {
-            int j = lps[i - 1];
+
+
+            int j = lps[i-1];
+
             while (j > 0 && combined[i] != combined[j]) {
                 j = lps[j - 1];
             }
-            if (combined[i] == combined[j]) {
+           
                 j++;
-            }
+            
+
             lps[i] = j;
+
+
         }
 
         // lps.back() gives us the length of the longest palindrome prefix
