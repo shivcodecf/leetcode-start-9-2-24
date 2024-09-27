@@ -31,17 +31,28 @@ public:
     }
 
     int getScore(string& word, trieNode* root) {
-        trieNode* crawl = root; //"abc"
+
+        trieNode* node = root;
+
         int score = 0;
 
-        for(char &ch : word) {
-            int idx = ch - 'a';
-            score += crawl->children[idx]->countP;
+        for(char ch : word)
+        {
+            int x = ch -'a';
 
-            crawl = crawl->children[idx]; // now i am at "b" wala node
+            score+=node->children[x]->countP;
+
+            node = node->children[x];
+
+
         }
 
+
         return score;
+
+
+
+      
     }
 
     vector<int> sumPrefixScores(vector<string>& words) {
