@@ -43,10 +43,12 @@ public:
                     node->child[val] = getTrieNode();  // Create new node if it doesn't exist
                 }
 
+                ans += node->child[val]->cnt;  
+
                 node = node->child[val];  // Move to the next node
                 
                 // Accumulate the count of existing prefix-suffix pairs at the current node
-                ans += node->cnt;  
+                
             }
 
             // Increment the count for the current word at the end of insertion
