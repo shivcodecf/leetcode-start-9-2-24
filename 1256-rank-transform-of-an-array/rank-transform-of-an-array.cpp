@@ -27,7 +27,7 @@ public:
 
         if(mp1.find(ans[i].first)!=mp1.end())
         {
-            mp[ans[i].first] = mp[ans[i].first];
+            mp[ans[i].first] = cnt-1;
         }
         else {
             mp[ans[i].first] = cnt;
