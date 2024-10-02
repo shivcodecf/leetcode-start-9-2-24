@@ -10,16 +10,28 @@
  * };
  */
 class Solution {
+
+         int ans=0;
+        
+         int solve(TreeNode* root)
+        {    
+            if(root==NULL)
+            {
+                return NULL;
+            }
+
+             int x = 1+solve(root->left);
+
+             int y = 1+solve(root->right);
+
+             return max(x,y);
+
+        }
+
 public:
     int maxDepth(TreeNode* root) {
 
-       if(!root)
-       {
-           return 0;
-       }  
-       int l= maxDepth(root->left);
-       int r=maxDepth(root->right);
-       return max(l,r)+1; 
+       return solve(root);
 
     }
 };
