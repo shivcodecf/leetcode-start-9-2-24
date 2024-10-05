@@ -5,20 +5,24 @@ public:
     
     
     bool match(TreeNode* root, TreeNode* subRoot){
+
         
-        if(root!=NULL && subRoot!=NULL){
+        if(root!=NULL && subRoot!=NULL && root->val == subRoot->val){
+
             bool a = match(root->left, subRoot->left);
             bool b = match(root->right, subRoot->right);
             
-            if( (root->val == subRoot->val) && a && b ){
+            if( a && b ){
                 return true;
             }else
                 return false;
         }
+
         else if(root==NULL && subRoot==NULL)
             return true;
         else
             return false;
+
     }
     
     
