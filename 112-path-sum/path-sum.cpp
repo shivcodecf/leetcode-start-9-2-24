@@ -17,7 +17,7 @@ public:
         }
 
         // Recursively check the left and right subtree
-        return (root->left && hasPathSum(root->left, targetSum)) ||
-               (root->right && hasPathSum(root->right, targetSum));
+        return ( hasPathSum(root->left, targetSum)) ||
+               ( hasPathSum(root->right, targetSum));
     }
 };
