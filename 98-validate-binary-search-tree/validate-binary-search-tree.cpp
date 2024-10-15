@@ -10,24 +10,28 @@
  * };
  */
 class Solution {
-public: 
- vector<int> res;
-    void inor(TreeNode* p)
-    {
-        if (!p) return;
-        inor(p->left);
-        res.push_back(p->val);
-        inor(p->right);
+void solve(TreeNode* root, vector<int>&v)
+    { 
+      
+      if(root==nullptr) return ;
+
+    solve(root->left, v);
+    v.push_back(root->val);
+    solve(root->right, v);
+return ;
+
     }
+
+public:
     bool isValidBST(TreeNode* root) {
-        
-          inor(root);
-        
-        for(int i=1;i<res.size();i++)
+        vector<int>v;
+        solve(root,v);
+        for(int i=0;i<v.size()-1;i++)
         {
-            if(res[i]<=res[i-1])
+            if(v[i]>=v[i+1])
             {
                 return false;
+                
             }
         }
         return true;
