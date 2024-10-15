@@ -17,9 +17,11 @@ class Solution {
    {
     if(root==nullptr) return;
 
+    v.push_back(root->val);
+
     solve(root->left,v);
 
-    v.push_back(root->val);
+    
 
     solve(root->right,v);
     
