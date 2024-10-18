@@ -2,6 +2,7 @@ class Solution {
 public:
  
     int solve(int i, int ors, int maxi, vector<int>& nums) {
+        
         if(i >= nums.size()){
          
             return (ors == maxi) ? 1 : 0;
