@@ -1,34 +1,6 @@
 class Solution {
    
-   #include <iostream>
-#include <vector>
-#include <algorithm>
-
-// Recursive function to calculate LIS ending at index i
-int lis(int i, const std::vector<int>& nums) {
-    if (i == 0) return 1; // Base case: LIS at the first element is itself
-
-    int max_len = 1; // At least the current element is counted as a subsequence
-    for (int j = 0; j < i; ++j) {
-        if (nums[j] < nums[i]) {
-            max_len = std::max(max_len, 1 + lis(j, nums));
-        }
-    }
-    return max_len;
-}
-
-// Recursive function to calculate LDS starting at index i
-int lds(int i, const std::vector<int>& nums) {
-    if (i == nums.size() - 1) return 1; // Base case: LDS at the last element is itself
-
-    int max_len = 1; // At least the current element is counted as a subsequence
-    for (int j = i + 1; j < nums.size(); ++j) {
-        if (nums[j] < nums[i]) {
-            max_len = std::max(max_len, 1 + lds(j, nums));
-        }
-    }
-    return max_len;
-}
+ 
 
 
 
