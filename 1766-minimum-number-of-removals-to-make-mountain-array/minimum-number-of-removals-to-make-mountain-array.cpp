@@ -20,7 +20,7 @@ public:
 
     // Calculate LDS starting from each index
     for (int i = n - 1; i >= 0; --i) {
-        for (int j = i + 1; j < n; ++j) {
+        for (int j = n-1; j >i; j--) {
             if (nums[j] < nums[i]) {
                 lds[i] = std::max(lds[i], lds[j] + 1);
             }
