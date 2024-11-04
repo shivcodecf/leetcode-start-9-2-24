@@ -1,26 +1,46 @@
-#include<bits/stdc++.h>
-using namespace std;
-
 class Solution {
 public:
-   string compressedString(string word) {
-    string ans = "";
-    int n = word.size();
-    
-    for (int i = 0; i < n;) { 
-        char currentChar = word[i];
-        int count = 0;
-        
-        // Count occurrences of the current character
-        while (i < n && word[i] == currentChar && count < 9) {
-            count++;
-            i++;
-        }
-        
-        // Append the count and character to the result string
-        ans += to_string(count) + currentChar;
-    }
+    string compressedString(string word) {
 
-    return ans;
-}
+        string ans = "";
+
+        map<char,int>mp;
+
+        int c = 0;
+
+       for(int i=0;i<word.size()-1;i++)
+       {
+         
+        if(word[i]==word[i+1] && c<8)
+        { 
+
+          c++;
+
+        }
+        else {
+            c++;
+            ans+=c+'0';
+            ans+=word[i];
+            c=0;  
+        }
+
+          
+       }
+
+       c++;
+
+       ans+=c+'0';
+
+       int n=word.size();
+
+       ans+=word[n-1];
+
+
+       return ans;
+
+
+
+
+
+    }
 };
