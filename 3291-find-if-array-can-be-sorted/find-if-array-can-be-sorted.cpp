@@ -28,10 +28,7 @@ public:
                 }
             }
 
-            if(!flag)
-            {
-                return true;
-            }
+         
         }
 
         return true;
