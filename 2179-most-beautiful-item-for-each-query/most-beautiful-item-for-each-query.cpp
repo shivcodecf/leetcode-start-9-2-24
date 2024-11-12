@@ -4,14 +4,14 @@ public:
 
 
 
-        auto comparator = [](const pair<int,int>& a,pair<int,int>& b)
-        {
-            if(a.first==b.first)
-            {
-                return a.second < b.second;
-            }
-            return a.first < b.first;
-        };
+        // auto comparator = [](const pair<int,int>& a,pair<int,int>& b)
+        // {
+        //     if(a.first==b.first)
+        //     {
+        //         return a.second < b.second;
+        //     }
+        //     return a.first < b.first;
+        // };
         
      vector<pair<int,int>>v;
 
@@ -20,7 +20,7 @@ public:
         v.push_back({items[i][0],items[i][1]});
      }
 
-     sort(v.begin(),v.end(),comparator);
+     sort(v.begin(),v.end());
 
      vector<pair<int,pair<int,int>>>v1;
 
