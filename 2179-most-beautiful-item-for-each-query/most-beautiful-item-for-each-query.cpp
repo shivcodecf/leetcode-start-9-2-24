@@ -24,6 +24,7 @@ public:
 
         std::vector<int> ans;
         for (const int query : queries) {
+
             // Use upper_bound to find the first element with price > query
             auto it = std::upper_bound(maxBeautyByPrice.begin(), maxBeautyByPrice.end(), std::make_pair(query, INT_MAX));
 
@@ -33,6 +34,7 @@ public:
                 --it;  // Go to the last affordable item within budget
                 ans.push_back(it->second);
             }
+            
         }
 
         return ans;
