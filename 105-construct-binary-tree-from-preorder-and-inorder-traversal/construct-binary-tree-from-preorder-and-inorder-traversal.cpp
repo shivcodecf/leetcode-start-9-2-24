@@ -12,13 +12,20 @@
 class Solution {
 
     int search(vector<int>& inorder, int start, int end, int curr)
-    {
+    { 
+        
         for(int i = start; i <= end; i++) {
+
             if(inorder[i] == curr) {
+
                 return i;
+                
             }
+
         }
+
         return -1;
+
     }
 
     TreeNode* solve(vector<int>& preorder, vector<int>& inorder, int start, int end, int &idx)
@@ -41,6 +48,7 @@ class Solution {
 
         // Recursively build the left and right subtrees
         node->left = solve(preorder, inorder, start, pos - 1, idx);
+        
         node->right = solve(preorder, inorder, pos + 1, end, idx);
 
         return node;
@@ -50,9 +58,12 @@ public:
     TreeNode* buildTree(vector<int>& preorder, vector<int>& inorder) {
         
         int idx = 0;  // Preorder index starts at 0
+
         int n = inorder.size();
         
         // Build the tree using the preorder and inorder traversal arrays
+
         return solve(preorder, inorder, 0, n - 1, idx);
+
     }
 };
