@@ -15,13 +15,13 @@ public:
         
         int n = s.size();
 
-        vector<vector<int>> prefix(3, vector<int>(n + 1, 0));
+        vector<vector<int>> prefix(n+1, vector<int>(3, 0));
         
         for (int i = 0; i < n; i++) {
 
             for (int j = 0; j < 3; j++) {
 
-                prefix[j][i + 1] = prefix[j][i] + (s[i] - 'a' == j ? 1 : 0);
+                prefix[i+1][j] = prefix[i][j] + (s[i] - 'a' == j ? 1 : 0);
 
             }
 
@@ -42,7 +42,7 @@ public:
                 for (int i = 0; i < 3; i++) {
 
 
-                    int count = prefix[i][left] + (prefix[i][n] - prefix[i][rightStart]);
+                    int count = prefix[left][i] + (prefix[n][i] - prefix[rightStart][i]);
 
 
                     if (count < k) {
@@ -78,7 +78,7 @@ public:
             } else {
 
                 left = mid + 1;
-                
+
             }
 
         }
