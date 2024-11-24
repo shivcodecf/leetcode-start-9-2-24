@@ -13,6 +13,10 @@ class Solution {
 
         int res = INT_MAX;
 
+         int skip = nums[ind] + solve(n, nums, k, op1, op2, ind + 1);
+        // res = min(res, nums[ind] + solve(n, nums, k, op1, op2, ind + 1));
+        res = min(res,skip);
+
         // Option 1: Apply `op1` (divide by 2 and round up)
         if (op1 >= 1) {
             int newVal = (nums[ind] + 1) / 2;
@@ -44,17 +48,21 @@ class Solution {
 
         // Option 4: Skip current element
 
-        int skip = nums[ind] + solve(n, nums, k, op1, op2, ind + 1);
-        // res = min(res, nums[ind] + solve(n, nums, k, op1, op2, ind + 1));
-        res = min(res,skip);
+        // int skip = nums[ind] + solve(n, nums, k, op1, op2, ind + 1);
+        // // res = min(res, nums[ind] + solve(n, nums, k, op1, op2, ind + 1));
+        // res = min(res,skip);
 
         return dp[op1][op2][ind]= res;
     }
 
 public:
     int minArraySum(vector<int>& nums, int k, int op1, int op2) {
+
         memset(dp,-1,sizeof(dp));
+
         int n = nums.size();
+
         return solve(n, nums, k, op1, op2, 0);
+
     }
 };
