@@ -13,6 +13,11 @@ public:
         //Space : O(6!)
         string target = "123450";
 
+        if(target==start)
+        {
+            return 0;
+        }
+
         queue<string> que;
         que.push(start);
         unordered_map<int, vector<int>> mp;
@@ -31,7 +36,9 @@ public:
         while(!que.empty()) {
             int n = que.size();
 
-            //Processing all elements at current level
+            
+             
+
             while(n--) {
                 string curr = que.front();
                 que.pop();
@@ -45,15 +52,25 @@ public:
                 for(int swapIdx : mp[indexOfZero]) {
 
                     string newState = curr;
+
                     swap(newState[indexOfZero], newState[swapIdx]);
+
                     if(visited.find(newState) == visited.end()) {
+
                         que.push(newState);
+
                         visited.insert(newState);
+
                     }
-                    
+
                 }
             }
-            level++;
+
+             level++;
+            
+
+            
+           
         }
 
         return -1;
