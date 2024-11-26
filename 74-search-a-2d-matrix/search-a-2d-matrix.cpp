@@ -1,29 +1,21 @@
 class Solution {
 public:
     bool searchMatrix(vector<vector<int>>& matrix, int target) {
-        int n=matrix.size(),m=matrix[0].size();
-
-
-       int i=0,j=m-1;
-
-       while(i<n && j>=0)
-       { 
-
-        if(matrix[i][j]==target)
-        {
-            return true;
+        int row = matrix.size();
+        int col = matrix[0].size();
+        int left = 0, right = row*col - 1, mid = -1, value;
+        while (left <= right) {
+            mid = left + (right-left)/2;
+            value = matrix[mid/col][mid%col];
+            cout << "Value: " << value << endl;
+            if (value == target) {
+                return true;
+            } else if (target < value) {
+                right = mid-1;
+            } else { // target > value
+                left = mid + 1;
+            }
         }
-        else if(target>matrix[i][j])
-        {
-           i++;
-        }
-        else {
-            j--;
-        }
-        
-
-       }
-
-       return false;
+        return false;
     }
 };
