@@ -21,14 +21,14 @@ public:
                     ans.push_back({nums[i], nums[left], nums[right]});
 
                     // Skip duplicates for the second number
-                    while (left < right && nums[left] == nums[left + 1]) left++;
+                    while (left+1 < right && nums[left] == nums[left + 1]) left++;
                     // Skip duplicates for the third number
-                    while (left < right && nums[right] == nums[right - 1]) right--;
+                    while (left < right-1 && nums[right] == nums[right - 1]) right--;
 
                     // Move pointers
                     left++;
                     right--;
-                    
+
                 } else if (sum < target) {
                     left++;
                 } else {
