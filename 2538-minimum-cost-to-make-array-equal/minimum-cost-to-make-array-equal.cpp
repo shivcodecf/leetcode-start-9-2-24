@@ -1,66 +1,44 @@
-
-#define ll long long
-
-class Solution { 
-
-   ll solve(vector<int>& nums, vector<int>& cost,ll mid)
-   { 
-
-    ll sum=0;
-
-    for(int i=0;i<nums.size();i++)
-    {
-       sum+=abs(mid-nums[i])*cost[i];
-    }
-
-    return sum;
-
-   }
-
-
+class Solution {
 public:
+    
+    long long find_cost(vector<int>& nums, vector<int>& cost, int ele)
+    {
+        long long ans = 0;
+        for(int i = 0; i < nums.size(); i++)
+        {
+            long long a = abs(nums[i] - ele);
+            ans = ans + (a * cost[i]);
+        }
+            
+        return ans;
+    }
+    
     long long minCost(vector<int>& nums, vector<int>& cost) {
         
-    //  sort(nums.begin(),nums.end());
-
-     int n= nums.size();
-
-     int low = *min_element(nums.begin(),nums.end());
-
-      int high = *max_element(nums.begin(),nums.end());
-
-     ll ans=INT_MAX;
-
-     while(low<=high)
-     {
-        int mid = low+(high-low)/2;
-
-        ll cost1 = solve(nums,cost,mid);
-
-        ll cost2 = solve(nums,cost,mid+1);
-
-         ans = min(cost2,cost1);
-
-        if(cost1<cost2)
+        int minele = INT_MAX, mxele = INT_MIN;
+        for(auto i:nums)
         {
-          high = mid-1;
-         
+            minele = min(minele, i);
+            mxele = max(mxele, i);
         }
-        else {
-            // ans = min(ans,cost2);
-            low = mid+1;
+        long long ans = LLONG_MAX;
+        while(minele <= mxele)
+        {
+            int mid = minele + (mxele - minele) / 2;
+            long long temp = find_cost(nums, cost, mid);
+            ans = min(ans, temp);
+            long long r = find_cost(nums, cost, mid+1);
+            long long l = find_cost(nums, cost, mid-1);
+            // If mid is less than both it's immediate neighbours than it is the answer.
+            if(temp < l && temp < r)
+                return ans;
+			// Shifting mid corresponding to the smallest possible answer.
+            else if(temp < l && temp > r) // 
+                minele = mid+1;
+            else
+                mxele = mid-1;
+            
         }
-
-        
-
-        
-
-
-     }
-
-     return ans;
-
-
-
+        return ans;
     }
 };
