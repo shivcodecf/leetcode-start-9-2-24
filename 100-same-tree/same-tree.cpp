@@ -10,47 +10,41 @@
  * };
  */
 class Solution {
-
-    vector<int>v;
-
-    bool solve(TreeNode* root1,TreeNode* root2)
-    {   
-          
-          if(root1==NULL && root2==NULL)return true;
-         if(root1==NULL && root2!=NULL ) return false;
-
-         if(root1!=NULL && root2==NULL ) return false;
+      
+      bool solve(TreeNode* p, TreeNode* q)
+      {    
 
 
-        if(root1->val!=root2->val) return false;
+        if(p==nullptr && q==nullptr)
+        {
+            return true;
+        }
+
+        if(p==nullptr || q==nullptr)
+        {
+            return false;
+        }
+        
+        if(p->val!=q->val)
+        {
+            return false;
+        }
+
 
         
+        return  (solve(p->left,q->left) & solve(p->right,q->right));
 
-         return solve(root1->left,root2->left)&&solve(root1->right,root2->right);
-
-         
+     
 
       
 
-        //  return true;
 
-
-
-        
-    }
-
-
-   
-
+      }
 
 public:
     bool isSameTree(TreeNode* p, TreeNode* q) {
         
-         return  solve(p,q);
-
-      
-
-        
+        return solve(p,q);
 
     }
 };
