@@ -13,8 +13,9 @@ public:
         int count = (length >= low && length <= high) ? 1 : 0;
 
         // Recursive calls for extending the string with '0's and '1's
-        count = (count + solve(length + zero, low, high, zero, one, memo)) % MOD;
-        count = (count + solve(length + one, low, high, zero, one, memo)) % MOD;
+        count +=  solve(length + zero, low, high, zero, one, memo) % MOD;
+        count += solve(length + one, low, high, zero, one, memo) % MOD;
+        count = count%MOD;
 
         // Store the result in the memoization table
         return memo[length] = count;
