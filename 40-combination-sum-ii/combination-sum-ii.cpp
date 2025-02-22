@@ -26,20 +26,16 @@ class Solution {
            
             
                ans.push_back(v);
-            
-
-            
-         
+    
         }
-
-         return;
+        return;
       } 
 
       for(int i=ind;i<n;i++)
       { 
-            if( candidates[i] > target ) break;
+           
 
-          if( i>ind && candidates[i-1] ==  candidates[i]  && i>0) continue;
+          if( i>ind && candidates[i-1] ==  candidates[i] && i>0 ) continue;
 
         
          v.push_back( candidates[i]);
