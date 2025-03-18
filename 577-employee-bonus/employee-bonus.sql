@@ -1,24 +1,27 @@
 # Write your MySQL query statement below
-select e.name,b.bonus from Employee e
+select e.name, b.bonus 
 
-LEFT JOIN
+from  Employee e 
+
+left join 
 
 Bonus b
 
-ON
+on e.empId = b.empId
 
-e.empId = b.empId 
+where 
 
-
-
-
-
-where
-
-b.bonus<1000 
+b.bonus<1000
 
 OR
 
-b.empId is NULL;
+b.empId is null;
+
+
+
+
+
+
+
 
 
