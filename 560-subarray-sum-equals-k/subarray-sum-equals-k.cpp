@@ -1,46 +1,23 @@
 class Solution {
 public:
     int subarraySum(vector<int>& nums, int k) {
-        
-       map<int,int>mp;
+        unordered_map<int, int> mp;
+        int prefixSum = 0, ans = 0;
 
-       int n = nums.size();
+        mp[0] = 1; // Edge case for when prefixSum itself is k
 
-       vector<int>pref(n);
+        for (int num : nums) {
+            
+            prefixSum += num;
+            int check = prefixSum - k;
 
-       pref[0] = nums[0];
+            if (mp.find(check) != mp.end()) {
+                ans += mp[check]; // Add all previous occurrences
+            }
 
-       for(int i=1;i<n;i++)
-       {
-        pref[i] = pref[i-1]+nums[i];
-       }
-
-       int ans=0;
-
-       for(int i=0;i<nums.size();i++)
-       {
-        
-
-        if(pref[i]==k)
-        {
-            ans++;
+            mp[prefixSum]++; // Store the frequency of prefixSum
         }
 
-        int check = (pref[i]-k);
-
-        if(mp.find(check)!=mp.end())
-        {
-            ans+=mp[check];
-        }
-
-        mp[pref[i]]++;
-
-
-
-       }
-
-       return ans;
-
-
+        return ans;
     }
 };
