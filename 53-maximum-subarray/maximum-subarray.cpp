@@ -5,15 +5,24 @@ public:
         int ans = INT_MIN,sum=0;
         
         for(int i=0;i<nums.size();i++)
-        {
-          sum+=nums[i];
+        { 
 
-          ans = max(sum,ans);
+         if(sum+nums[i]>=0)
+         {  
+             
+            sum+=nums[i];
+            ans = max(ans,sum);
 
-          if(sum<0)
-          {
-            sum=0;
-          }
+         }
+         
+         else {
+
+            ans = max(ans,sum+nums[i]);
+
+            sum = 0;
+
+         }
+          
           
         }
 
