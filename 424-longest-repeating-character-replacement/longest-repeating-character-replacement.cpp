@@ -11,13 +11,15 @@ public:
 
         for(int i=0;i<s.size();i++)
         {   
-            mp[s[i]]++;
+              mp[s[i]]++;
 
-            check = max(check,mp[s[i]]);
+             check = max(check,mp[s[i]]);
 
              while(j<s.size() && (i-j+1)-check>k)
-             {
+             { 
+
               mp[s[j]]--;
+              
               j++;
 
              }
@@ -25,7 +27,7 @@ public:
              ans = max(ans,i-j+1);
 
 
-        }
+        } 
 
         return ans;
     }
