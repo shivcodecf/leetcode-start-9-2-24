@@ -2,8 +2,9 @@ class Solution {
 public:
     ListNode* mergeTwoLists(ListNode* list1, ListNode* list2) {
         
-        ListNode dummy; // create a dummy node
-        ListNode* temp = &dummy; // temp points to dummy
+       ListNode* dummy = new ListNode(); // dummy points to a new real node
+ListNode* temp = dummy;           // temp points to dummy
+
 
         ListNode* l1 = list1;
         ListNode* l2 = list2;
@@ -23,6 +24,6 @@ public:
         if (l1) temp->next = l1;
         if (l2) temp->next = l2;
 
-        return dummy.next;
+        return dummy->next;
     }
 };
