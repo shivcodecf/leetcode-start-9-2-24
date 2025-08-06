@@ -1,48 +1,25 @@
 class Solution {
-public:
-    bool solve(vector<int>& nums, int ind, int reqSum, int n, int check, vector<vector<int>>& dp) {
-        // If the current sum has reached the required sum
-        if (check == reqSum) {
-            return true;
-        }
-        // If we have processed all elements or the current sum exceeds the required sum
-        if (ind >= n || check > reqSum) {
-            return false;
-        }
-        // If we have already computed the result for this state
-        if (dp[ind][check] != -1) {
-            return dp[ind][check];
-        }
+    bool solve(vector<int>& nums, int target, int ind, int sum, vector<vector<int>>& dp) {
+        if(sum == target) return true;
+        if(ind >= nums.size() || sum > target) return false;
 
-        // Include the current element in the subset
-        int take = solve(nums, ind + 1, reqSum, n, check + nums[ind], dp);
-        // Exclude the current element from the subset
-        int notTake = solve(nums, ind + 1, reqSum, n, check, dp);
+        if(dp[ind][sum] != -1) return dp[ind][sum];
 
-        // Store the result in dp array and return
-        return dp[ind][check] = take || notTake;
+        bool take = solve(nums, target, ind + 1, sum + nums[ind], dp);
+        bool notake = solve(nums, target, ind + 1, sum, dp);
+
+        return dp[ind][sum] = take || notake;
     }
 
+public:
     bool canPartition(vector<int>& nums) {
-        int sum = 0;
+        int total = accumulate(nums.begin(), nums.end(), 0);
+        if(total % 2 != 0) return false;
 
-        // Calculate the total sum of the array
-        for (int num : nums) {
-            sum += num;
-        }
+        int target = total / 2;
 
-        // If the total sum is odd, we can't partition it into two equal subsets
-        if (sum % 2 != 0) {
-            return false;
-        }
+        vector<vector<int>> dp(nums.size(), vector<int>(target + 1, -1));
 
-        int n = nums.size();
-        int sum1 = sum / 2;
-
-        // Initialize the dp array with -1
-        vector<vector<int>> dp(n + 1, vector<int>(sum1 + 1, -1));
-
-        // Start the recursive solution
-        return solve(nums, 0, sum1, n, 0, dp);
+        return solve(nums, target, 0, 0, dp);
     }
 };
