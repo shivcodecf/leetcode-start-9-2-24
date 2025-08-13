@@ -1,35 +1,46 @@
 class Solution {
 public:
     bool searchMatrix(vector<vector<int>>& matrix, int target) {
-        
-        int row = matrix.size();
-        int col = matrix[0].size();
-        int left = 0, right = row*col - 1, mid = -1, value;
 
-        while (left <= right) {
+        int n = matrix.size();
 
-            mid = left + (right-left)/2;
+        int m = matrix[0].size();
 
-            value = matrix[mid/col][mid%col];
+        int low = 0;
 
-            cout << "Value: " << value << endl;
+        int high = n * m - 1;
 
-            if (value == target) {
+        while (low <= high) {
+
+            int mid = low + (high - low) / 2;
+
+            int row = mid / m;
+
+            int col = mid % m;
+
+            if (matrix[row][col] == target) {
 
                 return true;
+            }
 
-            } else if (target < value) {
+        
 
-                right = mid-1;
+            else if ((target < matrix[row][col])) {
 
-            } else { // target > value
-
-                left = mid + 1;
+                high = mid - 1;
 
             }
+
+            else if ((target > matrix[row][col])) {
+
+                low = mid + 1;
+            }
+
 
         }
 
         return false;
+
+
     }
 };
