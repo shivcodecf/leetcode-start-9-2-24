@@ -1,37 +1,39 @@
 class Solution {
-public: 
+    
+    int solve(vector<int>& nums,int ind,vector<int>& dp)
+    {  
+           
+        if(nums.size()-1 == ind)
+        {
+            return nums[ind];
+        }
 
-int solve(vector<int>& A,int n,int ind,int sum,vector<int>& dp)
-{
-    if(ind>=n)
-    {
-        return 0;
+        if(nums.size()-1 <= ind)
+        {
+            return 0;
+        }
+
+        if(dp[ind]!=-1)
+        {
+            return dp[ind];
+        }
+
+        int take = nums[ind]+solve(nums,ind+2,dp);
+
+        int notake = solve(nums,ind+1,dp);
+
+        return dp[ind] =  max(take,notake);
+
     }
-   
-   
-   if(dp[ind]!=-1)
-   {
-       return dp[ind];
-   }
 
-     int take=0,notake= 0;
+public:
+    int rob(vector<int>& nums) {
 
-    take = solve(A,n,ind+2,sum,dp)+A[ind];
-  
-    notake = solve(A,n,ind+1,sum,dp);
-   
+        int n= nums.size();
 
-    return dp[ind]=max(take,notake);
+        vector<int>dp(n,-1);
+        
+        return solve(nums,0,dp);
 
-}
-    int rob(vector<int>& A) {
-     int n=A.size();
-     vector<int>dp(n+1,-1);
-     if(n==2)
-     {
-         return max(A[0],A[1]);
-     }
-
-     return solve(A,n,0,0,dp);
     }
 };
