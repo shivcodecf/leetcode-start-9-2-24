@@ -3,15 +3,7 @@ class Solution {
     int solve(vector<int>& nums,int ind,vector<int>& dp)
     {  
            
-        if(nums.size()-1 == ind)
-        {
-            return nums[ind];
-        }
-
-        if(nums.size()-1 <= ind)
-        {
-            return 0;
-        }
+       if (ind >= nums.size()) return 0;
 
         if(dp[ind]!=-1)
         {
