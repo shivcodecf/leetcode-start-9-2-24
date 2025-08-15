@@ -1,33 +1,25 @@
 class Solution {
-public:
-    int LISUsingMem(vector<int> &nums, int prev, int curr, vector<vector<int>> &dp) {
-        if (curr >= nums.size()) {
-            return 0;
-        }
-        if (dp[prev + 1][curr] != -1) {
-            return dp[prev + 1][curr];
-        }
-
-        int include = 0;
+    int dp[2501][2501]; 
+    
+    int solve(vector<int>& nums, int ind, int prev) {
+        if (ind >= nums.size()) return 0;
         
-        if (prev == -1 || nums[prev] < nums[curr]) {
-
-            include = 1 + LISUsingMem(nums, curr, curr + 1, dp);
-
+        if (dp[ind][prev + 1] != -1) 
+            return dp[ind][prev + 1];
+        
+        int take = 0;
+        if (prev == -1 || nums[ind] > nums[prev]) {
+            take = 1 + solve(nums, ind + 1, ind);
         }
-
-        int exclude = LISUsingMem(nums, prev, curr + 1, dp);
-
-        dp[prev + 1][curr] = max(include, exclude);
-
-        return dp[prev + 1][curr];
+        
+        int notake = solve(nums, ind + 1, prev);
+        
+        return dp[ind][prev + 1] = max(take, notake);
     }
-
+    
+public:
     int lengthOfLIS(vector<int>& nums) {
-        int prev = -1;
-        int curr = 0;
-        int n = nums.size();
-        vector<vector<int>> dp(n + 1, vector<int>(n + 1, -1));
-        return LISUsingMem(nums, prev, curr, dp);
+        memset(dp, -1, sizeof(dp));
+        return solve(nums, 0, -1);
     }
 };
