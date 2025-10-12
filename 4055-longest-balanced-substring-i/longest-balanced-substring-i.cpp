@@ -34,14 +34,22 @@ public:
 
                
 
-                if(check(mp))
+                int x = 0,y=INT_MAX;
+
+                for(auto it:mp)
+                {
+                    x = max(x,it.second);
+
+                    y = min(y,it.second);
+                }
+
+                if(x==y)
                 {
                     ans = max(ans,j-i+1);
                 }
 
-              
-
             }
+
 
         }
 
