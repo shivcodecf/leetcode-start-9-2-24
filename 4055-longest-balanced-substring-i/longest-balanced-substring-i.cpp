@@ -1,38 +1,55 @@
 class Solution {
+
+         bool check( unordered_map<char, int>& mp)
+         {  
+            int maxi = 0;
+
+            int mini = INT_MAX;
+
+            for(auto it:mp)
+            {
+                maxi = max(maxi,it.second);
+
+                mini = min(mini,it.second);
+            }
+
+            return maxi==mini;
+
+
+         }
+
+
 public:
     int longestBalanced(string s) {
-        int n = s.size();
+
         int ans = 0;
 
-        // Try for every possible unique char count
-        for (int uniq = 1; uniq <= 26; uniq++) {
-            // sliding window
-            for (int i = 0; i < n; i++) {
-                vector<int> freq(26, 0);
-                int distinct = 0;
+        for (int i = 0; i < s.size(); i++) {
 
-                for (int j = i; j < n; j++) {
-                    int idx = s[j] - 'a';
-                    if (freq[idx] == 0) distinct++;
-                    freq[idx]++;
+            unordered_map<char, int> mp;
 
-                    if (distinct > uniq) break;
+            for (int j = i; j < s.size(); j++) {
 
-                    int len = j - i + 1;
-                    if (distinct == uniq && len % uniq == 0) {
-                        int need = len / uniq;
-                        bool ok = true;
-                        for (int f : freq) {
-                            if (f != 0 && f != need) {
-                                ok = false;
-                                break;
-                            }
-                        }
-                        if (ok) ans = max(ans, len);
-                    }
+                mp[s[j]]++;
+
+               
+
+                if(check(mp))
+                {
+                    ans = max(ans,j-i+1);
                 }
+
+              
+
             }
+
         }
+
+
         return ans;
+
+
+
+
     }
 };
