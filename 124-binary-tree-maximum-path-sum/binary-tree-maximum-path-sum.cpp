@@ -10,45 +10,25 @@
  * };
  */
 class Solution {
+    int ans = INT_MIN;
+
+    int solve(TreeNode* node) {
+        if (!node) return 0;
+
+        // Compute max contribution from left and right subtrees
+        int left = max(0, solve(node->left));
+        int right = max(0, solve(node->right));
+
+        // Path that goes through the current node (could be the answer)
+        ans = max(ans, node->val + left + right);
+
+        // Return best path that can be extended upwards
+        return node->val + max(left, right);
+    }
+
 public:
-
-int maxSum;
-
-int solve(TreeNode* root){
-
-    if(root == NULL) return 0;
-
-    int left = solve(root->left);
-
-    int right = solve(root->right);
-
-    int n_accha = max(left,right) + root->val;
-
-    int sab_acche = root->val + left + right;
-
-    int root_accha = root->val;
-
-    maxSum = max({n_accha, sab_acche,root_accha,maxSum});
-
-
-    return max(root_accha,n_accha);
-
-
-
-    
-
-   
-}
-
     int maxPathSum(TreeNode* root) {
-
-
-        maxSum = INT_MIN;
-
         solve(root);
-
-        return  maxSum;
-
-
+        return ans;
     }
 };
