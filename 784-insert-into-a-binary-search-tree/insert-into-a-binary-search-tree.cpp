@@ -13,11 +13,12 @@ class Solution {
       
       TreeNode* solve(TreeNode* node , int val)
       {
+
         if(node == nullptr)
         {
-          TreeNode* node = new TreeNode(val);
+          TreeNode* node1 = new TreeNode(val);
 
-          return node;
+          return node1;
         }
 
         if(node->val<val)
