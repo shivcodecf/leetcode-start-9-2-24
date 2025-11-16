@@ -10,31 +10,38 @@
  * };
  */
 class Solution {
+      
+      TreeNode* solve(TreeNode* node , int val)
+      {
+        if(node == nullptr)
+        {
+          TreeNode* node = new TreeNode(val);
 
-    private:
-    TreeNode* solve(TreeNode* node, int val)
-    {
-        if(node==NULL)
-        {
-            node=new TreeNode(val);
-            return node;
+          return node;
         }
-        
-        if(val < node->val)
+
+        if(node->val<val)
         {
-            node->left=solve(node->left, val);
+
+         node->right = solve(node->right,val);
+
         }
-        else if(val > node->val)
+        else if(node->val > val)
         {
-            node->right=solve(node->right, val);
+            node->left  = solve(node->left,val);
         }
-        
+
         return node;
-    }
-    
-    public:
-    TreeNode* insertIntoBST(TreeNode* root, int val) {
         
-        return solve(root, val);
+
+
+      }
+
+public:
+    TreeNode* insertIntoBST(TreeNode* root, int val) {
+       
+       return solve(root,val);
+
+        
     }
 };
