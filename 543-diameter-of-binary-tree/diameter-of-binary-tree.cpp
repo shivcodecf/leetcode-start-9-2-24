@@ -15,9 +15,9 @@ class Solution {
       int ans = 0;
 
     int solve(TreeNode* node) {
-        if (node == nullptr) {
-            return 0;
-        }
+        // if (node == nullptr) {
+        //     return 0;
+        // }
 
         int left =0,right =0;
 
