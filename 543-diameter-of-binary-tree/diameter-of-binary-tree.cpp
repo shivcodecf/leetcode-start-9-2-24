@@ -12,36 +12,41 @@
  */
 class Solution {
 
-    int ans = 0;
+      int ans = 0;
 
     int solve(TreeNode* node) {
-
-    
-        int left = 0, right = 0;
-
-        if (node->left) {
-            left = 1 + solve(node->left);
+        if (node == nullptr) {
+            return 0;
         }
 
-        if (node->right) {
-            right = 1 + solve(node->right);
+        int left =0,right =0;
+
+        if(node->left)
+        {
+           left = 1 + solve(node->left);
         }
 
-        ans = max(ans, left + right);
+        if(node->right)
+        {
+           right = 1 + solve(node->right);
+        }
 
-        return max({left, right});
+        
+
+         
+
+        int x = left+right;
+
+        ans = max(ans,x);
+
+        return max(left,right);
+
 
     }
 
 public:
-    int diameterOfBinaryTree(TreeNode* root) {
-
-        if (root == nullptr) {
-            return 0;
-        }
-
-        solve(root);
-
+    int diameterOfBinaryTree(TreeNode* root) { 
+        solve(root); 
         return ans;
-    }
+        }
 };
