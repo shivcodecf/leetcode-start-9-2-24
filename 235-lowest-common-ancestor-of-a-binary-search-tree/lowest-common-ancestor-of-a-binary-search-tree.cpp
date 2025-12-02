@@ -9,91 +9,30 @@
  */
 
 class Solution {
-        
-     void solve(TreeNode* root,TreeNode* node,vector<int>& v2)
-     { 
-
-       if(root==nullptr) return;
-
-       v2.push_back(root->val);
-
-       if(root->val==node->val)
-       { 
-
-        return;
-
-       }
-
-      if(root->val < node->val)
-      {
-        solve(root->right,node,v2);
-      }
-      else if(root->val > node->val)
-      {
-        solve(root->left,node,v2);
-      }
-
-
-
-     }
-
-
 public:
     TreeNode* lowestCommonAncestor(TreeNode* root, TreeNode* p, TreeNode* q) {
-         
-          vector<int>v,v1;
 
-          solve(root,p,v);
+        if (root == nullptr) {
+            return nullptr;
+        }
+        if(root==p || root ==q)
+        {
+            return root;
+        }
 
-          solve(root,q,v1);
+        if (((p->val > root->val) && (root->val > q->val)) ||
+            ((p->val < root->val) && (root->val < q->val))) {
 
-           for(int i=0;i<v1.size();i++)
-          {
-            cout <<v1[i]<<" ";
-          }
+            return root;
+        }
 
-          cout <<endl;
+        else {
 
-            for(int i=0;i<v.size();i++)
-          {
-            cout <<v[i]<<" ";
-          }
-          int flag=0;
-
-          for(int i=0;i<min(v.size(),v1.size());i++)
-          {
-            if(v[i]==v1[i])
-            {
-                continue;
+            if ((root->val > q->val)) {
+                return lowestCommonAncestor(root->left,  p, q);
+            } else {
+                return lowestCommonAncestor(root->right, p,  q);
             }
-            else {
-                flag=1;
-                TreeNode* node = new TreeNode(v1[i-1]);
-                 return node;
-            }
-
-          }
-
-          if(flag==0)
-          {
-            if(v1.size()>=v.size())
-            {
-                  TreeNode* node = new TreeNode(v[v.size()-1]);
-                   return node;
-            }
-            else {
-                TreeNode* node = new TreeNode(v1[v1.size()-1]);
-                 return node;
-            }
-           
-          }
-         
-
-          TreeNode* node1 = new TreeNode(0);
-
-          return node1;
-
-
-
+        }
     }
 };
