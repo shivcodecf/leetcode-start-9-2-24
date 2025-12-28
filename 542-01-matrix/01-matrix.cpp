@@ -2,55 +2,83 @@ class Solution {
 public:
     vector<vector<int>> updateMatrix(vector<vector<int>>& mat) {
 
-        int n = mat.size(), m = mat[0].size();
 
-        queue<pair<int, pair<int, int>>> q;
+       int n = mat.size();
 
-        vector<vector<int>> v(n, vector<int>(m, INT_MAX));
+       int m = mat[0].size();
 
-        for (int i = 0; i < n; i++) {
-            for (int j = 0; j < m; j++) {
-                if (mat[i][j] == 0)
+       
+       vector<vector<int>>v(n,vector<int>(m,INT_MAX));
 
-                {
-                    v[i][j] = 0;
-                    q.push({0, {i, j}});
-                }
-            }
-        }
+       queue<pair<pair<int,int>,int>>q;
+       
 
-        int drow[] = {-1, 0, +1, 0};
 
-        int dcol[] = {0, +1, 0, -1};
-
-        while (!q.empty()) {
-
-            auto it = q.front();
-            int x = it.first;
-
-            int y = it.second.first;
-
-            int z = it.second.second;
-
-            q.pop();
-
-            for (int k = 0; k < 4; k++) {
-
-                int nrow = drow[k] + y;
-
-                int ncol = dcol[k] + z;
-
-                if (nrow >= 0 && ncol >= 0 && nrow < n && ncol < m &&
-                    x + 1 < v[nrow][ncol]) {
-
-                    v[nrow][ncol] = x + 1;
-
-                    q.push({x + 1, {nrow, ncol}});
-                }
-            }
+       for(int i=0;i<n;i++)
+       {
+        for(int j=0;j<m;j++)
+        { 
             
+
+            if(mat[i][j]==0)
+            {
+                q.push({{i,j},0});
+                v[i][j] = 0;
+            }
+        }
+       }
+
+       int dx[] = {0,1,0,-1};
+
+       int dy[] = {1,0,-1,0};
+
+       while(!q.empty())
+       { 
+
+        int x = q.front().first.first;
+
+        int y = q.front().first.second;
+
+        int dis = q.front().second;
+
+        q.pop();
+
+
+
+        for(int i=0;i<4;i++)
+        {
+            int newR = x+dx[i];
+            int newC = y+dy[i];
+
+            
+
+            
+
+            if(newR <n && newC <m && newR>=0 && newC>=0 && dis+1<v[newR][newC])
+            {
+                v[newR][newC] = dis+1;
+                q.push({{newR,newC},dis+1});
+            }
+
+
+
+
         }
 
-        return v;
+
+
+
+       }
+
+
+      return v;
+
+
+
+
+
+
+
+        
     }
 };
