@@ -1,36 +1,59 @@
 class Solution {
 public:
-  vector<vector<int>> floodFill(vector<vector<int>>& image, int sr, int sc, int color) {
-    int n = image.size();
-    int m = image[0].size();
+    vector<vector<int>> floodFill(vector<vector<int>>& image, int sr, int sc,
+                                  int color) {
 
-    int originalColor = image[sr][sc];
-    if (originalColor == color) return image; // No need to fill if color is same
+        queue<pair<int, int>> q;
 
-    queue<pair<int, int>> q;
-    q.push({sr, sc});
+        q.push({sr, sc});
 
-    vector<pair<int, int>> dirs{{1, 0}, {-1, 0}, {0, -1}, {0, 1}};
+        int value = image[sr][sc];
 
-    while (!q.empty()) {
-        auto [x, y] = q.front();
-        q.pop();
+        if (value == color) return image;
 
-      
+        image[sr][sc] = color;
 
-        for (auto [dx, dy] : dirs) {
-            int newr = x + dx;
-            int newc = y + dy;
+        int dx[] = {0, 1, 0, -1};
 
-            if (newr >= 0 && newr < n && newc >= 0 && newc < m && image[newr][newc] == originalColor) {
-                q.push({newr, newc});
+        int dy[] = {1, 0, -1, 0};
+
+        int n = image.size();
+
+        int m = image[0].size();
+
+        while (!q.empty()) {    
+
+
+            int x = q.front().first;
+
+            int y = q.front().second;
+
+            q.pop();
+
+            for (int i = 0; i < 4; i++) {
+                int newR = x + dx[i];
+                int newC = y + dy[i];
+
+                if (newR < n && newC < m && newR>=0 && newC>=0) {
+
+                    if (image[newR][newC] == value) {
+
+                        image[newR][newC] = color;
+                         q.push({newR, newC});
+                        
+                    }
+
+                    
+
+                   
+                }
             }
+
+
         }
 
-          image[x][y] = color;
+
+        return image;
+
     }
-
-    return image;
-}
-
 };
