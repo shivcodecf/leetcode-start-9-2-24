@@ -1,49 +1,75 @@
 class Solution {
 public:
-    int ladderLength(string startWord, string targetWord,
+    int ladderLength(string beginWord, string endWord,
                      vector<string>& wordList) {
-        // Creating a queue ds of type {word,transitions to reach ‘word’}.
+
+        map<string, int> mp;
+
+        for (int i = 0; i < wordList.size(); i++) {
+            
+            mp[wordList[i]]++;
+        }
+
         queue<pair<string, int>> q;
 
-        // BFS traversal with pushing values in queue
-        // when after a transformation, a word is found in wordList.
-        q.push({startWord, 1});
+        if(mp.find(endWord)==mp.end())
+        {
+            return 0;
+        }
 
-        // Push all values of wordList into a set
-        // to make deletion from it easier and in less time complexity.
-        unordered_set<string> st(wordList.begin(), wordList.end());
-        st.erase(startWord);
+        q.push({beginWord,0});
+
+        int ans = 0;
+
         while (!q.empty()) {
 
-            string word = q.front().first;
-            int steps = q.front().second;
-            q.pop();
+            int n = q.size();
 
-            // we return the steps as soon as
-            // the first occurence of targetWord is found.
-            if (word == targetWord)
-                return steps;
+            while (n--) {
 
-            for (int i = 0; i < word.size(); i++) {
-                // Now, replace each character of ‘word’ with char
-                // from a-z then check if ‘word’ exists in wordList.
-                char original = word[i];
+                string s = q.front().first;
+                int l = q.front().second;
+                q.pop();
 
-                for (char ch = 'a'; ch <= 'z'; ch++) {
+                string s1 = s;
 
-                    word[i] = ch;
-                    // check if it exists in the set and push it in the queue.
-                    if (st.find(word) != st.end()) {
-                        st.erase(word);
-                        q.push({word, steps + 1});
-                    }
-                    
+                if(s==endWord)
+                {
+                    return l+1;
                 }
 
-                word[i] = original;
+               
+
+                int flag = 0;
+
+                for (int i = 0; i < s1.size(); i++) {
+
+                    for (char j = 'a'; j <= 'z'; j++) {
+
+                        s[i] = j;
+
+                        if(mp.find(s)!=mp.end())
+                        {  
+                            flag = 1;
+                            q.push({s,l+1});
+                            mp.erase(s);
+                        }
+
+                        s = s1;
+
+
+                    }
+                }
+
+               
+
             }
+
+
         }
 
         return 0;
+
+        
     }
 };
