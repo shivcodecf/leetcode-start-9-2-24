@@ -1,64 +1,40 @@
 class Solution {
 public:
-    int findCheapestPrice(int n, vector<vector<int>>& flights, int src, int dst, int k) {
-        
-        vector<int>dis(n,1e9);
+    int findCheapestPrice(int n, vector<vector<int>>& flights,
+                          int src, int dst, int k) {
 
-        map<int,vector<pair<int,int>>>mp;
-
-        for(int i=0;i<flights.size();i++)
-        {
-           mp[flights[i][0]].push_back({flights[i][1],flights[i][2]});
+        vector<vector<pair<int,int>>> adj(n);
+        for (auto &f : flights) {
+            adj[f[0]].push_back({f[1], f[2]});
         }
 
-        priority_queue<
-        pair<int, pair<int, int>>,            // Type of elements in the priority queue
-        vector<pair<int, pair<int, int>>>, // Underlying container (vector)
-        greater<pair<int, pair<int, int>>>  // Comparison function (greater for min-heap)
-    > pq;
+        // dist[node][stops]
+        vector<vector<int>> dist(n, vector<int>(k + 2, 1e9));
+        priority_queue<vector<int>, vector<vector<int>>, greater<>> pq;
 
-    pq.push({0,{src,0}});
+        // {cost, stops, node}
+        pq.push({0, 0, src});
+        dist[src][0] = 0;
 
-    dis[src] = 0;
+        while (!pq.empty()) {
+            auto cur = pq.top();
+            pq.pop();
 
-    
+            int cost = cur[0];
+            int stops = cur[1];
+            int node = cur[2];
 
-    while(!pq.empty())
-    {
-        auto it = pq.top();
+            if (node == dst) return cost;
+            if (stops > k) continue;
 
-        pq.pop();
-
-        int x = it.first;
-
-        int y = it.second.first;
-
-        int z = it.second.second;
-
-        if(x>k) continue;
-
-        for(auto it1:mp[y])
-        {    
-              int val  = it1.first;
-              int cost = it1.second;
-
-              int sum = z + cost;
-
-              if(sum<dis[val] )
-              {
-                 dis[val] = sum;
-                 pq.push({x+1,{val,sum}});
-              }
+            for (auto [next, price] : adj[node]) {
+                if (cost + price < dist[next][stops + 1]) {
+                    dist[next][stops + 1] = cost + price;
+                    pq.push({cost + price, stops + 1, next});
+                }
+            }
         }
 
+        return -1;
     }
-
-
-    if(dis[dst]==1e9) return -1;
-
-    return  dis[dst];
-
-
-
-    }
-};  
+};
