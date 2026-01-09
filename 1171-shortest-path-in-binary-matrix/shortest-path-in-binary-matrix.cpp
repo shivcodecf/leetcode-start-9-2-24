@@ -1,51 +1,110 @@
 class Solution {
 public:
     int shortestPathBinaryMatrix(vector<vector<int>>& grid) {
+        
+      priority_queue<pair<int,pair<int,int>>,vector<pair<int,pair<int,int>>>,greater<>>pq;
 
-        int n = grid.size();
-        if (grid[0][0] == 1 || grid[n-1][n-1] == 1) return -1;
+      int n = grid.size();
 
-        // 8 directions
-        vector<int> dx = {-1,-1,-1,0,0,1,1,1};
-        vector<int> dy = {-1,0,1,-1,1,-1,0,1};
+      int m = grid[0].size();
 
-        vector<vector<int>> dist(n, vector<int>(n, 1e9));
+      if(grid[0][0]== 1 || grid[n-1][m-1 ]== 1)
+      {
+        return -1;
+      }
 
-        // min-heap: {distance, row, col}
-        priority_queue<vector<int>, vector<vector<int>>, greater<>> pq;
+      vector<vector<int>>dis(n+1,vector<int>(m+1,1e9));
 
-        dist[0][0] = 1;
-        pq.push({1, 0, 0});
+      dis[0][0] = 0;
 
-        while (!pq.empty()) {
+      pq.push({0,{0,0}});
 
-            auto cur = pq.top();
-            pq.pop();
+      while(!pq.empty())
+      { 
 
-            int d = cur[0];
-            int r = cur[1];
-            int c = cur[2];
+        auto it = pq.top();
 
-            // reached destination
-            if (r == n-1 && c == n-1) return d;
+        pq.pop();
 
-            // skip outdated paths
-            // if (d > dist[r][c]) continue;
+        int path = it.first;
 
-            for (int i = 0; i < 8; i++) {
-                int nr = r + dx[i];
-                int nc = c + dy[i];
+        int row = it.second.first;
 
-                if (nr >= 0 && nc >= 0 && nr < n && nc < n &&
-                    grid[nr][nc] == 0 &&
-                    d + 1 < dist[nr][nc]) {
+        int col = it.second.second;
 
-                    dist[nr][nc] = d + 1;
-                    pq.push({d + 1, nr, nc});
-                }
-            }
+        if(row == n-1 && col == m-1)
+        {
+            return path+1;
         }
 
-        return -1;
+        int newR = 0, newC = 0;
+
+        if(row-1 >=0 && col-1>=0 && row-1<n && col-1<m && path+1<dis[row-1][col-1] && grid[row-1][col-1]==0)
+
+        {
+            dis[row-1][col-1] = path+1;
+            pq.push({path+1,{row-1,col-1}});
+        }
+
+         if(row-1 >=0 && col+1>=0 && row-1<n && col+1<m && path+1<dis[row-1][col+1] && grid[row-1][col+1]==0)
+
+        {
+            dis[row-1][col+1] = path+1;
+            pq.push({path+1,{row-1,col+1}});
+        }
+
+         if(row+1 >=0 && col+1>=0 && row+1<n && col+1<m && path+1<dis[row+1][col+1] && grid[row+1][col+1]==0)
+
+        {
+            dis[row+1][col+1] = path+1;
+            pq.push({path+1,{row+1,col+1}});
+        }
+
+          if(row+1 >=0 && col-1>=0 && row+1<n && col-1<m && path+1<dis[row+1][col-1] && grid[row+1][col-1]==0)
+
+        {
+            dis[row+1][col-1] = path+1;
+            pq.push({path+1,{row+1,col-1}});
+        }
+
+           if(row >=0 && col+1>=0 && row<n && col+1<m && path+1<dis[row][col+1] && grid[row][col+1]==0 )
+
+        {
+            dis[row][col+1] = path+1;
+            pq.push({path+1,{row,col+1}});
+        }
+
+           if(row +1 >=0 && col>=0 && row+1<n && col<m && path+1<dis[row+1][col] && grid[row+1][col]==0)
+
+        {
+            dis[row+1][col] = path+1;
+            pq.push({path+1,{row+1,col}});
+        }
+
+         if(row >=0 && col-1>=0 && row<n && col-1<m && path+1<dis[row][col-1] && grid[row][col-1]==0)
+
+        {
+            dis[row][col-1] = path+1;
+            pq.push({path+1,{row,col-1}});
+        }
+
+          if(row -1 >=0 && col>=0 && row-1<n && col<m && path+1<dis[row-1][col] && grid[row-1][col]==0)
+
+        {
+            dis[row-1][col] = path+1;
+            pq.push({path+1,{row-1,col}});
+        }
+
+      }
+
+      return -1;
+
+
+
+
+
+
+
+
     }
 };
