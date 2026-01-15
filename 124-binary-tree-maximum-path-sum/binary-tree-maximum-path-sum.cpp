@@ -10,25 +10,31 @@
  * };
  */
 class Solution {
-    int ans = INT_MIN;
+     
+     int ans = INT_MIN;
 
-    int solve(TreeNode* node) {
-        if (!node) return 0;
+     int solve(TreeNode* root)
+     {
+        if(root==nullptr)
+        {
+            return 0;
+        }
 
-        // Compute max contribution from left and right subtrees
-        int left = max(0, solve(node->left));
-        int right = max(0, solve(node->right));
+        int left = max(0,solve(root->left));
 
-        // Path that goes through the current node (could be the answer)
-        ans = max(ans, node->val + left + right);
+        int right = max(0,solve(root->right));
 
-        // Return best path that can be extended upwards
-        return node->val + max(left, right);
-    }
+        ans = max(ans,left+right+root->val);
+
+        return max(left,right)+root->val;
+     }
 
 public:
     int maxPathSum(TreeNode* root) {
-        solve(root);
-        return ans;
+
+      solve(root);
+
+      return ans;
+        
     }
 };
