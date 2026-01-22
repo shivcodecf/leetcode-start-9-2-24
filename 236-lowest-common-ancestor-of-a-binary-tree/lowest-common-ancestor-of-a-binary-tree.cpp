@@ -28,10 +28,10 @@ class Solution {
         {
             return root;
         }
-        //   else if((root == p && left) || (root == p && right) || (root == q && right) || (root == q && left))
-        // {
-        //     return root;
-        // }
+          else if((root == p && left) || (root == p && right) || (root == q && right) || (root == q && left))
+        {
+            return root;
+        }
         else if(left)
         {
             return left;
