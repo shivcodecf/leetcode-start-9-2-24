@@ -4,14 +4,14 @@ public:
                           vector<double>& succProb, int start_node,
                           int end_node) {
 
-        vector<vector<pair<int, float>>> adj(n + 1);
+        vector<vector<pair<int, float>>> adj(n);
 
         for (int i = 0; i < edges.size(); i++) {
             adj[edges[i][0]].push_back({edges[i][1], succProb[i]});
             adj[edges[i][1]].push_back({edges[i][0], succProb[i]});
         }
 
-        vector<float> dis(n + 1, 0.0f);
+        vector<float> dis(n, 0.0f);
         dis[start_node] = 1.0f;
 
         priority_queue<pair<float, int>> pq;
