@@ -1,108 +1,91 @@
 class Solution {
 public:
     int minimumObstacles(vector<vector<int>>& grid) {
-        
-       std::priority_queue<std::pair<int, std::pair<int, int>>, 
-                        std::vector<std::pair<int, std::pair<int, int>>>, 
-                        std::greater<std::pair<int, std::pair<int, int>>>> pq;
 
-           set<pair<int,int>>st;
+        priority_queue<pair<int,pair<int,int>>,vector<pair<int,pair<int,int>>>,greater<pair<int,pair<int,int>>>>pq;
 
-           pq.push({0,{0,0}});
-           st.insert({0,0});
+        if(grid[0][0]==1)
+        {
+          pq.push({1,{0,0}});
+        }
+        else {
+          pq.push({0,{0,0}});
+        }
 
-           int ans=0;
+        int n = grid.size();
 
-           int n=grid.size();
+        int m = grid[0].size();
 
-           int m= grid[0].size();
+        vector<vector<int>>dis(n,vector<int>(m,INT_MAX));
 
-      
+        if(grid[0][0]==1)
+        {
+            dis[0][0] = 1;
+        }
+        else {
+            dis[0][0] = 0;
+        }
+
+        int dx[] = {0,+1,0,-1};
+
+        int dy[] = {+1,0,-1,0};
+
 
         while(!pq.empty())
-        {    
-
-           
-
+        {
             auto it = pq.top();
 
             pq.pop();
 
-            int x = it.first;
+            int ob = it.first;
 
-            int y = it.second.first;
+            int x = it.second.first;
 
-            int z = it.second.second;
+            int y = it.second.second;
 
-            if(y==n-1 && z==m-1)
+            if(x == n-1 && y == m-1)
             {
-                return x;
+                return ob;
             }
 
-            if(y-1>=0 && st.find({y-1,z})==st.end())
-            {  
-               if(grid[y-1][z]==1)
-               {
-                 pq.push({x+1,{y-1,z}});
-               }
-               else {
-                pq.push({x,{y-1,z}});
-               }
-               st.insert({y-1,z});
-              
-            }
-
-            if(y+1<n && st.find({y+1,z})==st.end() )
-
+            for(int i=0;i<4;i++)
             {
-                if(grid[y+1][z]==1)
-               {
-                 pq.push({x+1,{y+1,z}});
-               }
-               else {
-                pq.push({x,{y+1,z}});
-               }
+                int newX = x+dx[i];
 
-               st.insert({y+1,z});
-            }
+                int newY = y+dy[i];
 
-            if(z-1>=0 && st.find({y,z-1})==st.end())
-            {
-                if(grid[y][z-1]==1)
-               {
-                 pq.push({x+1,{y,z-1}});
-               }
-               else {
-                pq.push({x,{y,z-1}});
-               }
-               st.insert({y,z-1});
+                int check=0;
+
+                if(newX>=0 && newX<n && newY>=0 && newY<m)
+                {
+
+                    if(grid[newX][newY]==1)
+                {
+                 check = 1;
+                }
+
+                if(ob + check < dis[newX][newY])
+                {
+                  dis[newX][newY] = check + ob;
+                  pq.push({dis[newX][newY],{newX,newY}});
+                }
+
+                }
+
+                
+
             }
 
             
-            if(z+1<m &&  st.find({y,z+1})==st.end())
-            {
-                if(grid[y][z+1]==1)
-               {
-                 pq.push({x+1,{y,z+1}});
-               }
-               else {
-                pq.push({x,{y,z+1}});
-               }
-
-                st.insert({y,z+1});
-            }
-
-
-
         }
 
         return -1;
 
 
 
+
+
        
-
-
-
+        
     }
 };
