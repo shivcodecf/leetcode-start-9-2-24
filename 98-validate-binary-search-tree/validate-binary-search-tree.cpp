@@ -6,55 +6,43 @@
  *     TreeNode *right;
  *     TreeNode() : val(0), left(nullptr), right(nullptr) {}
  *     TreeNode(int x) : val(x), left(nullptr), right(nullptr) {}
- *     TreeNode(int x, TreeNode *left, TreeNode *right) : val(x), left(left),
- * right(right) {}
+ *     TreeNode(int x, TreeNode *left, TreeNode *right) : val(x), left(left), right(right) {}
  * };
  */
 class Solution {
+   
+   vector<int>ans;
 
-    vector<int>v;
-
-    void  solve(TreeNode* node) {
-
-        if (node == nullptr) {
-            return;
-        }
-
-
-      solve(node->left);
-
-      v.push_back(node->val);
-
-      solve(node->right);
-
-
-
-
+   void solve(TreeNode* root)
+   {
+    if(root==nullptr)
+    {
+        return;
     }
 
+    solve(root->left);
 
+    ans.push_back(root->val);
 
+    solve(root->right);
+
+   }
 
 public:
     bool isValidBST(TreeNode* root) {
 
-        if (root == nullptr) {
-
-            return true;
-        }
-
+        
         solve(root);
 
-
-        for(int i=0;i<v.size()-1;i++)
+        for(int i=1;i<ans.size();i++)
         {
-           if(v[i]>=v[i+1])
-           {
-            return false;
-           }
+            if(ans[i]<=ans[i-1])
+            {
+              return false;
+            }
         }
 
         return true;
-
+        
     }
 };
