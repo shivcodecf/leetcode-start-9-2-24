@@ -24,17 +24,17 @@ class Solution {
             return false;
         }
 
-        if (node->left == nullptr && node->right == nullptr &&
-            subRoot->left == nullptr && subRoot->right == nullptr) {
+        // if (node->left == nullptr && node->right == nullptr &&
+        //     subRoot->left == nullptr && subRoot->right == nullptr) {
 
-             if(node->val == subRoot->val)
-             {
-                return true;
-             }   
+        //      if(node->val == subRoot->val)
+        //      {
+        //         return true;
+        //      }   
 
-            return false;
+        //     return false;
 
-        }
+        // }
 
         if (node->val != subRoot->val) {
             return false;
