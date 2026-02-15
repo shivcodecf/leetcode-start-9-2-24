@@ -1,54 +1,78 @@
+/**
+ * Definition for a binary tree node.
+ * struct TreeNode {
+ *     int val;
+ *     TreeNode *left;
+ *     TreeNode *right;
+ *     TreeNode() : val(0), left(nullptr), right(nullptr) {}
+ *     TreeNode(int x) : val(x), left(nullptr), right(nullptr) {}
+ *     TreeNode(int x, TreeNode *left, TreeNode *right) : val(x), left(left),
+ * right(right) {}
+ * };
+ */
 class Solution {
-public:
-    
-    bool ans = false;
-    
-    
-    bool match(TreeNode* root, TreeNode* subRoot){
 
-        
-        if(root!=NULL && subRoot!=NULL && root->val == subRoot->val){
+    bool solve(TreeNode*node, TreeNode*subRoot) {
 
-            bool a = match(root->left, subRoot->left);
-            bool b = match(root->right, subRoot->right);
-            
-            if( a && b ){
-                return true;
-            }else
-                return false;
+        if(node == nullptr && subRoot == nullptr)
+        {
+            return true;
         }
 
-        else if(root==NULL && subRoot==NULL)
-            return true;
-        else
+        if(node==nullptr || subRoot == nullptr)
+        {
+            return false;
+        }
+
+        if (node->left == nullptr && node->right == nullptr &&
+            subRoot->left == nullptr && subRoot->right == nullptr) {
+
+             if(node->val == subRoot->val)
+             {
+                return true;
+             }   
+
             return false;
 
-    }
-    
-    
-    void inorder(TreeNode* root, TreeNode* subRoot){
-
-        if(root!=NULL){
-
-            inorder(root->left, subRoot);
-            
-           
-            
-            inorder(root->right, subRoot);
-
-             bool x = match(root, subRoot);
-            
-            if(x){ans = x;}
-
         }
 
+        if (node->val != subRoot->val) {
+            return false;
+        }
+
+        bool left = solve(node->left, subRoot->left);
+
+        bool right = solve(node->right, subRoot->right);
+
+        return left && right;
     }
-    
+
+public:
     bool isSubtree(TreeNode* root, TreeNode* subRoot) {
 
-        inorder(root, subRoot);
+        queue<TreeNode*> q;
 
-        return ans;
+        q.push(root);
 
+        while (!q.empty()) {
+            TreeNode* node = q.front();
+            q.pop();
+
+            if (node->val == subRoot->val) {
+                if (solve(node, subRoot)) {
+                    return true;
+                }
+            }
+            if(node->left)
+            {
+                q.push(node->left);
+            }
+             if(node->right)
+            {
+                q.push(node->right);
+            }
+        }
+
+        return false;
     }
 };
