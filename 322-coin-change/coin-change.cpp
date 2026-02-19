@@ -1,31 +1,65 @@
 class Solution {
-public:    
-    int dp[12 + 1][10000 + 1];
-    
-    int findLowestCoins(vector<int> &coins, int cur, int amount) {
-        if (cur == coins.size() || amount <= 0)
-            return (amount == 0) ? 0 : INT_MAX - 1;   
-        
-        if (dp[cur][amount] != -1)
-            return dp[cur][amount];
-        
-        int res = -1;
-        if (coins[cur] <= amount) {
-        int takeCoin = 1 + findLowestCoins(coins, cur + 0, amount - coins[cur]);
-            int doNotTakeCoin = 0 + findLowestCoins(coins, cur + 1, amount - 0);
-            dp[cur][amount] = res = min(takeCoin, doNotTakeCoin);    
-        }
-        else {
-            return (amount==0) ? 0 : INT_MAX-1;
-        }
-        
-        return dp[cur][amount] = res;
+
+   long long solve(vector<int>& coins,int target,int index,int sum,vector<vector<int>>& dp)
+   {
+
+    int n = coins.size();
+
+    if(sum<0)
+    {
+        return INT_MAX;
     }
-    
+
+    if(sum == 0)
+    {
+        return 0;
+    }
+
+    if(index>=n)
+    {
+     if(sum == 0)
+     {
+        return 0;
+     }
+     return INT_MAX;
+    }
+
+    if(dp[index][sum]!=-1)
+    {
+        return dp[index][sum];
+    }
+
+    long long take = 1+solve(coins,target,index,sum-coins[index],dp); 
+
+    long long take1 = 1+solve(coins,target,index+1,sum-coins[index],dp); 
+
+    long long notake = solve(coins,target,index+1,sum,dp); 
+
+    return dp[index][sum] =  min({take,take1,notake});
+
+
+
+   }
+
+public:
     int coinChange(vector<int>& coins, int amount) {
-        memset(dp, -1, sizeof(dp));
+
         sort(coins.begin(),coins.end());
-        int res = findLowestCoins(coins, 0, amount);
-        return (res == INT_MAX - 1 ) ? -1 : res;
+
+        reverse(coins.begin(),coins.end());
+
+        int n = coins.size();
+
+         vector<vector<int>>dp(n+1,vector<int>(amount+1,-1));
+
+        long long ans = solve(coins,amount,0,amount,dp);
+
+        if(ans == INT_MAX)
+        {
+            return -1;
+        }
+
+        return ans;
+        
     }
 };
