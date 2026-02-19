@@ -46,7 +46,7 @@ public:
 
         sort(coins.begin(),coins.end());
 
-        reverse(coins.begin(),coins.end());
+        // reverse(coins.begin(),coins.end());
 
         int n = coins.size();
 
