@@ -1,31 +1,36 @@
 class Solution {
-private:
-    bool wordBreak(string s, unordered_set<string> &set, vector<int> &memo, int start){
-        
-        if(start == s.size()){
+    unordered_set<string> dict;
+    vector<int> dp;   // -1 = unvisited, 0 = false, 1 = true
+
+    bool solve(string& s, int ind) {
+        if (ind == s.size())
             return true;
-        }
 
-        if(memo[start] != -1){
-            return memo[start];
-        }
+        if (dp[ind] != -1)
+            return dp[ind];
 
-        for(int i=start; i<s.size(); i++){
+        string check = "";
 
-            if(set.count(s.substr(start, i+1-start)) && wordBreak(s, set, memo, i+1)){
-                memo[start] = true;
-                return true;
-                
+        for (int i = ind; i < s.size(); i++) {
+            check += s[i];
+
+            if (dict.count(check)) {
+                if (solve(s, i + 1))
+                    return dp[ind] = 1;
             }
         }
 
-        return memo[start] = false;
-        return false;
+        return dp[ind] = 0;
     }
+
 public:
     bool wordBreak(string s, vector<string>& wordDict) {
-        vector<int> memo(s.size(), -1);
-        unordered_set<string> set(wordDict.begin(), wordDict.end());
-        return wordBreak(s, set, memo, 0);
+
+        for (auto& word : wordDict)
+            dict.insert(word);
+
+        dp.resize(s.size(), -1);
+
+        return solve(s, 0);
     }
 };
