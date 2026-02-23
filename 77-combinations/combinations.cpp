@@ -3,20 +3,31 @@ class Solution {
     vector<vector<int>>ans;
    
    void solve(int n,int k,vector<int>& v,int ind)
-   {
+   {  
+
        
+
        if(v.size()==k)
        {
         ans.push_back(v);
         return;
        }
 
-       for(int i=ind;i<=n;i++)
-       { 
-         v.push_back(i);
-         solve(n,k,v,i+1);
-         v.pop_back();
+        if(ind>n)
+       {
+        return;
        }
+       
+      
+
+      
+
+      
+         v.push_back(ind);
+         solve(n,k,v,ind+1);
+         v.pop_back();
+         solve(n,k,v,ind+1);
+       
 
        
 
