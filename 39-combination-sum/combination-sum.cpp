@@ -14,21 +14,27 @@ class Solution {
 
       
 
+      
+
         if (sum == target) {
 
                 ans.push_back(v);
         
+        //         v.pop_back();
 
+        // sum -= candidates[ind];
          
             
             return;
 
         }
-        
 
-        sum += candidates[ind];
+           sum += candidates[ind];
 
         v.push_back(candidates[ind]);
+        
+
+       
 
         
 
