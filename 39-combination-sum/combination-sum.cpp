@@ -8,34 +8,40 @@ class Solution {
 
         int n = candidates.size();
 
-         if (sum == target) {
-
-           
-           ans.push_back(v);
-           return;
-            
-
-        }
-
         if (ind >= n || sum>target) {
             return;
         }
 
+      
+
+        if (sum == target) {
+
+                ans.push_back(v);
         
+
+         
+            
+            return;
+
+        }
+        
+
+        sum += candidates[ind];
+
         v.push_back(candidates[ind]);
 
-       
-
         
 
-        solve(candidates, v, target, ind, sum+candidates[ind]);
+        solve(candidates, v, target, ind, sum);
+          
+            v.pop_back();
 
-         v.pop_back();
-
+        sum -= candidates[ind];
+       
 
         solve(candidates, v, target, ind + 1, sum);
 
-        
+       
 
        
         
