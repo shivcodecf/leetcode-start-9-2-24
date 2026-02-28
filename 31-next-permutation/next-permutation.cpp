@@ -2,40 +2,49 @@ class Solution {
 public:
     void nextPermutation(vector<int>& nums) {
 
-        int n=nums.size();
+        int n = nums.size(),check=0;
 
-        int gola_idx = -1;
+        for(int i=n-1;i>=1;i--)
+        {
+            if(nums[i-1]<nums[i])
+            {  
+                int mini = nums[i-1],indx=-1;
+                check=1;
+
+                for(int j=i;j<n;j++)
+                {
+                   if(nums[j]>mini)
+                   {
+                    
+                     mini = min(mini,nums[j]);
+                     indx = j;
+
+                   }
+                }
+
+                if(indx!=-1)
+                {
+                    swap(nums[i-1],nums[indx]);
+                }
+                
+                reverse(nums.begin()+i,nums.end());
+
+                break;
+
+
+            }
+
+
+        }
+
+        if(check==0)
+        {
+            reverse(nums.begin(),nums.end());
+        }
+
+        // return nums;
+
+
         
-      for(int i=n-1;i>0;i--)
-      {
-        if(nums[i]>nums[i-1])
-        {
-            gola_idx = i-1;
-            break;
-        }
-      }
-
-      int swap_idx = -1;
-
-      if(gola_idx!=-1)
-      {
-        for(int i=n-1;i>gola_idx;i--)
-      {
-        if(nums[i]>nums[gola_idx])
-        {
-         swap_idx = i;
-         break;
-        }
-      }
-
-      swap(nums[gola_idx],nums[swap_idx]);
-      }
-
-      
-
-      reverse(nums.begin()+gola_idx+1,nums.end());
-     
-
-
     }
 };
