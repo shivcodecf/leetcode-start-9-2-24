@@ -1,20 +1,14 @@
 class Solution {
 
-    bool isValid(string& s1) {
+    bool isValid(string &s) {
         int count = 0;
-
-        for (int i = 0; i < s1.size(); i++) {
-            if (s1[i] == '(') {
-                count++;
-            } else if (s1[i] == ')') {
+        for (char c : s) {
+            if (c == '(') count++;
+            else if (c == ')') {
                 count--;
-            }
-
-            if (count < 0) {
-                return false;
+                if (count < 0) return false;
             }
         }
-
         return count == 0;
     }
 
@@ -22,64 +16,49 @@ public:
     vector<string> removeInvalidParentheses(string s) {
 
         vector<string> ans;
-
         unordered_set<string> visited;
-
         queue<string> q;
 
         q.push(s);
-
-        
-            bool flag = false;
-
         visited.insert(s);
 
         while (!q.empty()) {
 
-            int n = q.size();
+            int size = q.size();
+            bool found = false;
 
+            for (int i = 0; i < size; i++) {
 
-            
-
-           
-               string s1 = q.front();
-
+                string curr = q.front();
+                
                 q.pop();
 
-                
-
-                if (isValid(s1)) {
-                    ans.push_back(s1);
-                    flag = true;
-                }
-            
-            
-
-            if (flag) {
-                continue;
-            }
-
-            for (int i = 0; i < s1.size(); i++) {
-
-                string next = "";
-
-                if (s1[i] == '(' || s1[i] == ')') {
-                    next = s1.substr(0, i) + s1.substr(i + 1);
+                if (isValid(curr)) {
+                    ans.push_back(curr);
+                    found = true;
                 }
 
-                if (!visited.count(next) && next.size()) {
-                    q.push(next);
-                    visited.insert(next);
+                if (found) continue;
+
+                for (int j = 0; j < curr.size(); j++) {
+
+                    if (curr[j] != '(' && curr[j] != ')')
+                        continue;
+
+                    string next =
+                        curr.substr(0, j) + curr.substr(j + 1);
+
+                    if (!visited.count(next)) {
+                        visited.insert(next);
+                        q.push(next);
+                    }
                 }
             }
-            
+
+            if (found) break;
         }
 
-        if(ans.size())
-
-        return ans;
-
-        ans.push_back("");
+        if (ans.empty()) ans.push_back("");
 
         return ans;
     }
