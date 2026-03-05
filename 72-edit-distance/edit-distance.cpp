@@ -1,43 +1,47 @@
 class Solution {
-public:
-    int findMinOperations(string &word1, string &word2, int index1, int index2, vector<vector<int>> &memo) {
-        // If we've reached the end of word1 or word2
-        if (index1 >= word1.size() || index2 >= word2.size()) {
-            if (index2 < word2.size()) return word2.size() - index2; // Remaining characters in word2 need to be inserted
-            else if (index1 < word1.size()) return word1.size() - index1; // Remaining characters in word1 need to be deleted
-            else return 0; // Both words are fully traversed
+
+    int solve(string& word1, string& word2, int i, int j, vector<vector<int>>& dp) {
+        int n = word1.size(), m = word2.size();
+
+        if (i >= n || j >= m) {
+
+            if (j <= m - 1) {
+                return (m - 1 - j + 1);
+            }
+             if (i <= n - 1) {
+                return (n - 1 - i + 1);
+            }
+
+
+            return 0;
         }
 
-        // If already calculated, return the stored result
-        if (memo[index1][index2] != -1) return memo[index1][index2];
+        if(dp[i][j]!=-1)
+        {
+            return dp[i][j];
+        }
 
-        // Initialize variables for possible operations
-        int insertOp = INT_MAX, deleteOp = INT_MAX, replaceOp = INT_MAX, noOp = INT_MAX;
+        int insert = INT_MAX, update = INT_MAX, del = INT_MAX, skip = INT_MAX;
 
-        // If characters match, no operation is needed, move to the next characters
-        if (word1[index1] == word2[index2]) {
-            noOp = findMinOperations(word1, word2, index1 + 1, index2 + 1, memo);
+        if (word1[i] == word2[j]) {
+            skip = solve(word1, word2, i + 1, j + 1,dp);
         } else {
-            // Insert a character in word1
-            insertOp = 1 + findMinOperations(word1, word2, index1, index2 + 1, memo);
-            // Delete a character from word1
-            deleteOp = 1 + findMinOperations(word1, word2, index1 + 1, index2, memo);
-            // Replace a character in word1
-            replaceOp = 1 + findMinOperations(word1, word2, index1 + 1, index2 + 1, memo);
+            insert = 1 + solve(word1, word2, i, j + 1,dp);
+            update = 1 + solve(word1, word2, i + 1, j + 1,dp);
+            del = 1 + solve(word1, word2, i + 1, j,dp);
         }
 
-        // Store the result in memo table and return the minimum of the operations
-        return memo[index1][index2] = min({noOp, insertOp, deleteOp, replaceOp});
+        return  dp[i][j] = min({skip, insert, update, del});
+
     }
 
+public:
     int minDistance(string word1, string word2) {
-        // If word1 is empty, return the length of word2
-        if (word1.empty()) return word2.size();
-        
-        // Create a memoization table initialized with -1
-        vector<vector<int>> memo(word1.size(), vector<int>(word2.size(), -1));
-        
-        // Call the recursive helper function
-        return findMinOperations(word1, word2, 0, 0, memo);
+
+        int n = word1.size(),m = word2.size();
+
+        vector<vector<int>>dp(n,vector<int>(m,-1));
+
+        return solve(word1, word2, 0, 0,dp);
     }
 };
