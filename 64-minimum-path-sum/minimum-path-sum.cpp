@@ -1,22 +1,52 @@
 class Solution {
 public:
-    int mm;
-    int nn;
-    int t[201][201];
-    vector<vector<int>> nums;
-    int fun(int i,int j){
-        if (i == mm-1 && j == nn-1) return nums[i][j];
-        if (i>=mm || j>= nn) return INT_MAX;
-        if (t[i][j] !=-1) return t[i][j];
-        long right = fun(i,j+1);
-        long down = fun(i+1,j);
-        return t[i][j] =nums[i][j] + min(right,down);
-    }
-    int minPathSum(vector<vector<int>>& arr) {
-        mm = arr.size();
-        nn =arr[0].size();
-        nums =arr;
-        memset(t,-1,sizeof(t));
-        return fun(0,0);
+    int minPathSum(vector<vector<int>>& grid) {
+
+        priority_queue<
+    pair<int, pair<int, int>>,
+    vector<pair<int, pair<int, int>>>,
+    greater<pair<int, pair<int, int>>>
+> q;
+
+        int n = grid.size(), m = grid[0].size();
+
+        vector<vector<int>> vis(n, vector<int>(m, INT_MAX));
+
+        int dx[] = {1, 0};
+
+        int dy[] = {0, 1};
+
+        q.push({grid[0][0], {0, 0}});
+
+        vis[0][0] = grid[0][0];
+
+        while (!q.empty()) {
+            auto it = q.top();
+            q.pop();
+
+            int minSum = it.first;
+
+            int x = it.second.first;
+
+            int y = it.second.second;
+
+            if (x == n - 1 && y == m - 1) {
+                return minSum;
+            }
+
+            for (int i = 0; i < 2; i++) {
+                int newX = x + dx[i];
+
+                int newY = y + dy[i];
+
+                if ( newX<n && newY<m && newX>=0 && newY>=0 &&  vis[x][y] + grid[newX][newY] < vis[newX][newY]) {
+                    vis[newX][newY] = vis[x][y] + grid[newX][newY];
+
+                    q.push({vis[newX][newY], {newX, newY}});
+                }
+            }
+        }
+
+        return -1;
     }
 };
