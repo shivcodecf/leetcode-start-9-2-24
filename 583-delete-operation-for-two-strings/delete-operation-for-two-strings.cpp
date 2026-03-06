@@ -3,7 +3,9 @@ class Solution {
     int solve(string& word1,string& word2,int i,int j, vector<vector<int>>& dp)
     {
 
-     int n = word1.size(),m=word2.size();   
+     int n = word1.size(),m=word2.size();
+
+     // here we are checking that if any string is not travesreds yet ,then means we need to remove remeining next char to make string equals.   
   
      if(i>=n || j>=m)
      {
@@ -18,6 +20,16 @@ class Solution {
 
         return 0;
      }
+
+
+     // here we are checking that three conditions -->
+
+     // 1)  if any index character is equal then , we move both pointer 
+     // 2) if  no, then, we have two possble ways 
+       //     i) we can delete first string char 
+      //      ii) we can delete second string char
+
+
 
      if(dp[i][j]!=-1)
      {
