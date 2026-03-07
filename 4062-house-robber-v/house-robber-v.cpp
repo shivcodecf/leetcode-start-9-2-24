@@ -1,36 +1,58 @@
 class Solution {
-public:
-    int n;
-    long long dp[100001];
-    long long solve(int ind, vector<int>&nums,vector<int>&colors)
-    {
-        if(ind>=n) return 0;
-        if(dp[ind]!=-1) return dp[ind];
-        
-        //if it is the last house -> best to choose robbing this house
-        if(ind==n-1) {
+
+     long long dp[100001];
+
+    long long solve(vector<int>& nums, vector<int>& colors, int ind) {
+        int n = nums.size();
+
+        // if(ind == n-1)
+        // {
+        //     return nums[ind];
+        // }
+
+        if (ind >= n) {
+            return 0;
+        }
+
+           if (dp[ind] != -1) {
+            return dp[ind];
+        }
+
+        if(ind==n-1)
+        {
             return nums[ind];
         }
-        
-        long long val1=0; long long val2=0;
 
-        //if chosen to rob -> must skip next house if same color or 
-        
-        if(colors[ind]==colors[ind+1]){
-            val1 = nums[ind]+solve(ind+2,nums,colors);
-        }else{
-            val1 = nums[ind]+solve(ind+1,nums,colors);
+        long long take = 0, notake = 0, adjTake = 0;
+
+     
+
+        notake = solve(nums, colors, ind + 1);
+
+        int nextIdx = -1;
+
+        if (colors[ind] == colors[ind + 1]) {
+
+            nextIdx = ind+2;
+
+        }
+        else {
+            nextIdx = ind+1;
         }
 
-        //if chosen not to rob
-        val2 = solve(ind+1,nums,colors);
+        take = nums[ind] +  solve(nums, colors,  nextIdx);
 
-        return dp[ind]=max(val1,val2);
-        
+
+        return dp[ind] = max(take, notake);
     }
+
+public:
     long long rob(vector<int>& nums, vector<int>& colors) {
+
+        int n = nums.size();
+
         memset(dp,-1,sizeof(dp));
-        n = nums.size();
-        return solve(0,nums,colors);
+
+        return solve(nums, colors, 0);
     }
 };
