@@ -9,7 +9,7 @@ public:
         
         //if it is the last house -> best to choose robbing this house
         if(ind==n-1) {
-            return nums[ind] + solve(ind+1,nums,colors);
+            return nums[ind];
         }
         
         long long val1=0; long long val2=0;
