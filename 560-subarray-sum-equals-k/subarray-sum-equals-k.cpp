@@ -40,9 +40,9 @@ public:
 
                    
 
-                    if (mp[left] == 0) {
-                        mp.erase(left);
-                    }
+                    // if (mp[left] == 0) {
+                    //     mp.erase(left);
+                    // }
 
                 }
             
