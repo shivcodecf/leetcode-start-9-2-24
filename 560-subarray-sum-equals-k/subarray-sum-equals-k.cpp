@@ -11,6 +11,8 @@ public:
         vector<int> pref(n, 0);
 
         pref[0] = nums[0];
+        
+        mp[0] = 1;
 
         // [1,-1,0] --->  [1,0,0]   k = 0;
 
@@ -23,11 +25,11 @@ public:
 
         for (int i = 0; i < pref.size(); i++) {
 
-            if (pref[i] == k) {
+            // if (pref[i] == k) {
 
-                ans++;
+            //     ans++;
 
-            }
+            // }
            
 
                 int left = pref[i] - k;
