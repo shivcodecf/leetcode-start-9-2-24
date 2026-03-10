@@ -1,51 +1,59 @@
 class Solution {
-public:  
-     int solve(vector<int>& A,int n,int ind,int sum,vector<int>& dp)
-{
-    if(ind==n)
-    {
-        return A[ind];
+
+    int solve(vector<int>& nums, int ind,int flag,vector<vector<int>>& dp) {
+        int n = nums.size();
+        if (flag ==0 && ind >= n-1) {
+            return 0;
+        }
+        if (flag ==1 && ind >= n) {
+            return 0;
+        }
+
+        if(dp[ind][flag]!=-1)
+        {
+            return dp[ind][flag];
+        }
+
+
+       
+
+        int skip = INT_MIN , take = INT_MIN;
+
+
+
+         skip = solve(nums, ind + 1,flag,dp);
+
+         take = nums[ind] + solve(nums, ind + 2,flag,dp);
+
+        return dp[ind][flag] =  max(skip,take);
+
+
     }
-    if(ind>n)
-    {
-        return 0;
-    }
-    
-   
-   
-   if(dp[ind]!=-1)
-   {
-       return dp[ind];
-   }
 
-     int take=0,notake= 0;
+public:
+    int rob(vector<int>& nums) {
 
-    take = solve(A,n,ind+2,sum,dp)+A[ind];
-  
-    notake = solve(A,n,ind+1,sum,dp);
-   
+        int n = nums.size();
 
-    return dp[ind]=max(take,notake);
+        if(nums.size()==1)
+        {
+            return nums[0];
+        }
 
-}
+        
 
-    int rob(vector<int>& A) {
+        // vector<int> v;
 
-     int n=A.size();
-     vector<int>dp(n+1,-1);
-      vector<int>dp1(n+1,-1);
-    
-     if(n==2)
-     {
-         return max(A[0],A[1]);
-     }
-     if(n==1)
-     {
-        return A[0];
-     }
+        // v.push_back(nums[0]);
+        // v.push_back(nums[n-1]);
 
-      return max(solve(A,n-2,0,0,dp),solve(A,n-1,1,0,dp1));
+        // for(int i=1;i<n-1;i++)
+        // {
+        //     v.push_back(nums[i]);
+        // }
 
-      
+        vector<vector<int>>dp(n,vector<int>(2,-1));
+
+        return max(solve(nums, 0,0,dp),solve(nums,1,1,dp));
     }
 };
