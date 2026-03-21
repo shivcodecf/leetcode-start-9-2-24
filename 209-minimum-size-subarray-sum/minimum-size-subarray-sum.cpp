@@ -4,59 +4,24 @@ public:
 
         int n = nums.size();
 
-        vector<int>pref(n);
-
-        pref[0] = nums[0];
-
-        for(int i=1;i<n;i++)
-        {
-            pref[i] = pref[i-1]+nums[i];
-        }
-
-        int low = 0, high = n - 1;
-
-        // [2,5,6,8,12,15]
+        int i = 0, j = 0;
 
         int ans = INT_MAX;
 
+        int sum = 0;
 
-        for(int i=0;i<n;i++)
-        {
-            if(pref[i]>=target)
-            {
-             ans = min(ans,i+1);
-            }
-        }
+        while (i < n && j < n) {
+            sum += nums[j];
 
-
-        for(int i=0;i<n;i++)
-        { 
-
-            int low = i;
-            int high = n-1;
-
-            while(low<=high)
-            {
-                int mid = low+(high-low)/2;
-
-                int check = pref[mid]-pref[i];
-
-                if(check>=target)
-                {
-                    ans =  min(ans,mid-i);
-                    high = mid-1;
-                }
-                else {
-                    low = mid+1;
-                }
-
-                
+            while (sum >= target) {
+                ans = min(ans, j - i + 1);
+                sum -= nums[i];
+                i++;
             }
 
+            j++;
         }
 
         return ans == INT_MAX ? 0 : ans;
-
-       
     }
 };
