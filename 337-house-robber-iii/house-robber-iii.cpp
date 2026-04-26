@@ -2,7 +2,8 @@ class Solution {
     unordered_map<TreeNode*, vector<int>> dp;
 
     int solve(TreeNode* root, int check) {
-        if (root == nullptr) return 0;
+        if (root == nullptr)
+            return 0;
 
         // If already computed, return it
         if (dp.count(root) && dp[root][check] != -1)
@@ -25,7 +26,5 @@ class Solution {
     }
 
 public:
-    int rob(TreeNode* root) {
-        return solve(root, 0);
-    }
+    int rob(TreeNode* root) { return solve(root, 0); }
 };
