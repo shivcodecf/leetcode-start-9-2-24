@@ -1,60 +1,43 @@
 class Solution {
-    
-    bool check(string & s1)
+   
+   bool isPal(string& s)
+   {
+    int i=0,j=s.size()-1;
+
+    while(i<j)
     {
-        int i=0,j=s1.size()-1;
-
-        while(i<j)
+        if(s[i]!=s[j])
         {
-            if(s1[i]==s1[j])
-            {
-                i++;
-                j--;
-            }
-            else {
-                return false;
-            }
+            return false;
         }
-
-        return true;
+        i++;
+        j--;
     }
 
+    return true;
+   }
 
 public:
     string longestPalindrome(string s) {
 
-        int maxi = INT_MIN;
+        int ans = 0;
+        string res = "";
 
-        string ans = "";
-        
-        for(int i=0;i<s.size();i++)
-        {   
+        for (int i = 0; i < s.size(); i++) {
             string s1 = "";
-
-            for(int j=i;j<s.size();j++)
-            {
-               s1+=s[j];
-
-               if(check(s1))
-               {
-                
-                int x = s1.size();
-
-                if(maxi<x)
+            for (int j = i; j < s.size(); j++) {
+                s1 += s[j];
+                if(isPal(s1))
                 {
-                   ans = s1;
-                   maxi = x;
+                    if(s1.size()>ans)
+                    {
+                        res = s1;
+                        ans = s1.size();
+                    }
                 }
-
-               }
             }
-
-
         }
 
-
-        return ans;
-
-        
+        return res;
     }
 };
