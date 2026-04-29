@@ -1,36 +1,46 @@
 class Solution {
-    unordered_set<string> dict;
-    vector<int> dp;   // -1 = unvisited, 0 = false, 1 = true
 
-    bool solve(string& s, int ind) {
-        if (ind == s.size())
-            return true;
+    bool solve(string& s, vector<string>& wordDict,
+               unordered_map<string, int>& mp, int ind,vector<int>& dp) {
 
-        if (dp[ind] != -1)
-            return dp[ind];
+        int n = s.size();
 
-        string check = "";
+       if (ind == s.size()) return true;
+
+       if(dp[ind]!=-1)
+       {
+        return dp[ind];
+       }
+
+        string s1 = "";
 
         for (int i = ind; i < s.size(); i++) {
-            check += s[i];
+            s1 += s[i];
 
-            if (dict.count(check)) {
-                if (solve(s, i + 1))
-                    return dp[ind] = 1;
+            if (mp.find(s1) != mp.end()) {
+
+                if(solve(s, wordDict, mp, i + 1,dp)){
+                    return dp[ind] =  true;
+                };
             }
         }
 
-        return dp[ind] = 0;
+        return dp[ind] =  false;
     }
 
 public:
     bool wordBreak(string s, vector<string>& wordDict) {
 
-        for (auto& word : wordDict)
-            dict.insert(word);
+        unordered_map<string, int> mp;
 
-        dp.resize(s.size(), -1);
+        int n = s.size();
 
-        return solve(s, 0);
+        vector<int>dp(n,-1);
+
+        for (int i = 0; i < wordDict.size(); i++) {
+            mp[wordDict[i]]++;
+        }
+
+        return solve(s, wordDict, mp, 0,dp);
     }
 };
