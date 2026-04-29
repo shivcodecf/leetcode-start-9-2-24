@@ -1,43 +1,44 @@
 class Solution {
 public:
     vector<vector<int>> threeSum(vector<int>& nums) {
-        vector<vector<int>> ans;
-        int n = nums.size();
 
-        // Sort the input array
         sort(nums.begin(), nums.end());
 
-        for (int i = 0; i < n - 2; i++) {
-           
-            if (i > 0 && nums[i] == nums[i - 1]) continue;
+        int n = nums.size();
 
-            int target = -nums[i];
-            int left = i + 1, right = n - 1;
+        vector<vector<int>> ans;
 
-            while (left < right) {
+        for (int i = 0; i <= nums.size() - 3; i++) {
 
-                int sum = nums[left] + nums[right];
+            if (i > 0 && nums[i] == nums[i - 1]) {
+                continue;
+            }
 
-                if (sum == target) {
+            int left = -nums[i];
 
-                    ans.push_back({nums[i], nums[left], nums[right]});
+            int j = i + 1, k = n - 1;
 
-                   
-                    while (left+1 < right && nums[left] == nums[left + 1]) left++;
-                   
-                    while (left < right-1 && nums[right] == nums[right - 1]) right--;
+            int sum = nums[i];
 
-                    
-                    left++;
-                    right--;
+            while (j < k) {
+                // sum += nums[j];
+                int total = nums[i] + nums[j] + nums[k];
 
-
-                } else if (sum < target) {
-                    left++;
-                } else {
-                    right--;
+                if (total == 0) {
+                    ans.push_back({nums[i], nums[j], nums[k]});
                 }
 
+                if (total > 0) {
+                    k--;
+                } else {
+                    int take = nums[j];
+
+                    j++;
+
+                    while ( j<n && nums[j - 1] == nums[j]) {
+                        j++;
+                    }
+                }
             }
         }
 
