@@ -12,39 +12,31 @@
  */
 class Solution {
 
-    bool solve(TreeNode*node, TreeNode*subRoot) {
+    bool solve(TreeNode* root, TreeNode* subRoot) {
 
-        if(node == nullptr && subRoot == nullptr)
-        {
+        if (root == nullptr && subRoot == nullptr) {
+
             return true;
         }
 
-        if(node==nullptr || subRoot == nullptr)
-        {
+        if ((root == nullptr && subRoot) || (root && subRoot == nullptr)) {
             return false;
         }
 
-        // if (node->left == nullptr && node->right == nullptr &&
-        //     subRoot->left == nullptr && subRoot->right == nullptr) {
-
-        //      if(node->val == subRoot->val)
-        //      {
-        //         return true;
-        //      }   
-
-        //     return false;
-
-        // }
-
-        if (node->val != subRoot->val) {
+        if (root->val != subRoot->val) {
             return false;
         }
 
-        bool left = solve(node->left, subRoot->left);
+        bool l = false, r = false;
 
-        bool right = solve(node->right, subRoot->right);
+        l = solve(root->left, subRoot->left);
 
-        return left && right;
+        r = solve(root->right, subRoot->right);
+
+        return l && r;
+
+
+
     }
 
 public:
@@ -55,21 +47,23 @@ public:
         q.push(root);
 
         while (!q.empty()) {
-            TreeNode* node = q.front();
+            TreeNode* x = q.front();
             q.pop();
 
-            if (node->val == subRoot->val) {
-                if (solve(node, subRoot)) {
+            if (x->val == subRoot->val) {
+                bool check = solve(x, subRoot);
+
+                if (check) {
                     return true;
                 }
             }
-            if(node->left)
-            {
-                q.push(node->left);
+
+            if (x->left) {
+                q.push(x->left);
             }
-             if(node->right)
-            {
-                q.push(node->right);
+
+            if (x->right) {
+                q.push(x->right);
             }
         }
 
