@@ -2,10 +2,12 @@ class Solution {
     unordered_set<string> st;
     vector<int> dp;
 
-    int solve(string &s, int ind) {
-        if (ind >= s.size()) return 0;
+    int solve(string& s, int ind) {
+        if (ind >= s.size())
+            return 0;
 
-        if (dp[ind] != -1) return dp[ind];
+        if (dp[ind] != -1)
+            return dp[ind];
 
         int ans = INT_MAX;
         string curr = "";
@@ -22,14 +24,14 @@ class Solution {
             }
         }
 
-        return dp[ind] = ans;
+        // n*(n) = n*n  // in case of dp only
 
-        
+        return dp[ind] = ans;
     }
 
 public:
     int minExtraChar(string s, vector<string>& dictionary) {
-        for (auto &word : dictionary) {
+        for (auto& word : dictionary) {
             st.insert(word);
         }
 
