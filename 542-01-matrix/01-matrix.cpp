@@ -2,83 +2,51 @@ class Solution {
 public:
     vector<vector<int>> updateMatrix(vector<vector<int>>& mat) {
 
+        int n = mat.size(), m = mat[0].size();
 
-       int n = mat.size();
+        vector<vector<int>> dis(n, vector<int>(m, INT_MAX));
 
-       int m = mat[0].size();
+        queue<pair<int, pair<int, int>>> q;
 
-       
-       vector<vector<int>>v(n,vector<int>(m,INT_MAX));
-
-       queue<pair<pair<int,int>,int>>q;
-       
-
-
-       for(int i=0;i<n;i++)
-       {
-        for(int j=0;j<m;j++)
-        { 
-            
-
-            if(mat[i][j]==0)
-            {
-                q.push({{i,j},0});
-                v[i][j] = 0;
+        for (int i = 0; i < n; i++) {
+            for (int j = 0; j < m; j++) {
+                if (mat[i][j] == 0) {
+                    q.push({0, {i, j}});
+                    dis[i][j] = 0;
+                }
             }
         }
-       }
 
-       int dx[] = {0,1,0,-1};
+        int dx[] = {0, +1, 0, -1};
 
-       int dy[] = {1,0,-1,0};
+        int dy[] = {-1, 0, +1, 0};
 
-       while(!q.empty())
-       { 
+        // int path,x,y;
 
-        int x = q.front().first.first;
+        while (!q.empty()) {
 
-        int y = q.front().first.second;
+            auto it = q.front();
 
-        int dis = q.front().second;
+            q.pop();
 
-        q.pop();
+            int path = it.first;
 
+            int x = it.second.first;
 
+            int y = it.second.second;
 
-        for(int i=0;i<4;i++)
-        {
-            int newR = x+dx[i];
-            int newC = y+dy[i];
+            for (int i = 0; i < 4; i++) {
+                int newX = x + dx[i];
+                int newY = y + dy[i];
 
-            
-
-            
-
-            if(newR <n && newC <m && newR>=0 && newC>=0 && dis+1<v[newR][newC])
-            {
-                v[newR][newC] = dis+1;
-                q.push({{newR,newC},dis+1});
+                if (newX >= 0 && newX < n && newY >= 0 && newY < m &&
+                    path + 1 < dis[newX][newY]) {
+                    dis[newX][newY] = path + 1;
+                    q.push({path + 1, {newX, newY}});
+                }
             }
-
-
-
-
         }
 
-
-
-
-       }
-
-
-      return v;
-
-
-
-
-
-
-
-        
+        return dis;
     }
 };
