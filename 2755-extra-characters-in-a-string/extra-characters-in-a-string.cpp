@@ -1,42 +1,41 @@
-
- 
 class Solution {
+    unordered_set<string> st;
+    vector<int> dp;
 
-    int solve(int ind,string& s, unordered_set<string>& st, vector<int>& dp)
-    {
-         if(ind>=s.size()) return 0;
+    int solve(string &s, int ind) {
+        if (ind >= s.size()) return 0;
 
-         int res = INT_MAX;
-          
-         if(dp[ind]!=-1) return dp[ind];
-         res = min(res,1+solve(ind+1,s,st,dp));
+        if (dp[ind] != -1) return dp[ind];
 
-        for(int i=ind;i<s.size();i++)
-        {
-          string temp = s.substr(ind,i-ind+1);
+        int ans = INT_MAX;
+        string curr = "";
 
-          if(st.find(temp)!=st.end())
-          {
-             res = min(res,solve(i+1,s,st,dp));
-          }
+        for (int i = ind; i < s.size(); i++) {
+            curr += s[i];
 
-          
+            // If substring exists in dictionary → no extra cost
+            if (st.count(curr)) {
+                ans = min(ans, solve(s, i + 1));
+            } else {
+                // Otherwise count as extra character
+                ans = min(ans, (i - ind + 1) + solve(s, i + 1));
+            }
         }
 
-        return  dp[ind] = res;
+        return dp[ind] = ans;
 
-    }
-public:
-    int minExtraChar(string s, vector<string>& dict) {
-
-        int n=s.size();
-
-        vector<int>dp(n+1,-1);
-    
-    unordered_set<string>st(dict.begin(),dict.end());
-
-    return solve(0,s,st,dp);
         
+    }
 
+public:
+    int minExtraChar(string s, vector<string>& dictionary) {
+        for (auto &word : dictionary) {
+            st.insert(word);
+        }
+
+        int n = s.size();
+        dp.resize(n, -1);
+
+        return solve(s, 0);
     }
 };
