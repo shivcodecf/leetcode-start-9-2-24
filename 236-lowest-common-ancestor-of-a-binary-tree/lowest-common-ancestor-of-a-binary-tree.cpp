@@ -8,47 +8,35 @@
  * };
  */
 class Solution {
-    
-    TreeNode* solve(TreeNode* root , TreeNode* p , TreeNode* q)
-    {
-        if(root == nullptr)
-        {
+
+    TreeNode* solve(TreeNode* root, TreeNode* p, TreeNode* q) {
+
+        if (root == nullptr) {
             return nullptr;
         }
 
-        if(root == p || root == q)
-        {
+        if (root->val == p->val || root->val == q->val) {
             return root;
         }
+        // if(root->val == )
 
-        TreeNode*left = solve(root->left,p,q);
-        TreeNode*right = solve(root->right,p,q);
+        TreeNode* l = solve(root->left, p, q);
 
-        if(left && right)
-        {
+        TreeNode* r = solve(root->right, p, q);
+
+        if (r && l) {
             return root;
-        }
-          else if((root == p && left) || (root == p && right) || (root == q && right) || (root == q && left))
-        {
-            return root;
-        }
-        else if(left)
-        {
-            return left;
-        }
-        else if(right)
-        {
-            return right;
-        }
-          
-        return nullptr;
+        } 
+
+        return l?l :r;
+
+
         
     }
 
 public:
     TreeNode* lowestCommonAncestor(TreeNode* root, TreeNode* p, TreeNode* q) {
 
-        return solve(root,p,q);
-        
+        return solve(root, p, q);
     }
 };
