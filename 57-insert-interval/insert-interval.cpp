@@ -2,76 +2,38 @@ class Solution {
 public:
     vector<vector<int>> insert(vector<vector<int>>& intervals, vector<int>& newInterval) {
 
-      vector<pair<int,int>>v;
-      int n=intervals.size();
+        vector<vector<int>>ans;
 
-      for(int i=0;i<n;i++)
-      {
-        v.push_back({intervals[i][0],intervals[i][1]});
-      } 
-   
+        int i=0;
 
-      v.push_back({newInterval[0],newInterval[1]});
+        int n = intervals.size();
 
-
-      sort(v.begin(),v.end());
-       int mini=v[0].first;
-    int maxi=v[0].second;
-
-    int prev=v[0].second;
-     n=v.size();
-    vector<vector<int>>v1;
-     vector<int>temp;  
-
-     if(n==1)
-     {
-        temp.push_back(mini);
-        temp.push_back(maxi);
-        v1.push_back(temp);
-        return v1;
-     }
-   
-
-    for(int i=1;i<n;i++)
-    {    
-       
-        
-        if(prev>=v[i].first)
+        while(i<n)
         {
-         maxi=max(maxi,v[i].second);
-         mini=min(mini,v[i].first);
-         prev=max(prev,v[i].second);
-
+          if(intervals[i][0]>newInterval[1])
+          {
+            break;
+          }
+          else if(newInterval[0]>intervals[i][1])
+          {
+            ans.push_back(intervals[i]);
+          }
+          else {
+            newInterval[0] = min(newInterval[0],intervals[i][0]);
+            newInterval[1] = max(newInterval[1],intervals[i][1]);
+          }
+          i++;
         }
-        else{
-            temp.push_back(mini);
-            temp.push_back(maxi);
-            v1.push_back(temp);
-               maxi=v[i].second;
-               mini=v[i].first;
-               prev=v[i].second;
-               temp.clear();
-        } 
-        
-        if(i==n-1 )
-        {     
-           
-            temp.push_back(mini);
-            temp.push_back(maxi);
-            v1.push_back(temp);
+
+        ans.push_back(newInterval);
+
+        while(i<n)
+        {
+            ans.push_back(intervals[i]);
+            i++;
         }
-         
 
-    }
-   
-    return v1;
-
-
-
-
-
-
-
+        return ans;
         
     }
 };
