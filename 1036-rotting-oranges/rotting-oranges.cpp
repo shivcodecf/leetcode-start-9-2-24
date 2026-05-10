@@ -2,62 +2,94 @@ class Solution {
 public:
     int orangesRotting(vector<vector<int>>& grid) {
 
-        int m = grid.size();
-        int n = grid[0].size();
-        vector<vector<int>> visited = grid;
-
         queue<pair<int, int>> q;
-        int countFreshOrange = 0;
-        for (int i = 0; i < m; i++) {
-            for (int j = 0; j < n; j++) {
-                if (visited[i][j] == 2) {
-                    q.push({i, j});
+
+        int n = grid.size(), m = grid[0].size();
+
+        int zero=0,one=0;
+
+        // vector<vector<int>> temp(n, vector<int>(m, -1));
+
+        for (int i = 0; i < n; i++) {
+
+            for (int j = 0; j < m; j++) {
+
+                if(grid[i][j]==0)
+                {
+                   zero=1;
                 }
-                if (visited[i][j] == 1) {
-                    countFreshOrange++;
+                if(grid[i][j]==1)
+                {
+                   one=1;
+                }
+                
+
+                if (grid[i][j] == 2) {
+
+                    q.push({i, j});
+                    // temp[i][j] = 2;
                 }
             }
         }
 
-        if (countFreshOrange == 0)
+        if(q.empty())
+        {
+            if(one>=1)
+            {
+                return -1;
+            }
             return 0;
-        if (q.empty())
-            return -1;
+        }
 
-        int minutes = -1;
+        int dx[] = {0, +1, 0, -1};
 
-        vector<pair<int, int>> dirs = {{1, 0}, {-1, 0}, {0, -1}, {0, 1}};
+        int dy[] = {-1, 0, +1, 0};
+
+        int ans = 0;
 
         while (!q.empty()) {
 
-            int s = q.size();
+            int l = q.size();
 
-            while (s--) {
+            while (l--) {
+
                 auto [x, y] = q.front();
-
                 q.pop();
 
-                for (auto [dx, dy] : dirs) {
-                    int newr = x + dx;
-                    int newc = y + dy;
+                for (int i = 0; i < 4; i++) {
+                    int newRow = x + dx[i];
 
-                    if (newr < m && newr >= 0 && newc < n && newc >= 0 &&
-                        visited[newr][newc] == 1) {
+                    int newCol = y + dy[i];
 
-                        countFreshOrange--;
-
-                        visited[newr][newc] = 2;
-
-                        q.push({newr, newc});
+                    if (newRow >= 0 && newRow < n && newCol >= 0 &&
+                        newCol < m && grid[newRow][newCol] == 1) {
+                        grid[newRow][newCol] = 2;
+                        q.push({newRow, newCol});
                     }
                 }
             }
-
-            minutes++;
+            ans++;
         }
 
-        if (countFreshOrange == 0)
-            return minutes;
-        return -1;
+        int flag=0;
+
+        for(int i=0;i<n;i++)
+        {
+            for(int j=0;j<m;j++)
+            {
+                if(grid[i][j]==1)
+                {
+                    flag = 1;
+                }
+            }
+        }
+
+        if(flag)
+        {
+          return -1;
+        }
+
+        return ans-1;;
+
     }
 };
