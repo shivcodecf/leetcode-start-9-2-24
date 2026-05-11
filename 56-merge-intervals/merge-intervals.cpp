@@ -1,63 +1,53 @@
 class Solution {
 public:
-    vector<vector<int>> merge(vector<vector<int>>& intervals) { 
+    vector<vector<int>> merge(vector<vector<int>>& intervals) {
 
-        sort(intervals.begin(), intervals.end(), [](const vector<int>& a, const vector<int>& b) {
-            return a[0] < b[0];
-        });
-    
-    int mini=intervals[0][0];
-    int maxi=intervals[0][1];
+        vector<int> newIntervals;
 
-    int prev=intervals[0][1];
-    int n=intervals.size();
-    vector<vector<int>>v;
-     vector<int>temp;  
+        int n = intervals.size();
 
-     if(n==1)
-     {
-        temp.push_back(mini);
-        temp.push_back(maxi);
-        v.push_back(temp);
-        return v;
-     }
-   
+        sort(intervals.begin(), intervals.end());
 
-    for(int i=1;i<n;i++)
-    {    
-       
-        
-        if(prev>=intervals[i][0])
-        {
-         maxi=max(maxi,intervals[i][1]);
-         mini=min(mini,intervals[i][0]);
-         prev=max(prev,intervals[i][1]);
+        newIntervals.push_back(intervals[0][0]);
 
+        newIntervals.push_back(intervals[0][1]);
+
+        vector<vector<int>> ans;
+
+        for (int i = 0; i < n; i++) {
+            cout << intervals[i][0] << " " << intervals[i][1] << endl;
         }
-        else{
-            temp.push_back(mini);
-            temp.push_back(maxi);
-            v.push_back(temp);
-               maxi=intervals[i][1];
-               mini=intervals[i][0];
-               prev=intervals[i][1];
-               temp.clear();
-        } 
-        
-        if(i==n-1 )
-        {     
-           
-            temp.push_back(mini);
-            temp.push_back(maxi);
-            v.push_back(temp);
+
+        int i = 1;
+
+        while (i < n) {
+
+            if (intervals[i][0] > newIntervals[1]) {
+                ans.push_back(newIntervals);
+                newIntervals[0] = intervals[i][0];
+                newIntervals[1] = intervals[i][1];
+            }
+
+            if (intervals[i][1] < newIntervals[0]) {
+
+                ans.push_back(intervals[i]);
+               
+
+            } else {
+                newIntervals[0] = min(newIntervals[0], intervals[i][0]);
+                newIntervals[1] = max(newIntervals[1], intervals[i][1]);
+            }
+
+            i++;
         }
-         
 
-    }
-   
-    return v;
+        ans.push_back(newIntervals);
 
+        // while (i < n) {
+        //     ans.push_back(intervals[i]);
+        //     i++;
+        // }
 
-
+        return ans;
     }
 };
