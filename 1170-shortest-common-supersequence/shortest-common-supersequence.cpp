@@ -38,7 +38,7 @@ public:
         dp.assign(n + 1, vector<int>(m + 1, -1));
 
         // Fill memo table
-        solve(str1, str2, 0, 0);
+        // solve(str1, str2, 0, 0);
 
         // Reconstruct answer using dp table
         int i = 0, j = 0;
