@@ -20,8 +20,13 @@ class Solution {
         if (str1[i] == str2[j]) {
            return  dp[i][j]  = 1 + solve(str1, str2, i + 1, j + 1,dp);
         } 
+        else {
 
-        first = 1 +  min(solve(str1, str2, i + 1, j,dp),solve(str1, str2, i, j + 1,dp));
+             first = 1 +  min(solve(str1, str2, i + 1, j,dp),solve(str1, str2, i, j + 1,dp));
+
+        }
+
+       
             // second = 1 + solve(str1, str2, i, j + 1,dp);
         
 
