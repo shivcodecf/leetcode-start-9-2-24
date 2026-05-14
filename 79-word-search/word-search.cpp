@@ -1,54 +1,51 @@
 class Solution {
 
-    bool solve(vector<vector<char>>& board, string& word, string& s, int i,
-               int j, int pointer, vector<vector<int>>& vis) {
+    bool solve(vector<vector<char>>& board, string& word, int ind, int i, int j,
+               vector<vector<char>>& vis) {
+
+        if (ind >= word.size()) {
+            return true;
+        }
+
+        
+
         int n = board.size(), m = board[0].size();
 
-        int len = word.size();
-
-        vis[i][j] = 1;
-
-        s += board[i][j];
-
-        if (pointer == len - 1) {
-            bool ok = (s == word);
-            vis[i][j] = -1;
-            s.pop_back();
-            return ok;
+        if (i + 1 < n && board[i + 1][j] == word[ind] && vis[i + 1][j] == '#') {
+            vis[i + 1][j] = word[ind];
+            if(solve(board, word, ind + 1, i + 1, j, vis)){
+                return true;
+            }
+            vis[i + 1][j] = '#';
         }
 
-        bool l = false, r = false, t = false, b = false;
-
-        if (i - 1 < n && j < m && i - 1 >= 0 && j >= 0 && vis[i - 1][j] == -1 &&
-            board[i - 1][j] == word[pointer + 1]) {
-
-            l = solve(board, word, s, i - 1, j, pointer + 1, vis);
+        if (j + 1 < m && board[i][j + 1] == word[ind] && vis[i][j + 1] == '#') {
+            vis[i][j + 1] = word[ind];
+            if(solve(board, word, ind + 1, i, j + 1, vis)){
+                return true;
+            }
+            vis[i][j + 1] = '#';
         }
 
-        if (i + 1 < n && j < m && i + 1 >= 0 && j >= 0 && vis[i + 1][j] == -1 &&
-            board[i + 1][j] == word[pointer + 1]) {
-            r = solve(board, word, s, i + 1, j, pointer + 1, vis);
+        if (i - 1 >= 0 && board[i - 1][j] == word[ind] &&
+            vis[i - 1][j] == '#') {
+            vis[i - 1][j] = word[ind];
+            if(solve(board, word, ind + 1, i - 1, j, vis)){
+                return true;
+            }
+             vis[i-1][j] = '#';
         }
 
-        if (i < n && j + 1 < m && i >= 0 && j + 1 >= 0 && vis[i][j + 1] == -1 &&
-            board[i][j + 1] == word[pointer + 1]) {
-
-            t = solve(board, word, s, i, j + 1, pointer + 1, vis);
+        if (j - 1 >= 0 && board[i][j - 1] == word[ind] &&
+            vis[i][j - 1] == '#') {
+            vis[i][j - 1] = word[ind];
+            if(solve(board, word, ind + 1, i, j - 1, vis)){
+                return true;
+            }
+            vis[i][j - 1] = '#';
         }
 
-        if (i < n && j - 1 < m && i >= 0 && j - 1 >= 0 && vis[i][j - 1] == -1 &&
-            board[i][j - 1] == word[pointer + 1]) {
-
-            b = solve(board, word, s, i, j - 1, pointer + 1, vis);
-        }
-
-        vis[i][j] = -1;
-
-        if (s.size()) {
-            s.pop_back();
-        }
-
-        return l | r | t | b;
+        return false;
     }
 
 public:
@@ -56,17 +53,16 @@ public:
 
         int n = board.size(), m = board[0].size();
 
-        vector<vector<int>> vis(n, vector<int>(m, -1));
-
-        string s = "";
+        vector<vector<char>> vis(n, vector<char>(m, '#'));
 
         for (int i = 0; i < n; i++) {
             for (int j = 0; j < m; j++) {
-                if (word[0] == board[i][j]) {
-
-                    if (solve(board, word, s, i, j, 0, vis)) {
+                if (board[i][j] == word[0]) {
+                    vis[i][j] = word[0];
+                    if (solve(board, word, 1, i, j, vis)) {
                         return true;
                     }
+                    vis[i][j] = '#';
                 }
             }
         }
