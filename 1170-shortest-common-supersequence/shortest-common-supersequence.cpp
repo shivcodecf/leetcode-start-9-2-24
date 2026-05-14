@@ -15,10 +15,10 @@ class Solution {
             return dp[i][j];
         }
 
-        int equal = 0, first = 0, second = 0;
+        int equal = INT_MAX, first = INT_MAX, second = 0;
 
         if (str1[i] == str2[j]) {
-           return  dp[i][j]  = 1 + solve(str1, str2, i + 1, j + 1,dp);
+           equal = 1 + solve(str1, str2, i + 1, j + 1,dp);
         } 
         else {
 
@@ -30,7 +30,7 @@ class Solution {
             // second = 1 + solve(str1, str2, i, j + 1,dp);
         
 
-        return dp[i][j] =  first;
+        return dp[i][j] =  min(first,equal);
     }
 
 public:
