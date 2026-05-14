@@ -2,49 +2,44 @@ class Solution {
 public:
     void nextPermutation(vector<int>& nums) {
 
-        int n = nums.size(),check=0;
+        int n = nums.size();
 
-        for(int i=n-1;i>=1;i--)
-        {
-            if(nums[i-1]<nums[i])
-            {  
-                int mini = nums[i-1],indx=-1;
-                check=1;
+        int check = 0;
 
-                for(int j=i;j<n;j++)
-                {
-                   if(nums[j]>mini)
-                   {
-                    
-                     mini = min(mini,nums[j]);
-                     indx = j;
+        for (int i = n - 1; i >= 1; i--) {
 
-                   }
+            if (nums[i - 1] < nums[i]) {
+
+                int mini = INT_MIN;
+
+                 check = 1;
+
+                int idx = -1;
+
+                for (int j = i; j < n; j++) {
+
+                    if (nums[j] > nums[i-1]) {
+
+                        mini = min(nums[j], mini);
+                      
+                        idx = j;
+
+                        // break;
+                       
+                    }
                 }
 
-                if(indx!=-1)
-                {
-                    swap(nums[i-1],nums[indx]);
-                }
-                
-                reverse(nums.begin()+i,nums.end());
-
+                swap(nums[i - 1], nums[idx]);
+                reverse(nums.begin() + i, nums.end());
+                cout << i-1<< " " <<idx<<endl;
                 break;
-
-
             }
-
-
         }
 
-        if(check==0)
-        {
-            reverse(nums.begin(),nums.end());
+        if (check==0) {
+            reverse(nums.begin(), nums.end());
         }
 
         // return nums;
-
-
-        
     }
 };
