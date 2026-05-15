@@ -21,10 +21,10 @@ class Solution {
             ans.push_back(temp);
             return;
         }
-       
+
+        solve(candidates, target, temp, sum, ind + 1);
 
         temp.push_back(candidates[ind]);
-        
 
         solve(candidates, target, temp, sum + candidates[ind], ind);
 
@@ -39,8 +39,6 @@ class Solution {
         }
 
         
-
-        solve(candidates, target, temp, sum, ind + 1);
 
         // sum -= candidates[ind];
 
