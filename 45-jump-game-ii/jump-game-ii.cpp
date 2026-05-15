@@ -35,7 +35,7 @@ public:
 
         int mx = *max_element(nums.begin(), nums.end());
 
-        vector<vector<int>> dp(n, vector<int>(mx + 1, -1));
+        vector<vector<int>> dp(n, vector<int>(mx+1, -1));
 
         int ans = solve(nums, 1, nums[0], dp);
 
