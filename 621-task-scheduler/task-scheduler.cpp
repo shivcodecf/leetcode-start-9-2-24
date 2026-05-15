@@ -1,26 +1,47 @@
 class Solution {
 public:
     int leastInterval(vector<char>& tasks, int n) {
-        if (n == 0)
-            return tasks.size();
 
-        vector<int> cnt(26, 0);
-        for (char task : tasks)
-            cnt[task - 'A']++;
+        //  A -> 3 , B -> 3
 
-        int maxCount = 0;
-        int sameMaxCount = 0;
+        // A _ _ A _ _ A
 
-        for (int i = 0; i < 26; i++) {
-            if (cnt[i] > maxCount) {
-                maxCount = cnt[i];
-                sameMaxCount = 1;
-            } else if (cnt[i] == maxCount) {
-                sameMaxCount++;
+        // 6 + 2 = 8
+
+        int space = 0;
+
+        map<char, int> mp;
+
+        for (int i = 0; i < tasks.size(); i++) {
+            mp[tasks[i]]++;
+        }
+
+        int maxi = INT_MIN, maxElement = -1;
+
+        for (auto it : mp) {
+            if (it.second > maxi) {
+                maxi = max(maxi, it.second);
+                maxElement = it.first;
             }
         }
 
-        int res = (n + 1) * (maxCount - 1) + sameMaxCount;
-        return max(res, (int)tasks.size());
+        int block = maxi-1;
+
+        space = (maxi-1)*n; 
+
+        for (auto it : mp) {
+
+            if(it.first !=maxElement)
+            {
+                space-=min(block,it.second);
+            }
+        }
+
+        if(space>=0)
+        {
+            return space+tasks.size();
+        }
+
+        return tasks.size();
     }
 };
