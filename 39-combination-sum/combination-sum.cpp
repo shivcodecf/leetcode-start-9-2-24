@@ -6,8 +6,7 @@ class Solution {
 
         int n = candidates.size();
 
-        if(sum>target)
-        {
+        if (sum > target) {
             return;
         }
 
@@ -22,16 +21,26 @@ class Solution {
             ans.push_back(temp);
             return;
         }
-
-        solve(candidates, target, temp, sum, ind + 1);
+       
 
         temp.push_back(candidates[ind]);
-
-        // sum += candidates[ind];
+        
 
         solve(candidates, target, temp, sum + candidates[ind], ind);
 
         temp.pop_back();
+
+        // sum += candidates[ind];
+
+        // Skip all duplicates of the current value
+        while (ind + 1 < candidates.size() &&
+               candidates[ind] == candidates[ind + 1]) {
+            ind++;
+        }
+
+        
+
+        solve(candidates, target, temp, sum, ind + 1);
 
         // sum -= candidates[ind];
 
