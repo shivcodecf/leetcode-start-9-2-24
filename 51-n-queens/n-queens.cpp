@@ -1,62 +1,70 @@
 class Solution {
-private:
-    bool isValid(vector<string>& board, int n, int row1, int col1) {
+    vector<vector<string>> ans;
 
-        // Check column
+    bool isValid(int n, vector<string>& v, int row, int col) {
 
-        
-        for (int i = 0; i < row1; i++) {
-            if (board[i][col1] == 'Q') {
+        for (int i = 0; i < n; i++) {
+
+            if (v[row][i] == 'Q') {
+                return false;
+            }
+
+            if (v[i][col] == 'Q') {
                 return false;
             }
         }
 
-        // Check main diagonal (upper left diagonal)
 
-        int x = row1, y = col1;
-        while (x < n && y < n && x >= 0 && y >= 0) {
-            if (board[x][y] == 'Q') {
+        int row1 = row, col1 = col;
+
+        while (row1 < n && row1 >= 0 && col1 < n && col1 >= 0) {
+            if (v[row1][col1] == 'Q') {
                 return false;
             }
 
-            x--;
-            y++;
+            row1--;
+            col1--;
         }
 
-        // Check anti-diagonal (upper right diagonal)
+        row1 = row, col1 = col;
 
-        x = row1, y = col1;
-        while (x >= 0 && y >= 0 && x < n && y < n) {
-            if (board[x][y] == 'Q') {
+        while (row1 < n && row1 >= 0 && col1 < n && col1 >= 0) {
+            if (v[row1][col1] == 'Q') {
                 return false;
             }
-            x--;
-            y--;
+
+            row1--;
+            col1++;
         }
 
         return true;
     }
+    void solve(int n, vector<string>& v, int row) {
 
-    void solve(int n, int row, vector<string>& board,
-               vector<vector<string>>& solutions) {
-        if (row == n) {
-            solutions.push_back(board);
+        if (row >= n) {
+            ans.push_back(v);
             return;
         }
-        for (int col = 0; col < n; col++) {
-            if (isValid(board, n, row, col)) {
-                board[row][col] = 'Q';
-                solve(n, row + 1, board, solutions);
-                board[row][col] = '.';
+
+        for (int i = 0; i < n; i++) {
+
+            if (isValid(n, v, row, i)) {
+                v[row][i] = 'Q';
+
+                solve(n, v, row + 1);
+
+                v[row][i] = '.';
             }
         }
     }
 
 public:
     vector<vector<string>> solveNQueens(int n) {
-        vector<vector<string>> solutions;
-        vector<string> board(n, string(n, '.'));
-        solve(n, 0, board, solutions);
-        return solutions;
+
+        vector<string> v(n, string(n, '.'));
+
+        solve(n, v, 0);
+
+        return ans;
     }
 };
