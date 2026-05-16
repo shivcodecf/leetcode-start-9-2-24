@@ -7,6 +7,8 @@ SELECT
     sub.subject_name,
     COUNT(exam.subject_name) AS attended_exams
 
+
+
 FROM 
 
     students stu 
