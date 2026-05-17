@@ -1,6 +1,7 @@
 class Solution {
-    int dfs(vector<vector<int>>& grid, vector<vector<int>>& vis, int x, int y) {
+    void dfs(vector<vector<int>>& grid, vector<vector<int>>& vis, int x, int y,int& area) {
         vis[x][y] = 1;
+        area++;
 
         int n = grid.size(), m = grid[0].size();
 
@@ -15,13 +16,13 @@ class Solution {
             int newY = y + dy[i];
 
             if (newX >= 0 && newX < n && newY < m && newY >= 0 &&
-                vis[newX][newY] == -1 && grid[newX][newY]==1) {
+                vis[newX][newY] == -1 && grid[newX][newY] == 1) {
 
-                count+= dfs(grid, vis, newX, newY);
+                dfs(grid, vis, newX, newY,area);
             }
         }
 
-        return count;
+       
     }
 
 public:
@@ -35,8 +36,11 @@ public:
 
         for (int i = 0; i < n; i++) {
             for (int j = 0; j < m; j++) {
+                int area = 0;
                 if (grid[i][j] == 1 && vis[i][j] == -1) {
-                    ans = max((int)dfs(grid, vis, i, j), ans);
+                    dfs(grid, vis, i, j,area);
+                    ans = max(area,ans);
+
                 }
             }
         }
