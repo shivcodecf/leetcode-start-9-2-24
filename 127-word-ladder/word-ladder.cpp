@@ -1,75 +1,54 @@
 class Solution {
 public:
-    int ladderLength(string beginWord, string endWord, vector<string>& wordList) {
+    int ladderLength(string beginWord, string endWord,
+                     vector<string>& wordList) {
 
+        queue<string> q;
 
-        
-        queue<pair<int, string>>q;
+        q.push(beginWord);
 
-        q.push({0, beginWord});
+        map<string, int> mp;
 
-        map<string,int>mp;
-
-        for(int i=0;i<wordList.size();i++)
-        {
+        for (int i = 0; i < wordList.size(); i++) {
             mp[wordList[i]]++;
         }
-        
-        vector<string>temp;
-        vector<vector<string>>ans;
 
-        int level = 0;
+        if (mp.find(endWord) == mp.end()) {
+            return 0;
+        }
 
-        temp.push_back(beginWord);
+        int ans = 0;
 
         while (!q.empty()) {
             int n = q.size();
 
-            level++;
+            ans++;
 
             while (n--) {
-
-                auto [step, s] = q.front();
-
+                string s = q.front();
                 q.pop();
 
-                if(s == endWord)
-                {
-                  return step+1;
+                if (s == endWord) {
+                    return ans;
                 }
 
                 string s1 = s;
 
                 for (int i = 0; i < s.size(); i++) {
                     for (char ch = 'a'; ch <= 'z'; ch++) {
+
                         s[i] = ch;
 
-                        if(mp.find(s)!=mp.end())
-                        {
-                          q.push({level, s});
-                          temp.push_back(s);
-                          mp[s]--;
-
-                          if(mp[s]==0)
-                          {
+                        if (mp.count(s)) {
+                            q.push(s);
                             mp.erase(s);
-                          }
-                        }     
-                        
-                      
-                       
+                        }
                     }
-
                     s = s1;
-
-                    
                 }
             }
         }
 
         return 0;
-
-
-        
     }
 };
