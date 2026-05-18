@@ -1,38 +1,32 @@
 class Solution {
-    int solve(vector<vector<int>>& triangle, int row, int col,
-              vector<vector<int>>& dp) {
-        int n = triangle.size();
+    int solve(vector<vector<int>>& triangle,int n,int x,int y,vector<vector<int>>& dp){
 
-        // Base case: reached last row
-        if (row == n - 1) {
-            return triangle[row][col];
+        if(x>=n){
+          return 0;  
         }
 
-        // Memoization
-        if (dp[row][col] != INT_MAX) {
-            return dp[row][col];
+        if(dp[x][y]!=INT_MAX)
+        {
+            return dp[x][y];
         }
 
-        // Two choices:
-        // 1. Move to same column in next row
-        int down = solve(triangle, row + 1, col, dp);
+        int left = INT_MAX , right = INT_MAX;
 
-        // 2. Move to next column in next row
-        int diagonal = solve(triangle, row + 1, col + 1, dp);
+        left = triangle[x][y] + solve(triangle,n,x+1,y,dp);
 
-        // Store and return result
-        return dp[row][col] =
-            triangle[row][col] + min(down, diagonal);
-    }
+        right = triangle[x][y] + solve(triangle,n,x+1,y+1,dp);
 
+        return dp[x][y] =  min(left,right);
+
+    } 
 public:
     int minimumTotal(vector<vector<int>>& triangle) {
+
         int n = triangle.size();
 
-        // Use INT_MAX instead of -1 because triangle values can be negative.
-        // If a valid answer equals -1, using -1 as "uncomputed" breaks memoization.
-        vector<vector<int>> dp(n, vector<int>(n, INT_MAX));
+        vector<vector<int>>dp(n,vector<int>(n,INT_MAX));
 
-        return solve(triangle, 0, 0, dp);
+        return solve(triangle,n,0,0,dp);
+        
     }
 };
