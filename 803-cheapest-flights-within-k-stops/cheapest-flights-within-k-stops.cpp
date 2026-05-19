@@ -3,29 +3,47 @@ public:
     int findCheapestPrice(int n, vector<vector<int>>& flights,
                           int src, int dst, int k) {
 
+        vector<vector<pair<int,int>>> adj(n);
+
+        for(auto &it : flights) {
+
+            adj[it[0]].push_back({it[1], it[2]});
+        }
+
+        queue<pair<int,pair<int,int>>> q;
+
+        // stops, {node, cost}
+        q.push({0, {src, 0}});
+
         vector<int> dist(n, INT_MAX);
 
         dist[src] = 0;
 
-        // relax edges k+1 times
-        for(int i = 0; i <= k; i++) {
+        while(!q.empty()) {
 
-            vector<int> temp = dist;
+            int stops = q.front().first;
+            int node = q.front().second.first;
+            int cost = q.front().second.second;
 
-            for(auto &flight : flights) {
+            q.pop();
 
-                int u = flight[0];
-                int v = flight[1];
-                int wt = flight[2];
+            if(stops > k) continue;
 
-                if(dist[u] != INT_MAX &&
-                   dist[u] + wt < temp[v]) {
+            for(auto &neigh : adj[node]) {
 
-                    temp[v] = dist[u] + wt;
+                int adjNode = neigh.first;
+                int wt = neigh.second;
+
+                if(cost + wt < dist[adjNode]) {
+
+                    dist[adjNode] = cost + wt;
+
+                    q.push({
+                        stops + 1,
+                        {adjNode, cost + wt}
+                    });
                 }
             }
-
-            dist = temp;
         }
 
         return dist[dst] == INT_MAX ? -1 : dist[dst];
