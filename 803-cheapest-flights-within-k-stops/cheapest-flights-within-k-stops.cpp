@@ -3,38 +3,31 @@ public:
     int findCheapestPrice(int n, vector<vector<int>>& flights,
                           int src, int dst, int k) {
 
-        vector<vector<pair<int,int>>> adj(n);
-        for (auto &f : flights) {
-            adj[f[0]].push_back({f[1], f[2]});
-        }
+        vector<int> dist(n, INT_MAX);
 
-        // dist[node][stops]
-        vector<vector<int>> dist(n, vector<int>(k + 2, 1e9));
-        priority_queue<vector<int>, vector<vector<int>>, greater<>> pq;
+        dist[src] = 0;
 
-        // {cost, stops, node}
-        pq.push({0, 0, src});
-        dist[src][0] = 0;
+        // relax edges k+1 times
+        for(int i = 0; i <= k; i++) {
 
-        while (!pq.empty()) {
-            auto cur = pq.top();
-            pq.pop();
+            vector<int> temp = dist;
 
-            int cost = cur[0];
-            int stops = cur[1];
-            int node = cur[2];
+            for(auto &flight : flights) {
 
-            if (node == dst) return cost;
-            if (stops > k) continue;
+                int u = flight[0];
+                int v = flight[1];
+                int wt = flight[2];
 
-            for (auto [next, price] : adj[node]) {
-                if (cost + price < dist[next][stops + 1]) {
-                    dist[next][stops + 1] = cost + price;
-                    pq.push({cost + price, stops + 1, next});
+                if(dist[u] != INT_MAX &&
+                   dist[u] + wt < temp[v]) {
+
+                    temp[v] = dist[u] + wt;
                 }
             }
+
+            dist = temp;
         }
 
-        return -1;
+        return dist[dst] == INT_MAX ? -1 : dist[dst];
     }
 };
