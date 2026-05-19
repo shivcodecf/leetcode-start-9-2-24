@@ -4,34 +4,45 @@ public:
                           vector<double>& succProb, int start_node,
                           int end_node) {
 
-        vector<vector<pair<int, float>>> adj(n);
+        unordered_map<int, vector<pair<int, double>>> adj;
 
-        for (int i = 0; i < edges.size(); i++) {
-            adj[edges[i][0]].push_back({edges[i][1], succProb[i]});
-            adj[edges[i][1]].push_back({edges[i][0], succProb[i]});
+        int m = edges.size();
+
+        int i = 0;
+
+        for (auto& it : edges) {
+            int x = it[0];
+            int y = it[1];
+            adj[x].push_back({y, succProb[i]});
+            adj[y].push_back({x, succProb[i]});
+            i++;
         }
 
-        vector<float> dis(n, 0.0f);
-        dis[start_node] = 1.0f;
+        priority_queue<pair<double, int>> pq;
 
-        priority_queue<pair<float, int>> pq;
-        pq.push({1.0f, start_node});
+        vector<double> vis(n, INT_MIN);
+
+        pq.push({1, start_node});
+
+        vis[start_node] = 1;
 
         while (!pq.empty()) {
-            auto [prob, node] = pq.top();
+
+            double dis = pq.top().first;
+            int x = pq.top().second;
             pq.pop();
 
-            if (node == end_node)
-                return prob;
+            for (auto& v : adj[x]) {
 
-            for (auto [next, succ] : adj[node]) {
-                if (prob * succ > dis[next]) {
-                    dis[next] = prob * succ;
-                    pq.push({dis[next], next});
+                if (dis * v.second > vis[v.first]) {
+
+                    vis[v.first] = dis * v.second;
+                    pq.push({dis * v.second, v.first});
+
                 }
             }
         }
 
-        return 0.0f;
+        return vis[end_node] == INT_MIN ? 0.00000 : vis[end_node] ;
     }
 };
