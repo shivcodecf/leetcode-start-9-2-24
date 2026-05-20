@@ -1,59 +1,47 @@
 class Solution {
 public:
-    vector<vector<int>> floodFill(vector<vector<int>>& image, int sr, int sc,
-                                  int color) {
+    vector<vector<int>> floodFill(vector<vector<int>>& image, int sr, int sc, int color) {
 
-        queue<pair<int, int>> q;
+        queue<pair<int,int>>q;
 
-        q.push({sr, sc});
-
-        int value = image[sr][sc];
-
-        if (value == color) return image;
-
-        image[sr][sc] = color;
-
-        int dx[] = {0, 1, 0, -1};
-
-        int dy[] = {1, 0, -1, 0};
+        q.push({sr,sc});
 
         int n = image.size();
 
         int m = image[0].size();
+         
+        int dx[] = {0,+1,0,-1};
 
-        while (!q.empty()) {    
+        int dy[] = {-1,0,+1,0};
 
+        int initialColor = image[sr][sc];
 
-            int x = q.front().first;
+        while(!q.empty()){
 
-            int y = q.front().second;
+         int x = q.front().first;
+         int y = q.front().second;
 
-            q.pop();
+         image[x][y] = color;
 
-            for (int i = 0; i < 4; i++) {
-                int newR = x + dx[i];
-                int newC = y + dy[i];
+         q.pop();
 
-                if (newR < n && newC < m && newR>=0 && newC>=0) {
+         for(int i=0;i<4;i++)
+         {
+            int newX = x + dx[i];
 
-                    if (image[newR][newC] == value) {
+            int newY = y + dy[i];
 
-                        image[newR][newC] = color;
-                         q.push({newR, newC});
-                        
-                    }
+            if(newX>=0 && newX<n && newY>=0 && newY<m && image[newX][newY]==initialColor && image[newX][newY]!=color){
+               
+                q.push({newX,newY});
 
-                    
-
-                   
-                }
             }
+         }
 
 
         }
 
-
         return image;
-
+        
     }
 };
