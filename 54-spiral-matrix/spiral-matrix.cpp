@@ -4,56 +4,91 @@ public:
 
         int n = matrix.size(), m = matrix[0].size();
 
-        map<pair<int, int>, int> mp;
+        int dir = 1;
 
         int i = 0, j = 0;
-        int dir = 1;   // 1 = right, 2 = down, 3 = left, 4 = up
+
+        set<pair<int, int>> st;
 
         vector<int> ans;
 
-        while (true) {
+        // st.insert({i,j});
 
-            // Correct boundary check:
-            // i >= 0 and j >= 0 are also required.
-            if (i >= 0 && i < n && j >= 0 && j < m &&
-                mp.find({i, j}) == mp.end()) {
+        // ans.push_back(matrix[0][0]);
 
-                ans.push_back(matrix[i][j]);
-                mp[{i, j}]++;
+        while (i < n && j < m) {
 
-                if (dir == 1) {               // right
+            // if(st.count({i,j}))
+            // {
+            //     break;
+            // }
+
+            if (!st.count({i, j}) && i<n && j<m && i>=0 && j>=0) {
+
+                if (dir == 1) {
+
+                    ans.push_back(matrix[i][j]);
+
+                    st.insert({i, j});
+
                     j++;
-                    if (j >= m || mp.find({i, j}) != mp.end()) {
-                        dir = 2;
+
+                    if (j >= m || st.count({i, j})) {
                         j--;
                         i++;
+                        dir++;
                     }
-                }
-                else if (dir == 2) {          // down
+
+
+                } else if (dir == 2) {
+
+                    st.insert({i, j});
+
+                    ans.push_back(matrix[i][j]);
+
                     i++;
-                    if (i >= n || mp.find({i, j}) != mp.end()) {
-                        dir = 3;
+
+                    if (i >= n || st.count({i, j})) {
                         i--;
                         j--;
+                        dir++;
                     }
+
                 }
-                else if (dir == 3) {          // left
+
+                else if (dir == 3) {
+
+                    st.insert({i, j});
+
+                    ans.push_back(matrix[i][j]);
+
                     j--;
-                    if (j < 0 || mp.find({i, j}) != mp.end()) {
-                        dir = 4;
+
+                    if (j < 0 || st.count({i, j})) {
                         j++;
                         i--;
+                        dir++;
                     }
+
                 }
-                else {                        // up
+
+                else if (dir == 4) {
+
+                    st.insert({i, j});
+
+                    ans.push_back(matrix[i][j]);
+
                     i--;
-                    if (i < 0 || mp.find({i, j}) != mp.end()) {
-                        dir = 1;
+
+                    if (i < 0 || st.count({i, j})) {
                         i++;
                         j++;
+                        dir = 1;
                     }
                 }
+
             }
+
             else {
                 break;
             }
