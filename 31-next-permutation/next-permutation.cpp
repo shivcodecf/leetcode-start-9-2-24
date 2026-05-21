@@ -4,42 +4,32 @@ public:
 
         int n = nums.size();
 
-        int check = 0;
+        int flag = 0;
 
-        for (int i = n - 1; i >= 1; i--) {
-
-            if (nums[i - 1] < nums[i]) {
-
-                int mini = INT_MIN;
-
-                 check = 1;
-
-                int idx = -1;
-
-                for (int j = i; j < n; j++) {
-
-                    if (nums[j] > nums[i-1]) {
-
-                        mini = min(nums[j], mini);
-                      
-                        idx = j;
-
-                        // break;
-                       
+        for (int i = n - 2; i >= 0; i--) {
+            if (nums[i] < nums[i + 1]) {
+                int maxi = INT_MAX;
+                int minIdx = -1;
+               
+                for (int j = i + 1; j < n; j++) {
+                    if (nums[j] > nums[i]) {
+                        maxi = min(maxi, nums[j]);
+                        minIdx = j;
                     }
                 }
 
-                swap(nums[i - 1], nums[idx]);
-                reverse(nums.begin() + i, nums.end());
-                cout << i-1<< " " <<idx<<endl;
-                break;
+                if (minIdx!=-1) {
+
+                    swap(nums[i], nums[minIdx]);
+                    reverse(nums.begin() + i+1, nums.end());
+                    flag = 1;
+                    break;
+                }
             }
         }
 
-        if (check==0) {
+        if (flag == 0) {
             reverse(nums.begin(), nums.end());
         }
-
-        // return nums;
     }
 };
