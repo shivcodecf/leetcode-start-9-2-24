@@ -1,22 +1,29 @@
 class Solution {
 
-    bool isValid(vector<vector<char>>& board, int x, int y, int d) {
-        for (int i = 0; i < 9; i++) {
-            if (board[x][i] == d) {
-                return false;
-            }
-            if (board[i][y] == d) {
+    bool isValid(vector<vector<char>>& board, int i, int j, char d, int n,
+                 int m) {
+        int row = i;
+        int col = j;
+
+        for (int k = 0; k < n; k++) {
+            if (board[k][col] == d) {
                 return false;
             }
         }
 
-        int startI = x / 3 * 3;
+        for (int k = 0; k < m; k++) {
+            if (board[row][k] == d) {
+                return false;
+            }
+        }
 
-        int startJ = y / 3 * 3;
+        row = i / 3 * 3;
+
+        col = j / 3 * 3;
 
         for (int i = 0; i < 3; i++) {
             for (int j = 0; j < 3; j++) {
-                if (board[startI + i][startJ + j] == d) {
+                if (board[row + i][col + j] == d) {
                     return false;
                 }
             }
@@ -25,25 +32,31 @@ class Solution {
         return true;
     }
 
-    bool solve(vector<vector<char>>& board, int i, int j) {
+    bool solve(int x, int y, vector<vector<char>>& board) {
+
         int n = board.size(), m = board[0].size();
 
-        for (int k = 0; k < n; k++) {
-            for (int l = 0; l < m; l++) {
-                if (board[k][l] != '.')
-                    continue;
+        for (int i = 0; i < n; i++) {
+            for (int j = 0; j < m; j++) {
 
-                for (int d = '1'; d <= '9'; d++) {
-                    if (isValid(board, k, l, d)) {
-                        board[k][l] = d;
-                        if(solve(board, k, l)){
+                if (board[i][j] == '.') {
+                for (char ch = '1'; ch <= '9'; ch++) {
+
+                    if (isValid(board, i, j, ch, n, m)) {
+
+                        board[i][j] = ch;
+
+                        if (solve(i, j, board)) {
                             return true;
                         }
-                        board[k][l] = '.';
+
+                        board[i][j] = '.';
                     }
                 }
-
                 return false;
+                }
+
+                
             }
         }
 
@@ -51,5 +64,10 @@ class Solution {
     }
 
 public:
-    void solveSudoku(vector<vector<char>>& board) { solve(board, 0, 0); }
+    void solveSudoku(vector<vector<char>>& board) {
+
+        int n = board.size(), m = board[0].size();
+
+        solve(0, 0, board);
+    }
 };
