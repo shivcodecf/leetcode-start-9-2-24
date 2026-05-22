@@ -5,6 +5,7 @@ public:
         int n = graph.size();
 
         vector<vector<int>> revAdj(n);
+
         vector<int> outdegree(n, 0);
 
         // reverse graph
@@ -12,8 +13,8 @@ public:
 
             outdegree[i] = graph[i].size();
 
-            for(auto neigh : graph[i]) {
-                revAdj[neigh].push_back(i);
+            for(auto &v : graph[i]) {
+                revAdj[v].push_back(i);
             }
         }
 
@@ -21,7 +22,6 @@ public:
 
         // terminal nodes
         for(int i = 0; i < n; i++) {
-
             if(outdegree[i] == 0) {
                 q.push(i);
             }
@@ -31,17 +31,17 @@ public:
 
         while(!q.empty()) {
 
-            int node = q.front();
+            int u = q.front();
             q.pop();
 
-            ans.push_back(node);
+            ans.push_back(u);
 
-            for(auto prev : revAdj[node]) {
+            for(auto &v : revAdj[u]) {
 
-                outdegree[prev]--;
+                outdegree[v]--;
 
-                if(outdegree[prev] == 0) {
-                    q.push(prev);
+                if(outdegree[v] == 0) {
+                    q.push(v);
                 }
             }
         }
