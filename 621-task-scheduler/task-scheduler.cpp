@@ -25,21 +25,19 @@ public:
             }
         }
 
-        int block = maxi-1;
+        int block = maxi - 1;
 
-        space = (maxi-1)*n; 
+        space = (maxi - 1) * n;
 
         for (auto it : mp) {
 
-            if(it.first !=maxElement)
-            {
-                space-=min(block,it.second);
+            if (it.first != maxElement) {
+                space -= min(block, it.second);
             }
         }
 
-        if(space>=0)
-        {
-            return space+tasks.size();
+        if (space >= 0) {
+            return space + tasks.size();
         }
 
         return tasks.size();
