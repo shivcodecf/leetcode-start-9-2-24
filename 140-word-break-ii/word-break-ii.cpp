@@ -5,16 +5,13 @@ class Solution {
 
     void solve(string s, vector<string>& wordDict, int ind, vector<string>& v) {
 
-       if(ind >= s.size())
-        {
+        if (ind >= s.size()) {
             string sentence = "";
 
-            for(int i = 0; i < v.size(); i++)
-            {
+            for (int i = 0; i < v.size(); i++) {
                 sentence += v[i];
 
-                if(i != v.size() - 1)
-                {
+                if (i != v.size() - 1) {
                     sentence += " ";
                 }
             }
@@ -23,7 +20,6 @@ class Solution {
 
             return;
         }
-
 
         string s1 = "";
 
@@ -36,9 +32,6 @@ class Solution {
                 v.pop_back();
             }
         }
-
-
-
     }
 
 public:
@@ -53,7 +46,5 @@ public:
         solve(s, wordDict, 0, v);
 
         return ans;
-
-
     }
 };
