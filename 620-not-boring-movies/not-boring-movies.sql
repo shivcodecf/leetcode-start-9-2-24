@@ -1,2 +1,2 @@
 # Write your MySQL query statement below
-select id , movie , description , rating from  Cinema where description != 'boring' AND  id%2 = 1 ORDER BY rating DESC;
+select id , movie , description , rating from  Cinema where description != 'boring' AND  id%2 ORDER BY rating DESC;
