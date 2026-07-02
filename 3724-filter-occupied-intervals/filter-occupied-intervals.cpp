@@ -14,6 +14,11 @@ public:
         int start = occupiedIntervals[0][0];
         int end = occupiedIntervals[0][1];
 
+        // [1,4], [2,3]
+
+        // [1,1] , [2,2]  2<=2  end = 2
+        // [1,2],[3,4] -- 3<=3
+
         for (int i = 1; i < occupiedIntervals.size(); i++) {
             int currStart = occupiedIntervals[i][0];
             int currEnd = occupiedIntervals[i][1];
@@ -21,6 +26,7 @@ public:
             // Overlap OR touching
             if (currStart <= end + 1) {
                 end = max(end, currEnd);
+                // end = 4
             } else {
                 merged.push_back({start, end});
                 start = currStart;
@@ -32,6 +38,8 @@ public:
 
         // Step 3: Remove free interval
         vector<vector<int>> result;
+
+        // [1,5]   [7,9]
 
         for (auto interval : merged) {
             int L = interval[0];
