@@ -1,32 +1,34 @@
 class Solution {
 public:
     int characterReplacement(string s, int k) {
-         
-         map<char,int>mp;
 
-         int ans =0,maxi = INT_MIN;
+        int n = s.size();
 
-         int j=0;
+        map<char, int> mp;
 
+        int i = 0, j = 0;
 
-         for(int i=0;i<s.size();i++)
-         { 
+        int ans = 1;
 
-            mp[s[i]]++;
+        int maxi = INT_MIN;
 
-            maxi = max(maxi,mp[s[i]]);
+        int flag = 0;
 
-            while(i>j && ((i-j+1)-maxi)>k)
-            {
-                mp[s[j]]--;
-                j++;
+        while (i < n && j < n) {
+            mp[s[j]]++;
+
+            maxi = max(maxi, mp[s[j]]);
+
+            while (j > i && ((j - i + 1) - maxi) > k) {
+                mp[s[i]]--;
+                i++;
             }
 
-            ans = max(ans,i-j+1);
+            ans = max(ans, j - i + 1);
 
-         }
+            j++;
+        }
 
-         return ans;
-
+        return ans;
     }
 };
