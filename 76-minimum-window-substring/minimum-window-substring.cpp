@@ -2,63 +2,40 @@ class Solution {
 public:
     string minWindow(string s, string t) {
 
-        map<char, int> mp;
+        unordered_map<char,int> need;
 
-        if(t.size()>s.size())
-        {
-            return "";
-        }
+        for(char c : t)
+            need[c]++;
 
-        for (int i = 0; i < t.size(); i++) {
-            mp[t[i]]++;
-        }
+        int count = 0;
+        int left = 0;
 
-        int n = s.size();
+        int start = 0;
+        int minLen = INT_MAX;
 
-        int i = 0, j = 0;
+        for(int right = 0; right < s.size(); right++) {
 
-        int count = t.size();
+            need[s[right]]--;
 
-        int startIndex = -1;
+            if(need[s[right]] >= 0)
+                count++;
 
-        int minWindow = INT_MAX;
+            while(count == t.size()) {
 
-        while (i < n && j < n) {
-            if (mp[s[j]] > 0) {
-
-                count--;
-            }
-
-            // if(count = 0)
-            // {
-
-            // }
-
-            mp[s[j]]--;
-
-            // startIndex = i;
-
-            while (count == 0 && i < n) {
-                int windowSize = j-i+1;
-
-                if (minWindow > windowSize) {
-                    minWindow = windowSize;
-                    startIndex = i;
-                }
-                mp[s[i]]++;
-
-                if (mp[s[i]] > 0) {
-                    count++;
+                if(right - left + 1 < minLen) {
+                    minLen = right - left + 1;
+                    start = left;
                 }
 
-                i++;
-            }
+                need[s[left]]++;
 
-            j++;
+                if(need[s[left]] > 0)
+                    count--;
+
+                left++;
+            }
         }
 
-        if(startIndex == -1) return "";
-
-        return s.substr(startIndex, minWindow);
+        return minLen == INT_MAX ? "" : s.substr(start, minLen);
     }
 };
