@@ -11,17 +11,20 @@ public:
         int sum = 0;
 
         while (i < n && j < n) {
+
             sum += nums[j];
 
-            while (sum >= target) {
+            while (sum >= target && i < n) {
                 ans = min(ans, j - i + 1);
                 sum -= nums[i];
                 i++;
             }
 
+            // ans = min(ans, j - i + 1);
+
             j++;
         }
 
-        return ans == INT_MAX ? 0 : ans;
+        return ans == INT_MAX ? 0: ans;
     }
 };
